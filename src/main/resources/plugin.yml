@@ -1,0 +1,5 @@
+name: TrickOrTreat
+version: 0.1
+author: scottec
+description:
+main: net.scottec.TrickOrTreat.TrickOrTreat
