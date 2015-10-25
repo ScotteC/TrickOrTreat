@@ -79,7 +79,7 @@ public class Request
                 {
                     bob.setLevel(boblvl);
                     alice.setLevel(alicelvl);
-                    //treat alice()
+                    Treat.treat(alice);
                     alice.sendMessage("You're very bad... Enjoy your treatment...");
                     bob.sendMessage("Sorry, request denied...");
                     status = true;
