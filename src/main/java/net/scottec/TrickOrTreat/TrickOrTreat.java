@@ -1,5 +1,7 @@
 package net.scottec.TrickOrTreat;
 
+import net.scottec.TrickOrTreat.Ghosts.Ghost;
+
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 

@@ -1,5 +1,6 @@
-package net.scottec.TrickOrTreat;
+package net.scottec.TrickOrTreat.Ghosts;
 
+import net.scottec.TrickOrTreat.Trick;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -60,12 +61,15 @@ public class Ghost implements Listener
             {
                 LivingEntity carrier = (LivingEntity) evt.getEntity().getVehicle();
                 carrier.removePotionEffect(PotionEffectType.INVISIBILITY);
+                carrier.remove();
             }
 
             // cancel natural drops of entity
             evt.setDroppedExp(0);
             evt.getDrops().clear();
 
+            Bukkit.getServer().getWorld("world").dropItemNaturally(
+                    evt.getEntity().getLocation(), Trick.getRndCandy());
         }
 
         // if died entity is a bat
