@@ -6,6 +6,13 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 /**
  * Created by Fabian on 22.10.2015.
+ *
+ * Defines a Trick Or Treat-Request from player Bob to player Alice
+ *
+ * On construction a new task is scheduled to represent the countdown
+ * Request-Object will be deleted by another task scheduled by RequestHandler
+ * after specified delay
+ *
  */
 public class Request
 {
@@ -22,6 +29,10 @@ public class Request
     private long time;
     private int countdown;
 
+    /*
+     * constructor
+     * starts also runnable task for countdown
+     */
     public Request(JavaPlugin plugin, Player bob, Player alice, int timeout)
     {
         this.plugin = plugin;
@@ -45,14 +56,9 @@ public class Request
             @Override
             public void run()
             {
-//                // init counter
-//                int cnt = countdown + 1;
-
                 // set level as countdown
                 bob.setLevel(countdown);
                 alice.setLevel(countdown);
-
-                bob.sendMessage("Tick " + countdown);
 
                 // cancel task if status is set true
                 if (status)

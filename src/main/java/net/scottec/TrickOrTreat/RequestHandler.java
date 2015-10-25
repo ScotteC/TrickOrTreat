@@ -5,9 +5,13 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
+import org.bukkit.event.player.PlayerJoinEvent;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -18,15 +22,19 @@ public class RequestHandler implements Listener
 {
     private JavaPlugin plugin;
 
-    public final int requestTimeout = 15;
-    public final long requestCooldown = 25;
+    public final int requestTimeout = 5;
+    public final long requestCooldown = 5;
 
     public static Map<Player, Request> requests = new HashMap<>();
 
+    /*
+     * constructor
+     */
     public RequestHandler(JavaPlugin plugin)
     {
         this.plugin = plugin;
     }
+
 
     /*
      * register request creating instance if ToTRequest to save involved
@@ -54,6 +62,19 @@ public class RequestHandler implements Listener
         }.runTaskLater(this.plugin, (this.requestCooldown*20));
     }
 
+
+    /*
+     * check if theres a request from bob on alice
+     */
+    public static Request checkRequest(Player bob, Player alice)
+    {
+        Request request = requests.get(bob);
+        if (request != null && request.getAlice() == alice)
+            return request;
+        return null;
+    }
+
+
     /*
      * if bob rightclicks alice with "Magic Wand" check if theres a pending
      * request by bob, otherwise create a new one
@@ -67,47 +88,41 @@ public class RequestHandler implements Listener
         {
             if(evt.getPlayer().getItemInHand().getItemMeta()
                     .getDisplayName().equals("Magic Wand"))
-            Player bob = evt.getPlayer();
-            Player alice = (Player) evt.getRightClicked();
-
-            // check on pending requests from bob,
-            // send error based on requeststatus
-            if (requests.containsKey(bob))
             {
-                if (!requests.get(bob).getStatus())
-                    bob.sendMessage("Only one request a time...");
+                Player bob = evt.getPlayer();
+                Player alice = (Player) evt.getRightClicked();
+
+                // check on pending requests from bob,
+                // send error based on requeststatus
+                if (requests.containsKey(bob))
+                {
+                    if (!requests.get(bob).getStatus())
+                        bob.sendMessage("Only one request a time...");
+                    else
+                    {
+                        long remainCool = (requests.get(bob).getRequestTime()
+                                + (this.requestCooldown*1000)
+                                - System.currentTimeMillis()) / 1000;
+                        bob.sendMessage("Cooldown: " + remainCool + " Seconds");
+                    }
+                }
+                // no pending requests, so create one
                 else
                 {
-                    long remainCool = (requests.get(bob).getRequestTime()
-                            + (this.requestCooldown*1000)
-                            - System.currentTimeMillis()) / 1000;
-                    bob.sendMessage("Cooldown: " + remainCool + " Seconds");
+                    createRequest(bob, alice);
                 }
             } // if "Magic Wand"
         } // if valid action with possible item
     } // onPlayerInteractEntity
-            }
-            // no pending requests, so create one
-            else
-            {
-                createRequest(bob, alice);
-            }
-        }
-    }
+
 
     /*
-     * check if theres a request from bob on alice
      * Check on player join, if player already has an Halloweenstick/Magic Wand
      * in inventory, otherwise add one
      */
-    public static Request checkRequest(Player bob, Player alice)
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent evt)
     {
-        Request request = requests.get(bob);
-        if (request != null && request.getAlice() == alice)
-            return request;
-        return null;
 
         ItemStack halloweenstick = new ItemStack(Material.BLAZE_ROD);
         ItemMeta hsMeta = halloweenstick.getItemMeta();
