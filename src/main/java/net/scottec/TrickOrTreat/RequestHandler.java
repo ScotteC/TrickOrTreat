@@ -63,10 +63,10 @@ public class RequestHandler implements Listener
     {
         // requests only on players and triggerd by "Magic Wand"(Blaze rod)
         if((evt.getRightClicked() instanceof Player)
-                && (evt.getPlayer().getItemInHand()
-                .getType().equals(Material.BLAZE_ROD)))
-        //.getItemMeta().getDisplayName().equals("BLAZE ROD"))
+                && evt.getPlayer().getItemInHand().hasItemMeta())
         {
+            if(evt.getPlayer().getItemInHand().getItemMeta()
+                    .getDisplayName().equals("Magic Wand"))
             Player bob = evt.getPlayer();
             Player alice = (Player) evt.getRightClicked();
 
@@ -83,6 +83,9 @@ public class RequestHandler implements Listener
                             - System.currentTimeMillis()) / 1000;
                     bob.sendMessage("Cooldown: " + remainCool + " Seconds");
                 }
+            } // if "Magic Wand"
+        } // if valid action with possible item
+    } // onPlayerInteractEntity
             }
             // no pending requests, so create one
             else
@@ -94,12 +97,28 @@ public class RequestHandler implements Listener
 
     /*
      * check if theres a request from bob on alice
+     * Check on player join, if player already has an Halloweenstick/Magic Wand
+     * in inventory, otherwise add one
      */
     public static Request checkRequest(Player bob, Player alice)
+    @EventHandler
+    public void onPlayerJoin(PlayerJoinEvent evt)
     {
         Request request = requests.get(bob);
         if (request != null && request.getAlice() == alice)
             return request;
         return null;
+
+        ItemStack halloweenstick = new ItemStack(Material.BLAZE_ROD);
+        ItemMeta hsMeta = halloweenstick.getItemMeta();
+        hsMeta.setDisplayName("Magic Wand");
+        String[] lore = {"Right click another Player",
+                         "to play 'Trick or Treat' !"};
+        hsMeta.setLore(Arrays.asList(lore));
+        halloweenstick.setItemMeta(hsMeta);
+        halloweenstick.setAmount(1);
+
+        if (!evt.getPlayer().getInventory().contains(halloweenstick))
+            evt.getPlayer().getInventory().addItem(halloweenstick);
     }
 }
