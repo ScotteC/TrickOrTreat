@@ -8,7 +8,7 @@ import org.bukkit.potion.PotionEffectType;
 /**
  * Created by Fabian on 25.10.2015.
  */
-public class Explosion extends Treatment
+public class Explosion implements Treatment
 {
 
     public void effect(Player player)

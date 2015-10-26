@@ -7,7 +7,7 @@ import org.bukkit.potion.PotionEffectType;
 /**
  * Created by Fabian on 25.10.2015.
  */
-public class Flames extends Treatment
+public class Flames implements Treatment
 {
     public void effect(Player player)
     {

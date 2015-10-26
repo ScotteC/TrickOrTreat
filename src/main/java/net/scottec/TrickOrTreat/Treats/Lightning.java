@@ -7,7 +7,7 @@ import org.bukkit.potion.PotionEffectType;
 /**
  * Created by Fabian on 25.10.2015.
  */
-public class Lightning extends Treatment
+public class Lightning implements Treatment
 {
     public void effect(Player player)
     {
