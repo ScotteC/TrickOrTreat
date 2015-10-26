@@ -20,6 +20,7 @@ import org.bukkit.potion.PotionEffectType;
  */
 public class Ghost implements Listener
 {
+    private static int ghostSwitch = 0;
 
     public void spawnGhost(Location l)
     {
@@ -29,19 +30,43 @@ public class Ghost implements Listener
         carrier.addPotionEffect(new PotionEffect(
                 PotionEffectType.INVISIBILITY, 99999, 1));
 
-        LivingEntity passenger = (LivingEntity) Bukkit.getWorld("world")
-                .spawnEntity(l, EntityType.SKELETON);
+        switch (ghostSwitch)
+        {
+            case 0:
+            {
+                LivingEntity passenger = (LivingEntity) Bukkit.getWorld("world")
+                        .spawnEntity(l, EntityType.SKELETON);
 
-        passenger.addPotionEffect(new PotionEffect(
-                PotionEffectType.INVISIBILITY, 99999, 1));
-        passenger.getEquipment().setHelmet(
-                new ItemStack(Material.PUMPKIN));
-        passenger.getEquipment().setChestplate(
-                new ItemStack(Material.CHAINMAIL_CHESTPLATE));
-        passenger.getEquipment().setItemInHand(
-                new ItemStack(Material.GHAST_TEAR));
+                passenger.addPotionEffect(new PotionEffect(
+                        PotionEffectType.INVISIBILITY, 99999, 1));
+                passenger.getEquipment().setHelmet(
+                        new ItemStack(Material.PUMPKIN));
+                passenger.getEquipment().setChestplate(
+                        new ItemStack(Material.CHAINMAIL_CHESTPLATE));
+                passenger.getEquipment().setItemInHand(
+                        new ItemStack(Material.GHAST_TEAR));
+                carrier.setPassenger(passenger);
+                ghostSwitch++;
+                break;
+            }
 
-        carrier.setPassenger(passenger);
+            case 1:
+            {
+                Creeper creeper = (Creeper) Bukkit.getWorld("world")
+                        .spawnEntity(l, EntityType.CREEPER);
+                creeper.setPowered(true);
+                carrier.setPassenger(creeper);
+                ghostSwitch++;
+                break;
+            }
+
+            case 2:
+            {
+                carrier.removePotionEffect(PotionEffectType.INVISIBILITY);
+                ghostSwitch = 0;
+                break;
+            }
+        }
     }
 
 
