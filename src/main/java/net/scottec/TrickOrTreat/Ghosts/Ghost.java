@@ -11,8 +11,11 @@ import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.scheduler.BukkitRunnable;
+
 
 /**
  * Initial idea and code written by Titian, Oct 2014
@@ -20,7 +23,13 @@ import org.bukkit.potion.PotionEffectType;
  */
 public class Ghost implements Listener
 {
+    private JavaPlugin plugin;
     private static int ghostSwitch = 0;
+
+    public Ghost(JavaPlugin plugin)
+    {
+        this.plugin = plugin;
+    }
 
     public void spawnGhost(Location l)
     {
@@ -93,14 +102,32 @@ public class Ghost implements Listener
             evt.setDroppedExp(0);
             evt.getDrops().clear();
 
-            Bukkit.getServer().getWorld("world").dropItemNaturally(
-                    evt.getEntity().getLocation(), Trick.getRndCandy());
+            Location loc = evt.getEntity().getLocation();
+
+            new BukkitRunnable()
+            {
+                int cnt = 10;
+
+                @Override
+                public void run()
+                {
+                    if(cnt == 0)
+                        this.cancel();
+                    else
+                    {
+                        Bukkit.getServer().getWorld("world").dropItemNaturally(
+                            loc, Trick.getRndCandy());
+                        cnt--;
+                    }
+                }
+            }.runTaskTimer(this.plugin, 10L, 10L );
         }
 
         // if died entity is a bat
         else if (evt.getEntityType().equals(EntityType.BAT))
         {
-
+            Bukkit.getServer().getWorld("world").dropItemNaturally(
+                    evt.getEntity().getLocation(), Trick.getRndCandy());
         }
     }
 

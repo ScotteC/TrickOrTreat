@@ -14,7 +14,7 @@ public class TrickOrTreat extends JavaPlugin implements Listener
     public void onEnable()
     {
         this.getServer().getPluginManager().registerEvents(new RequestHandler(this), this);
-        this.getServer().getPluginManager().registerEvents(new Ghost(), this);
+        this.getServer().getPluginManager().registerEvents(new Ghost(this), this);
         this.getServer().getPluginManager().registerEvents(new Trick(), this);
         this.getServer().getPluginManager().registerEvents(new Treat(), this);
 
