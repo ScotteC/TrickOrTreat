@@ -26,13 +26,19 @@ import java.util.List;
 public class Ghost implements Listener
 {
     private JavaPlugin plugin;
+
     private static int ghostSwitch = 0;
-    private static int maxLived;
+
+    private int maxLived;
+    private long dropDelay;
+    private long cleanInterval;
 
     public Ghost(JavaPlugin plugin)
     {
         this.plugin = plugin;
-        this.maxLived = 12000;
+        this.maxLived = this.plugin.getConfig().getInt("ghost.maxLived");
+        this.dropDelay = this.plugin.getConfig().getInt("ghost.dropDelay");
+        this.cleanInterval = this.plugin.getConfig().getInt("ghost.cleanInterval");
 
         new BukkitRunnable()
         {
@@ -59,7 +65,7 @@ public class Ghost implements Listener
                     }
                 }
             }
-        }.runTaskTimer(this.plugin, 0L, 400L);
+        }.runTaskTimer(this.plugin, 0L, this.cleanInterval);
     }
 
     public void spawnGhost(Location l)
@@ -165,7 +171,7 @@ public class Ghost implements Listener
                         cnt--;
                     }
                 }
-            }.runTaskTimer(this.plugin, 10L, 10L );
+            }.runTaskTimer(this.plugin, 0, this.dropDelay);
         }
 
         // if died entity is a bat

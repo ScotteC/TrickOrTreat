@@ -1,0 +1,16 @@
+#
+# config.yml for TrickOrTreat
+#
+
+request:
+  requestTimeout: 5
+  requestCooldown: 10
+
+trick:
+
+treat:
+
+ghost:
+  cleanInterval: 400
+  maxLived: 12000
+  dropDelay: 15

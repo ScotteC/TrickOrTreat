@@ -22,8 +22,8 @@ public class RequestHandler implements Listener
 {
     private JavaPlugin plugin;
 
-    public final int requestTimeout = 5;
-    public final long requestCooldown = 5;
+    private int requestTimeout;
+    private long requestCooldown;
 
     public static Map<Player, Request> requests = new HashMap<>();
 
@@ -33,6 +33,11 @@ public class RequestHandler implements Listener
     public RequestHandler(JavaPlugin plugin)
     {
         this.plugin = plugin;
+
+        requestTimeout = this.plugin.getConfig()
+                .getInt("request.requestTimeout");
+        requestCooldown = this.plugin.getConfig()
+                .getLong("request.requestCooldown");
     }
 
 
