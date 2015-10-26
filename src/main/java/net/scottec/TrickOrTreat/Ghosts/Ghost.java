@@ -1,6 +1,7 @@
 package net.scottec.TrickOrTreat.Ghosts;
 
 import net.scottec.TrickOrTreat.Trick;
+
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -157,7 +158,7 @@ public class Ghost implements Listener
 
             new BukkitRunnable()
             {
-                int cnt = 10;
+                int cnt = plugin.getConfig().getInt("ghost.dropCount");
 
                 @Override
                 public void run()

@@ -13,4 +13,5 @@ treat:
 ghost:
   cleanInterval: 400
   maxLived: 12000
+  dropCount: 5
   dropDelay: 15
