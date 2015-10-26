@@ -109,6 +109,20 @@ public class Ghost implements Listener
         }
     }
 
+    public static void killAllGhosts()
+    {
+        List<Entity> entities = Bukkit.getServer().getWorld("world").getEntities();
+
+        for(Entity entity : entities)
+        {
+            if (entity instanceof LivingEntity
+                    && (entity.getType().equals(EntityType.SKELETON)
+                    || entity.getType().equals(EntityType.CREEPER)
+                    || entity.getType().equals(EntityType.BAT)))
+                entity.remove();
+        }
+    }
+
 
     /**
      * EventHandler

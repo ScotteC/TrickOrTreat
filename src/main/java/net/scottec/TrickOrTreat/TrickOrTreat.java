@@ -10,7 +10,7 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public class TrickOrTreat extends JavaPlugin implements Listener
 {
-
+    @Override
     public void onEnable()
     {
         this.getServer().getPluginManager().registerEvents(new RequestHandler(this), this);
@@ -19,6 +19,12 @@ public class TrickOrTreat extends JavaPlugin implements Listener
         this.getServer().getPluginManager().registerEvents(new Treat(), this);
 
 //        loadConfig();
+    }
+
+    @Override
+    public void onDisable()
+    {
+        Ghost.killAllGhosts();
     }
 
 //    private void loadConfig()
