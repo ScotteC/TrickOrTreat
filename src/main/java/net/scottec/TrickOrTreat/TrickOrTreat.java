@@ -17,8 +17,6 @@ public class TrickOrTreat extends JavaPlugin implements Listener
         this.getServer().getPluginManager().registerEvents(new Ghost(this), this);
         this.getServer().getPluginManager().registerEvents(new Trick(), this);
         this.getServer().getPluginManager().registerEvents(new Treat(), this);
-
-//        loadConfig();
     }
 
     @Override
@@ -26,10 +24,4 @@ public class TrickOrTreat extends JavaPlugin implements Listener
     {
         Ghost.killAllGhosts();
     }
-
-//    private void loadConfig()
-//    {
-//        this.requestTimeout = 5;      // seconds
-//        this.requestCooldown = 15;    // seconds
-//    }
 }
