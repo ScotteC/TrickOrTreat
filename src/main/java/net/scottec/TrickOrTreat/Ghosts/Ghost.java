@@ -16,6 +16,8 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.List;
+
 
 /**
  * Initial idea and code written by Titian, Oct 2014
@@ -25,10 +27,39 @@ public class Ghost implements Listener
 {
     private JavaPlugin plugin;
     private static int ghostSwitch = 0;
+    private static int maxLived;
 
     public Ghost(JavaPlugin plugin)
     {
         this.plugin = plugin;
+        this.maxLived = 12000;
+
+        new BukkitRunnable()
+        {
+            @Override
+            public void run()
+            {
+                List<Entity> entities = Bukkit.getServer()
+                        .getWorld("world").getEntities();
+
+                for(Entity entity : entities)
+                {
+                    if (entity instanceof LivingEntity)
+                    {
+                        if((entity.getType().equals(EntityType.SKELETON)
+                            || entity.getType().equals(EntityType.CREEPER)
+                            || entity.getType().equals(EntityType.BAT))
+                            && entity.getTicksLived() >= maxLived )
+                            entity.remove();
+                        if (entity.getType().equals(EntityType.BAT))
+                        {
+                            Bat bat = (Bat) entity;
+                            bat.setAwake(true);
+                        }
+                    }
+                }
+            }
+        }.runTaskTimer(this.plugin, 0L, 400L);
     }
 
     public void spawnGhost(Location l)
