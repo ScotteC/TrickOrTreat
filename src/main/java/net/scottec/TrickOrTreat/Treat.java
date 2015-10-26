@@ -25,7 +25,7 @@ public class Treat implements Listener
 
     public static void treat(Player player)
     {
-        treats.get(((int) Math.round(Math.random()*100)) % treats.size())
+        treats.get(((int) (Math.random()*100)) % treats.size())
                 .effect(player);
     }
 

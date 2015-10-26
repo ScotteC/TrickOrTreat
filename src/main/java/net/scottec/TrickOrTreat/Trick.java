@@ -30,7 +30,7 @@ public class Trick implements Listener
     public static ItemStack getRndCandy()
     {
         return candyObjects.get(
-                ((int) Math.round(Math.random()*100)) % candyObjects.size())
+                ((int) (Math.random()*100)) % candyObjects.size())
                 .getItemStack();
     }
 
