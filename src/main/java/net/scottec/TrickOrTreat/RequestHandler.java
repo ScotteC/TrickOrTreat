@@ -62,14 +62,14 @@ public class RequestHandler implements Listener
         // inform bob and alice about started request
         titleBar.sendTitleMessageHeader(bob,
                 Config.getTxt().getString("request.new.bob.header"));
-        titleBar.sendTitleMessageFooter(bob,
-                Config.getTxt().getString("request.new.bob.footer")
-                        + alice.getDisplayName());
+        titleBar.sendTitleMessageFooter(bob, String.format(
+                Config.getTxt().getString("request.new.bob.footer"),
+                alice.getDisplayName()));
         titleBar.sendTitleMessageHeader(alice,
                 Config.getTxt().getString("request.new.alice.header"));
-        titleBar.sendTitleMessageFooter(alice,
-                Config.getTxt().getString("request.new.alice.footer")
-                        + bob.getDisplayName());
+        titleBar.sendTitleMessageFooter(alice, String.format(
+                Config.getTxt().getString("request.new.alice.footer"),
+                bob.getDisplayName()));
 
         // create schedueled task to remove requestobject form map
         new BukkitRunnable()
@@ -125,19 +125,20 @@ public class RequestHandler implements Listener
                         long remainCool = (requests.get(bob).getRequestTime()
                                 + (this.requestCooldown*1000)
                                 - System.currentTimeMillis()) / 1000;
-                        actionBar.sendActionBarMessage(bob,
-                                Config.getTxt().getString("request.cooldown1")
-                                + remainCool
-                                + Config.getTxt().getString("request.cooldown2"));
+
+                        actionBar.sendActionBarMessage(bob, String.format(
+                                Config.getTxt().getString("request.cooldown"),
+                                remainCool));
                     }
                 }
                 else if (requests.containsValue(alice)
                         || requests.containsKey(alice))
                 {
-                    actionBar.sendActionBarMessage(bob,
-                            "&4" + alice.getDisplayName()
-                            + Config.getTxt().getString("request.occupied"));
+                    actionBar.sendActionBarMessage(bob, String.format(
+                            Config.getTxt().getString("request.occupied"),
+                            alice.getDisplayName()));
                 }
+
                 // no pending requests, so create one
                 else
                 {

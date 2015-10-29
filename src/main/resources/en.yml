@@ -15,10 +15,10 @@ request:
   new:
     bob:
       header: "&6Trick or Treat!"
-      footer: "&6Send request to &4 "
+      footer: "&6Send request to &4%s"
     alice:
       header: "&6Trick or Treat!"
-      footer: "&6Request from &4 "
+      footer: "&6Request from &4%s"
 
   success:
     bob:
@@ -38,10 +38,9 @@ request:
 
   onlyOne: "&6Only one request a time"
 
-  cooldown1: "&6Cooldown: &4"
-  cooldown2: "&6 Seconds"
+  cooldown: "&6Cooldown: &4 %s &6 Seconds"
 
-  occupied: "&6 is occupied"
+  occupied: "&4%s &6is occupied"
 
 candy:
   sugar:
