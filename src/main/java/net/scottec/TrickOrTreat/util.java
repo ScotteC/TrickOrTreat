@@ -3,6 +3,7 @@ package net.scottec.TrickOrTreat;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -28,5 +29,11 @@ public class util
     {
         item.setAmount(amount);
         Bukkit.getServer().getWorld("world").dropItemNaturally(loc, item);
+    }
+
+    public static World getWorld()
+    {
+        return Bukkit.getServer().getWorld(
+                Config.getCfg().getString("common.worldname"));
     }
 }

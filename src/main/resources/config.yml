@@ -2,6 +2,8 @@
 # config.yml for TrickOrTreat
 #
 
+  worldname: "world"
+
 request:
   requestTimeout: 5
   requestCooldown: 10

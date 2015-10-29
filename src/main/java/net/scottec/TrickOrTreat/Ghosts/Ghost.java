@@ -53,8 +53,7 @@ public class Ghost implements Listener
             @Override
             public void run()
             {
-                List<Entity> entities = Bukkit.getServer()
-                        .getWorld("world").getEntities();
+                List<Entity> entities = util.getWorld().getEntities();
 
                 for(Entity entity : entities)
                 {
@@ -76,10 +75,10 @@ public class Ghost implements Listener
         }.runTaskTimer(this.plugin, 0L, this.cleanInterval);
     }
 
-    public void spawnGhost(Location l)
+    public void spawnGhost(Location loc)
     {
-        LivingEntity carrier = (LivingEntity) Bukkit.getWorld("world")
-                .spawnEntity(l, EntityType.BAT);
+        LivingEntity carrier = (LivingEntity) util.getWorld()
+                .spawnEntity(loc, EntityType.BAT);
 
         carrier.addPotionEffect(new PotionEffect(
                 PotionEffectType.INVISIBILITY, 99999, 1));
@@ -88,8 +87,8 @@ public class Ghost implements Listener
         {
             case 0:
             {
-                LivingEntity passenger = (LivingEntity) Bukkit.getWorld("world")
-                        .spawnEntity(l, EntityType.SKELETON);
+                LivingEntity passenger = (LivingEntity) util.getWorld()
+                        .spawnEntity(loc, EntityType.SKELETON);
 
                 passenger.addPotionEffect(new PotionEffect(
                         PotionEffectType.INVISIBILITY, 99999, 1));
@@ -106,8 +105,8 @@ public class Ghost implements Listener
 
             case 1:
             {
-                Creeper creeper = (Creeper) Bukkit.getWorld("world")
-                        .spawnEntity(l, EntityType.CREEPER);
+                Creeper creeper = (Creeper) util.getWorld()
+                        .spawnEntity(loc, EntityType.CREEPER);
                 creeper.setPowered(true);
                 carrier.setPassenger(creeper);
                 ghostSwitch++;
@@ -125,7 +124,7 @@ public class Ghost implements Listener
 
     public static void killAllGhosts()
     {
-        List<Entity> entities = Bukkit.getServer().getWorld("world").getEntities();
+        List<Entity> entities = util.getWorld().getEntities();
 
         for(Entity entity : entities)
         {
