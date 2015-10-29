@@ -94,6 +94,16 @@ public class RequestHandler implements Listener
         return null;
     }
 
+    public static boolean checkRequests(Player alice)
+    {
+        for(Request request : requests.values())
+        {
+            if(request.getAlice().equals(alice))
+                return request.getStatus();
+        }
+        return true;
+    }
+
 
     /*
      * if bob rightclicks alice with "Magic Wand" check if theres a pending
@@ -131,8 +141,9 @@ public class RequestHandler implements Listener
                                 remainCool));
                     }
                 }
-                else if (requests.containsValue(alice)
-                        || requests.containsKey(alice))
+                else if ((requests.containsKey(alice)
+                            && !requests.get(alice).getStatus())
+                        || ! checkRequests(alice) )
                 {
                     actionBar.sendActionBarMessage(bob, String.format(
                             Config.getTxt().getString("request.occupied"),
