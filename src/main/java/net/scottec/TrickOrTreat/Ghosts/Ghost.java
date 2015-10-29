@@ -35,12 +35,18 @@ public class Ghost implements Listener
     private long dropDelay;
     private long cleanInterval;
 
+    private ItemStack ghostscrap;
+
     public Ghost(JavaPlugin plugin)
     {
         this.plugin = plugin;
         this.maxLived = this.plugin.getConfig().getInt("ghost.maxLived");
         this.dropDelay = this.plugin.getConfig().getInt("ghost.dropDelay");
         this.cleanInterval = this.plugin.getConfig().getInt("ghost.cleanInterval");
+
+        this.ghostscrap = util.createItemStack(
+                "Ghostscrap", Material.ROTTEN_FLESH,
+                new String[]{"Collect and trade", "Test"});
 
         new BukkitRunnable()
         {
@@ -170,6 +176,7 @@ public class Ghost implements Listener
                     else
                     {
                         util.dropItem(loc, Trick.getRndCandy(), 1);
+                        util.dropItem(loc, ghostscrap, 2);
                         cnt--;
                     }
                 }
@@ -180,6 +187,7 @@ public class Ghost implements Listener
         else if (evt.getEntityType().equals(EntityType.BAT))
         {
             util.dropItem(evt.getEntity().getLocation(), Trick.getRndCandy(), 1);
+            util.dropItem(evt.getEntity().getLocation(), ghostscrap, 1);
         }
     }
 
