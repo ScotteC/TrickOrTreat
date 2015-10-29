@@ -144,7 +144,8 @@ public class Ghost implements Listener
                 || evt.getEntityType().equals(EntityType.SKELETON))
         {
             // if entity rides a bat, make the bat visibile
-            if (evt.getEntity().getVehicle().getType().equals(EntityType.BAT))
+            if (evt.getEntity().getVehicle() != null
+                   && evt.getEntity().getVehicle().getType().equals(EntityType.BAT))
             {
                 LivingEntity carrier = (LivingEntity) evt.getEntity().getVehicle();
                 carrier.removePotionEffect(PotionEffectType.INVISIBILITY);
