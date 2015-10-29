@@ -128,6 +128,12 @@ public class RequestHandler implements Listener
                                 "&6Cooldown: &4" + remainCool + "&6 Seconds");
                     }
                 }
+                else if (requests.containsValue(alice)
+                        || requests.containsKey(alice))
+                {
+                    actionBar.sendActionBarMessage(bob,
+                            "&4" + alice.getDisplayName() + "&6 is occupied");
+                }
                 // no pending requests, so create one
                 else
                 {
