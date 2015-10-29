@@ -1,5 +1,6 @@
 package net.scottec.TrickOrTreat.Tricks;
 
+import net.scottec.TrickOrTreat.Config;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
@@ -12,11 +13,9 @@ public class Sirup extends Candy
 {
     public Sirup()
     {
-        this.name = "Sirup";
+        this.name = Config.getTxt().getString("candy.sirup.name");
         this.item = Material.POTION;
-        this.lore = new String[2];
-        this.lore[0] = "Creamy red sirup.";
-        this.lore[1] = "Looks like blood...";
+        this.lore = Config.getTxt().getStringList("candy.sirup.lore");
 
         this.itemStack = this.createCandyItem();
     }

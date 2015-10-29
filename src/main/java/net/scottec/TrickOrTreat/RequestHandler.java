@@ -61,13 +61,15 @@ public class RequestHandler implements Listener
 
         // inform bob and alice about started request
         titleBar.sendTitleMessageHeader(bob,
-                "&6Trick or Treat!");
+                Config.getTxt().getString("request.new.bob.header"));
         titleBar.sendTitleMessageFooter(bob,
-                "&6Send request to &4" + alice.getDisplayName());
+                Config.getTxt().getString("request.new.bob.footer")
+                        + alice.getDisplayName());
         titleBar.sendTitleMessageHeader(alice,
-                "&6Trick or Treat!");
+                Config.getTxt().getString("request.new.alice.header"));
         titleBar.sendTitleMessageFooter(alice,
-                "&6Request from &4" + bob.getDisplayName());
+                Config.getTxt().getString("request.new.alice.footer")
+                        + bob.getDisplayName());
 
         // create schedueled task to remove requestobject form map
         new BukkitRunnable()
@@ -105,7 +107,8 @@ public class RequestHandler implements Listener
                 && evt.getPlayer().getItemInHand().hasItemMeta())
         {
             if(evt.getPlayer().getItemInHand().getItemMeta()
-                    .getDisplayName().equals("Magic Wand"))
+                    .getDisplayName().equals(
+                            Config.getTxt().getString("halloweenstick.name")))
             {
                 Player bob = evt.getPlayer();
                 Player alice = (Player) evt.getRightClicked();
@@ -116,21 +119,24 @@ public class RequestHandler implements Listener
                 {
                     if (!requests.get(bob).getStatus())
                         actionBar.sendActionBarMessage(bob,
-                                "&6Only one request a time");
+                                Config.getTxt().getString("request.onlyOne"));
                     else
                     {
                         long remainCool = (requests.get(bob).getRequestTime()
                                 + (this.requestCooldown*1000)
                                 - System.currentTimeMillis()) / 1000;
                         actionBar.sendActionBarMessage(bob,
-                                "&6Cooldown: &4" + remainCool + "&6 Seconds");
+                                Config.getTxt().getString("request.cooldown1")
+                                + remainCool
+                                + Config.getTxt().getString("request.cooldown2"));
                     }
                 }
                 else if (requests.containsValue(alice)
                         || requests.containsKey(alice))
                 {
                     actionBar.sendActionBarMessage(bob,
-                            "&4" + alice.getDisplayName() + "&6 is occupied");
+                            "&4" + alice.getDisplayName()
+                            + Config.getTxt().getString("request.occupied"));
                 }
                 // no pending requests, so create one
                 else
@@ -150,10 +156,9 @@ public class RequestHandler implements Listener
     public void onPlayerJoin(PlayerJoinEvent evt)
     {
         ItemStack halloweenstick = util.createItemStack(
-                "Magic Wand",
+                Config.getTxt().getString("halloweenstick.name"),
                 Material.BLAZE_ROD,
-                new String[] {"Right click another Player",
-                "to play 'Trick or Treat' !"});
+                Config.getTxt().getStringList("halloweenstick.lore"));
 
         if (!evt.getPlayer().getInventory().contains(halloweenstick))
             evt.getPlayer().getInventory().addItem(halloweenstick);

@@ -7,19 +7,19 @@ import org.bukkit.World;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by Fabian on 29.10.2015.
  */
 public class util
 {
-    public static ItemStack createItemStack(String name, Material item, String[] lore)
+    public static ItemStack createItemStack(String name, Material item, List<String> lore)
     {
         ItemStack is = new ItemStack(item);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(name);
-        im.setLore(Arrays.asList(lore));
+        im.setLore(lore);
         is.setItemMeta(im);
 
         return is;
@@ -28,7 +28,7 @@ public class util
     public static void dropItem(Location loc, ItemStack item, int amount)
     {
         item.setAmount(amount);
-        Bukkit.getServer().getWorld("world").dropItemNaturally(loc, item);
+        getWorld().dropItemNaturally(loc, item);
     }
 
     public static World getWorld()

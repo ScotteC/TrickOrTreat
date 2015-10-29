@@ -9,13 +9,63 @@ halloweenstick:
   name: "Magic Wand"
   lore:
   - "Right click another player"
-  - "to play 'Trick or Treat'"
+  - "to play >Trick or Treat<"
 
 request:
+  new:
+    bob:
+      header: "&6Trick or Treat!"
+      footer: "&6Send request to &4 "
+    alice:
+      header: "&6Trick or Treat!"
+      footer: "&6Request from &4 "
 
+  success:
+    bob:
+      header: "&6You recived some love"
+      footer: ""
+    alice:
+      header: "&6You're a very kind person"
+      footer: ""
 
-trick:
+  denied:
+    bob:
+      header: "&6Sorry, request denied"
+      footer: "&6Enjoy seeing someone suffer"
+    alice:
+      header: "&6You are a very bad person..."
+      footer: "&6Enjoy your treatment..."
 
+  onlyOne: "&6Only one request a time"
+
+  cooldown1: "&6Cooldown: &4"
+  cooldown2: "&6 Seconds"
+
+  occupied: "&6 is occupied"
+
+candy:
+  sugar:
+    name: "Sugar"
+    lore:
+    - "Sweet powder of joy"
+    - "Dont eat too much of it"
+
+  cookie:
+    name: "Sweet Cookie"
+    lore:
+    - "Very creepy cookie"
+    - "Taste it, it is delicious"
+
+  sirup:
+    name: "Sirup"
+    lore:
+    - "Creamy red sirup"
+    - "Could it be blood?"
 
 treat:
 
+ghosts:
+  scraps:
+    name: "Ghostscrap"
+    lore:
+    - "Collect and trade"

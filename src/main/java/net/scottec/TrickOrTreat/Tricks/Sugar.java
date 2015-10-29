@@ -1,5 +1,6 @@
 package net.scottec.TrickOrTreat.Tricks;
 
+import net.scottec.TrickOrTreat.Config;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
@@ -12,10 +13,9 @@ public class Sugar extends Candy
 {
     public Sugar()
     {
-        this.name = "Sugar";
+        this.name = Config.getTxt().getString("candy.sugar.name");
         this.item = Material.SUGAR;
-        this.lore = new String[1];
-        this.lore[0] = "Sweet powder of joy";
+        this.lore = Config.getTxt().getStringList("candy.sugar.lore");
 
         this.itemStack = this.createCandyItem();
     }

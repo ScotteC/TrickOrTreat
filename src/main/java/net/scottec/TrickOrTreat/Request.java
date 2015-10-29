@@ -70,12 +70,13 @@ public class Request
                 if (status)
                 {
                     titleBar.sendTitleMessageHeader(bob,
-                            "&6You recived some love");
+                            Config.getTxt().getString("request.success.bob.header"));
                     titleBar.sendTitleMessageFooter(bob,
-                            "");
+                            Config.getTxt().getString("request.success.bob.footer"));
                     titleBar.sendTitleMessageHeader(alice,
-                            "&6You're a very kind person");
-                    titleBar.sendTitleMessageFooter(alice, "");
+                            Config.getTxt().getString("request.success.alice.header"));
+                    titleBar.sendTitleMessageFooter(alice,
+                            Config.getTxt().getString("request.success.alice.footer"));
                     this.cancel();
                 }
                 // countdown if alice hasnt jet tricked bob
@@ -89,13 +90,13 @@ public class Request
                     Treat.treat(alice);
 
                     titleBar.sendTitleMessageHeader(bob,
-                            "&6Sorry, request denied");
+                            Config.getTxt().getString("request.denied.bob.header"));
                     titleBar.sendTitleMessageFooter(bob,
-                            "&6Watch &4" + alice.getDisplayName() + "&6 suffer");
+                            Config.getTxt().getString("request.denied.bob.footer"));
                     titleBar.sendTitleMessageHeader(alice,
-                            "&6You're a very bad person...");
+                            Config.getTxt().getString("request.denied.alice.header"));
                     titleBar.sendTitleMessageFooter(alice,
-                            "&6Enjoy your treatment...");
+                            Config.getTxt().getString("request.denied.alice.footer"));
 
                     status = true;
                     this.cancel();

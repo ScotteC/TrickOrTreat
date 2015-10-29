@@ -1,5 +1,6 @@
 package net.scottec.TrickOrTreat.Tricks;
 
+import net.scottec.TrickOrTreat.Config;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
@@ -12,12 +13,11 @@ public class Cookie extends Candy
 {
         public Cookie()
         {
-            this.name = "Sweet Cookie";
+            this.name = Config.getTxt().getString("candy.cookie.name");
             this.item = Material.COOKIE;
-            this.lore = new String[1];
-            this.lore[0] = "Very creepy cookie";
+            this.lore = Config.getTxt().getStringList("candy.cookie.lore");
 
-            this.itemStack = this.createCandyItem();
+            this.itemStack = createCandyItem();
         }
 
         public void effect(Player player)

@@ -7,6 +7,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by Fabian on 25.10.2015.
@@ -15,7 +16,7 @@ public abstract class Candy
 {
     protected String name;
     protected Material item;
-    protected String[] lore;
+    protected List<String> lore;
 
     protected ItemStack itemStack;
 

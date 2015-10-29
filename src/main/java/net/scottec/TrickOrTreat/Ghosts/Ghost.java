@@ -50,8 +50,9 @@ public class Ghost implements Listener
         this.cleanInterval = Config.getCfg().getInt("ghost.cleanInterval");
 
         this.ghostscrap = util.createItemStack(
-                "Ghostscrap", Material.ROTTEN_FLESH,
-                new String[]{"Collect and trade", "Test"});
+                Config.getTxt().getString("ghosts.scraps.name"),
+                Material.ROTTEN_FLESH,
+                Config.getTxt().getStringList("ghosts.scraps.lore"));
 
         // scheduled task to remove old ghosts an wake up bats
         new BukkitRunnable()
