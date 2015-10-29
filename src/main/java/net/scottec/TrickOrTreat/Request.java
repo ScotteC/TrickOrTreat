@@ -1,5 +1,7 @@
 package net.scottec.TrickOrTreat;
 
+import de.craftstuebchen.ysl3000.api.messageapi.MessageAPI;
+import de.craftstuebchen.ysl3000.api.messageapi.interfaces.IActionbarManager;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -21,14 +23,13 @@ public class Request
     private Player bob;
     private Player alice;
 
-    private int boblvl;
-    private int alicelvl;
 
     private boolean status;
 
     private long time;
     private int countdown;
 
+    private IActionbarManager actionBar;
     /*
      * constructor
      * starts also runnable task for countdown
@@ -37,11 +38,9 @@ public class Request
     {
         this.plugin = plugin;
 
+        this.actionBar = MessageAPI.inst().getActionbarManager();
         this.bob = bob;
         this.alice = alice;
-        // save bobs and alices actual explevel
-        this.boblvl = bob.getLevel();
-        this.alicelvl = alice.getLevel();
 
         // init request status
         this.status = false;
@@ -56,15 +55,14 @@ public class Request
             @Override
             public void run()
             {
-                // set level as countdown
-                bob.setLevel(countdown);
-                alice.setLevel(countdown);
+                actionBar.sendActionBarMessage(bob,
+                        "&6&l>> &4" + countdown + " &6&l<<");
+                actionBar.sendActionBarMessage(alice,
+                        "&6&l>> &4" + countdown + " &6&l<<");
 
                 // cancel task if status is set true
                 if (status)
                 {
-                    bob.setLevel(boblvl);
-                    alice.setLevel(alicelvl);
                     bob.sendMessage("You recieved some love");
                     alice.sendMessage("Thank you for sharing your sweeties");
                     this.cancel();
@@ -77,8 +75,6 @@ public class Request
                 // treat alice if countdown reaches 0 without reaction from alice
                 else if (!status && countdown == 0)
                 {
-                    bob.setLevel(boblvl);
-                    alice.setLevel(alicelvl);
                     Treat.treat(alice);
                     alice.sendMessage("You're very bad... Enjoy your treatment...");
                     bob.sendMessage("Sorry, request denied...");
