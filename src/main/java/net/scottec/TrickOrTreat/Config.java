@@ -39,37 +39,34 @@ public class Config
 
         // reload language file specified in config
         String langFileName = cfg.getString("common.languagefile");
-        File langFile = new File(plugin.getDataFolder(),langFileName);
 
-        // language file already exists in datafolder, read only
-        if( langFile.isFile() )
+        File langFile = new File(plugin.getDataFolder(), langFileName);
+        File defLangFile = new File(plugin.getDataFolder(), "en.yml");
+
+        txt = YamlConfiguration.loadConfiguration(
+                        plugin.getResource("en.yml"));
+        try
         {
-            try
+            if(!defLangFile.exists())
             {
+                defLangFile.createNewFile();
+                txt.save(defLangFile);
+            }
+
+            if(!langFileName.equals("en.yml"))
+            {
+                if (!langFile.exists())
+                {
+                    langFile.createNewFile();
+                    txt.save(langFile);
+                }
                 txt = YamlConfiguration.loadConfiguration(langFile);
             }
-            catch (Exception exp)
-            {
-                exp.printStackTrace();
-                return;
-            }
         }
-
-        // language file specified in config doesnt exits jet
-        // load default translationfile from resource and save in specified file
-        else
+        catch (Exception exp)
         {
-            try
-            {
-                txt = YamlConfiguration.loadConfiguration(
-                        plugin.getResource("en.yml"));
-                txt.save(langFile);
-            }
-            catch (Exception exp)
-            {
-                exp.printStackTrace();
-                return;
-            }
+            exp.printStackTrace();
+            return;
         }
     }
 
