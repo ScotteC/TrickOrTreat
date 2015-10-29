@@ -1,0 +1,21 @@
+#
+# Translation "English"
+#
+
+common:
+  welcome: "Happy Halloween"
+
+halloweenstick:
+  name: "Magic Wand"
+  lore:
+  - "Right click another player"
+  - "to play 'Trick or Treat'"
+
+request:
+
+
+trick:
+
+
+treat:
+

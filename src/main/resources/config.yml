@@ -2,6 +2,8 @@
 # config.yml for TrickOrTreat
 #
 
+common:
+  languagefile: "en.yml"
   worldname: "world"
 
 request:
