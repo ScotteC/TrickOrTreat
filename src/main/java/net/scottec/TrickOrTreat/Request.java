@@ -2,9 +2,12 @@ package net.scottec.TrickOrTreat;
 
 import de.craftstuebchen.ysl3000.api.messageapi.MessageAPI;
 import de.craftstuebchen.ysl3000.api.messageapi.interfaces.IActionbarManager;
+import de.craftstuebchen.ysl3000.api.messageapi.interfaces.ITitleManager;
+
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
+
 
 /**
  * Created by Fabian on 22.10.2015.
@@ -23,13 +26,14 @@ public class Request
     private Player bob;
     private Player alice;
 
-
     private boolean status;
 
     private long time;
     private int countdown;
 
     private IActionbarManager actionBar;
+    private ITitleManager titleBar;
+
     /*
      * constructor
      * starts also runnable task for countdown
@@ -39,6 +43,8 @@ public class Request
         this.plugin = plugin;
 
         this.actionBar = MessageAPI.inst().getActionbarManager();
+        this.titleBar = MessageAPI.inst().getTitleManager();
+
         this.bob = bob;
         this.alice = alice;
 
@@ -63,8 +69,13 @@ public class Request
                 // cancel task if status is set true
                 if (status)
                 {
-                    bob.sendMessage("You recieved some love");
-                    alice.sendMessage("Thank you for sharing your sweeties");
+                    titleBar.sendTitleMessageHeader(bob,
+                            "&6You recived some love");
+                    titleBar.sendTitleMessageFooter(bob,
+                            "");
+                    titleBar.sendTitleMessageHeader(alice,
+                            "&6You're a very kind person");
+                    titleBar.sendTitleMessageFooter(alice, "");
                     this.cancel();
                 }
                 // countdown if alice hasnt jet tricked bob
@@ -76,8 +87,16 @@ public class Request
                 else if (!status && countdown == 0)
                 {
                     Treat.treat(alice);
-                    alice.sendMessage("You're very bad... Enjoy your treatment...");
-                    bob.sendMessage("Sorry, request denied...");
+
+                    titleBar.sendTitleMessageHeader(bob,
+                            "&6Sorry, request denied");
+                    titleBar.sendTitleMessageFooter(bob,
+                            "&6Watch &4" + alice.getDisplayName() + "&6 suffer");
+                    titleBar.sendTitleMessageHeader(alice,
+                            "&6You're a very bad person...");
+                    titleBar.sendTitleMessageFooter(alice,
+                            "&6Enjoy your treatment...");
+
                     status = true;
                     this.cancel();
                 }

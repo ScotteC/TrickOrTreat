@@ -1,5 +1,9 @@
 package net.scottec.TrickOrTreat;
 
+import de.craftstuebchen.ysl3000.api.messageapi.MessageAPI;
+import de.craftstuebchen.ysl3000.api.messageapi.interfaces.IActionbarManager;
+
+import de.craftstuebchen.ysl3000.api.messageapi.interfaces.ITitleManager;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -25,6 +29,9 @@ public class RequestHandler implements Listener
     private int requestTimeout;
     private long requestCooldown;
 
+    private IActionbarManager actionBar;
+    private ITitleManager titleBar;
+
     public static Map<Player, Request> requests = new HashMap<>();
 
     /*
@@ -34,10 +41,13 @@ public class RequestHandler implements Listener
     {
         this.plugin = plugin;
 
-        requestTimeout = this.plugin.getConfig()
+        this.requestTimeout = this.plugin.getConfig()
                 .getInt("request.requestTimeout");
-        requestCooldown = this.plugin.getConfig()
+        this.requestCooldown = this.plugin.getConfig()
                 .getLong("request.requestCooldown");
+
+        this.actionBar = MessageAPI.inst().getActionbarManager();
+        this.titleBar = MessageAPI.inst().getTitleManager();
     }
 
 
@@ -52,9 +62,14 @@ public class RequestHandler implements Listener
         requests.put(bob, newRequest);
 
         // inform bob and alice about started request
-        bob.sendMessage("Trick or Treat, " + alice.getDisplayName() + "!");
-        alice.sendMessage(bob.getDisplayName() + ": Trick or Treat, "
-                + alice.getDisplayName() );
+        titleBar.sendTitleMessageHeader(bob,
+                "&6Trick or Treat!");
+        titleBar.sendTitleMessageFooter(bob,
+                "&6Send request to &4" + alice.getDisplayName());
+        titleBar.sendTitleMessageHeader(alice,
+                "&6Trick or Treat!");
+        titleBar.sendTitleMessageFooter(alice,
+                "&6Request from &4" + bob.getDisplayName());
 
         // create schedueled task to remove requestobject form map
         new BukkitRunnable()
@@ -102,13 +117,15 @@ public class RequestHandler implements Listener
                 if (requests.containsKey(bob))
                 {
                     if (!requests.get(bob).getStatus())
-                        bob.sendMessage("Only one request a time...");
+                        actionBar.sendActionBarMessage(bob,
+                                "&6Only one request a time");
                     else
                     {
                         long remainCool = (requests.get(bob).getRequestTime()
                                 + (this.requestCooldown*1000)
                                 - System.currentTimeMillis()) / 1000;
-                        bob.sendMessage("Cooldown: " + remainCool + " Seconds");
+                        actionBar.sendActionBarMessage(bob,
+                                "&6Cooldown: &4" + remainCool + "&6 Seconds");
                     }
                 }
                 // no pending requests, so create one
