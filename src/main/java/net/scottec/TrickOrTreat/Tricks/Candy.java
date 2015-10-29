@@ -1,5 +1,6 @@
 package net.scottec.TrickOrTreat.Tricks;
 
+import net.scottec.TrickOrTreat.util;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -20,13 +21,7 @@ public abstract class Candy
 
     public ItemStack createCandyItem()
     {
-        ItemStack is = new ItemStack(item);
-        ItemMeta im = is.getItemMeta();
-        im.setDisplayName(name);
-        im.setLore(Arrays.asList(lore));
-        is.setItemMeta(im);
-
-        return is;
+        return util.createItemStack(name, item, lore);
     }
 
     public ItemStack getItemStack() { return itemStack; }

@@ -2,8 +2,8 @@ package net.scottec.TrickOrTreat;
 
 import de.craftstuebchen.ysl3000.api.messageapi.MessageAPI;
 import de.craftstuebchen.ysl3000.api.messageapi.interfaces.IActionbarManager;
-
 import de.craftstuebchen.ysl3000.api.messageapi.interfaces.ITitleManager;
+
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -11,11 +11,9 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -151,15 +149,11 @@ public class RequestHandler implements Listener
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent evt)
     {
-
-        ItemStack halloweenstick = new ItemStack(Material.BLAZE_ROD);
-        ItemMeta hsMeta = halloweenstick.getItemMeta();
-        hsMeta.setDisplayName("Magic Wand");
-        String[] lore = {"Right click another Player",
-                         "to play 'Trick or Treat' !"};
-        hsMeta.setLore(Arrays.asList(lore));
-        halloweenstick.setItemMeta(hsMeta);
-        halloweenstick.setAmount(1);
+        ItemStack halloweenstick = util.createItemStack(
+                "Magic Wand",
+                Material.BLAZE_ROD,
+                new String[] {"Right click another Player",
+                "to play 'Trick or Treat' !"});
 
         if (!evt.getPlayer().getInventory().contains(halloweenstick))
             evt.getPlayer().getInventory().addItem(halloweenstick);

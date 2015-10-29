@@ -1,6 +1,7 @@
 package net.scottec.TrickOrTreat.Ghosts;
 
 import net.scottec.TrickOrTreat.Trick;
+import net.scottec.TrickOrTreat.util;
 
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
@@ -167,8 +168,7 @@ public class Ghost implements Listener
                         this.cancel();
                     else
                     {
-                        Bukkit.getServer().getWorld("world").dropItemNaturally(
-                            loc, Trick.getRndCandy());
+                        util.dropItem(loc, Trick.getRndCandy(), 1);
                         cnt--;
                     }
                 }
@@ -178,8 +178,7 @@ public class Ghost implements Listener
         // if died entity is a bat
         else if (evt.getEntityType().equals(EntityType.BAT))
         {
-            Bukkit.getServer().getWorld("world").dropItemNaturally(
-                    evt.getEntity().getLocation(), Trick.getRndCandy());
+            util.dropItem(evt.getEntity().getLocation(), Trick.getRndCandy(), 1);
         }
     }
 
