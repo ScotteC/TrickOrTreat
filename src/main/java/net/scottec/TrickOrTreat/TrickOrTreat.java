@@ -8,20 +8,34 @@ import org.bukkit.plugin.java.JavaPlugin;
 /**
  * Created by Fabian on 16.10.2015.
  */
-public class TrickOrTreat extends JavaPlugin implements Listener
+public class TrickOrTreat extends JavaPlugin
 {
     @Override
     public void onEnable()
     {
-        this.getServer().getPluginManager().registerEvents(new RequestHandler(this), this);
-        this.getServer().getPluginManager().registerEvents(new Ghost(this), this);
-        this.getServer().getPluginManager().registerEvents(new Trick(), this);
-        this.getServer().getPluginManager().registerEvents(new Treat(), this);
+        // load config files
+        Config.reloadConfig(this);
+
+        // register EventListener
+        registerListeners();
     }
 
     @Override
     public void onDisable()
     {
         Ghost.killAllGhosts();
+    }
+
+    private void registerListeners()
+    {
+        registerEvent(new RequestHandler(this));
+        registerEvent(new Ghost(this));
+        registerEvent(new Trick());
+        registerEvent(new Treat());
+    }
+
+    private void registerEvent(Listener listener)
+    {
+        this.getServer().getPluginManager().registerEvents(listener,this);
     }
 }
