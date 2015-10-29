@@ -1,9 +1,9 @@
 package net.scottec.TrickOrTreat.Ghosts;
 
+import net.scottec.TrickOrTreat.Config;
 import net.scottec.TrickOrTreat.Trick;
 import net.scottec.TrickOrTreat.util;
 
-import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.*;
@@ -33,21 +33,27 @@ public class Ghost implements Listener
 
     private int maxLived;
     private long dropDelay;
+    private int dropCount;
     private long cleanInterval;
 
     private ItemStack ghostscrap;
 
+
     public Ghost(JavaPlugin plugin)
     {
         this.plugin = plugin;
-        this.maxLived = this.plugin.getConfig().getInt("ghost.maxLived");
-        this.dropDelay = this.plugin.getConfig().getInt("ghost.dropDelay");
-        this.cleanInterval = this.plugin.getConfig().getInt("ghost.cleanInterval");
+
+        // load config
+        this.maxLived = Config.getCfg().getInt("ghost.maxLived");
+        this.dropDelay = Config.getCfg().getInt("ghost.dropDelay");
+        this.dropCount = Config.getCfg().getInt("ghost.dropCount");
+        this.cleanInterval = Config.getCfg().getInt("ghost.cleanInterval");
 
         this.ghostscrap = util.createItemStack(
                 "Ghostscrap", Material.ROTTEN_FLESH,
                 new String[]{"Collect and trade", "Test"});
 
+        // scheduled task to remove old ghosts an wake up bats
         new BukkitRunnable()
         {
             @Override
@@ -165,7 +171,7 @@ public class Ghost implements Listener
 
             new BukkitRunnable()
             {
-                int cnt = plugin.getConfig().getInt("ghost.dropCount");
+                int cnt = dropCount;
 
                 @Override
                 public void run()

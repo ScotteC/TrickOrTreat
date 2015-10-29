@@ -39,9 +39,9 @@ public class RequestHandler implements Listener
     {
         this.plugin = plugin;
 
-        this.requestTimeout = this.plugin.getConfig()
+        this.requestTimeout = Config.getCfg()
                 .getInt("request.requestTimeout");
-        this.requestCooldown = this.plugin.getConfig()
+        this.requestCooldown = Config.getCfg()
                 .getLong("request.requestCooldown");
 
         this.actionBar = MessageAPI.inst().getActionbarManager();
