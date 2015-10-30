@@ -1,6 +1,8 @@
 package net.scottec.TrickOrTreat;
 
 import net.scottec.TrickOrTreat.Ghosts.Ghost;
+import net.scottec.TrickOrTreat.Listener.EntityListener;
+import net.scottec.TrickOrTreat.Listener.PlayerListener;
 
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -10,6 +12,11 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public class TrickOrTreat extends JavaPlugin
 {
+    public static RequestHandler oRequestHandler;
+    public static Trick oTrick;
+    public static Treat oTreat;
+    public static Ghost oGhost;
+
     @Override
     public void onEnable()
     {
@@ -17,25 +24,34 @@ public class TrickOrTreat extends JavaPlugin
         Config.reloadConfig(this);
 
         // register EventListener
-        registerListeners();
+        createObjects();
     }
 
     @Override
     public void onDisable()
     {
-        Ghost.killAllGhosts();
+        oGhost.killAllGhosts();
     }
 
-    private void registerListeners()
+    private void createObjects()
     {
-        registerEvent(new RequestHandler(this));
-        registerEvent(new Ghost(this));
-        registerEvent(new Trick());
-        registerEvent(new Treat());
+        oRequestHandler = new RequestHandler(this);
+        oGhost = new Ghost(this);
+        oTrick = new Trick(this);
+        oTreat = new Treat(this);
+        new PlayerListener(this);
+        new EntityListener(this);
+
+//        registerEvent(new RequestHandler(this));
+//        registerEvent(new Ghost(this));
+//        registerEvent(new Trick());
+//        registerEvent(new Treat());
+//        registerEvent(new PlayerListener());
     }
 
-    private void registerEvent(Listener listener)
-    {
-        this.getServer().getPluginManager().registerEvents(listener,this);
-    }
+//    private void registerEvent(Listener listener)
+//    {
+//        this.
+//        this.getServer().getPluginManager().registerEvents(listener,this);
+//    }
 }

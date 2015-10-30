@@ -86,7 +86,7 @@ public class RequestHandler implements Listener
     /*
      * check if theres a request from bob on alice
      */
-    public static Request checkRequest(Player bob, Player alice)
+    public Request checkRequest(Player bob, Player alice)
     {
         Request request = requests.get(bob);
         if (request != null && request.getAlice() == alice)

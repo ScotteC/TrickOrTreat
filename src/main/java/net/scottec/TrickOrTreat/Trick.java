@@ -3,12 +3,9 @@ package net.scottec.TrickOrTreat;
 import net.scottec.TrickOrTreat.Tricks.*;
 
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.*;
 
@@ -19,15 +16,17 @@ public class Trick implements Listener
 {
     private static final List<Candy> candyObjects = new ArrayList<>();
 
-    public Trick()
+    public Trick(JavaPlugin plugin)
     {
+        plugin.getServer().getPluginManager().registerEvents(this, plugin);
+
         candyObjects.add(new Sugar());
         candyObjects.add(new Cookie());
         candyObjects.add(new Sirup());
     }
 
 
-    public static ItemStack getRndCandy()
+    public ItemStack getRndCandy()
     {
         return candyObjects.get(
                 ((int) (Math.random()*100)) % candyObjects.size())
