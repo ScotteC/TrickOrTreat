@@ -83,7 +83,8 @@ public class Trick implements Listener
 
         if((evt.getAction().equals(Action.RIGHT_CLICK_AIR)
                 || evt.getAction().equals(Action.RIGHT_CLICK_BLOCK))
-                && player.getItemInHand().hasItemMeta() )
+                && player.getItemInHand().hasItemMeta()
+                && RequestHandler.checkRequests(player))
         {
             Candy getCandy = getCandyByName(
                     player.getItemInHand().getItemMeta().getDisplayName());
