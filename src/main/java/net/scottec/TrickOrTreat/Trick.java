@@ -63,12 +63,13 @@ public class Trick implements Listener
                 Player bob = (Player) evt.getRightClicked();
 
                 ItemStack is = alice.getItemInHand();
-                is.setAmount(is.getAmount() - 1);
-                alice.getInventory().setItem(
-                        alice.getInventory().getHeldItemSlot(), is);
 
                 is.setAmount(1);
                 bob.getInventory().addItem(is);
+
+                is.setAmount(is.getAmount() - 1);
+                alice.getInventory().setItem(
+                        alice.getInventory().getHeldItemSlot(), is);
 
                 request.setStatus(true);
             }
