@@ -63,13 +63,10 @@ public class Trick implements Listener
                 Player bob = (Player) evt.getRightClicked();
 
                 ItemStack is = alice.getItemInHand();
-
-                is.setAmount(1);
-                bob.getInventory().addItem(is);
-
-                is.setAmount(is.getAmount() - 1);
-                alice.getInventory().setItem(
-                        alice.getInventory().getHeldItemSlot(), is);
+                ItemStack clone = is.clone();
+                clone.setAmount(1);
+                bob.getInventory().addItem(clone);
+                alice.getInventory().removeItem(clone);
 
                 request.setStatus(true);
             }
@@ -96,9 +93,9 @@ public class Trick implements Listener
                 getCandy.effect(player);
 
                 ItemStack is = player.getItemInHand();
-                is.setAmount(is.getAmount() - 1);
-                player.getInventory().setItem(
-                        player.getInventory().getHeldItemSlot(), is);
+                ItemStack clone = is.clone();
+                clone.setAmount(1);
+                player.getInventory().removeItem(clone);
             }
         }
     }
