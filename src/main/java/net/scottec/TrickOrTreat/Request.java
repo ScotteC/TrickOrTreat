@@ -87,7 +87,7 @@ public class Request
                 // treat alice if countdown reaches 0 without reaction from alice
                 else if (!status && countdown == 0)
                 {
-                    Treat.treat(alice);
+                    TrickOrTreat.oTreat.treat(alice);
 
                     titleBar.sendTitleMessageHeader(bob,
                             Config.getTxt().getString("request.denied.bob.header"));

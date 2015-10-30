@@ -2,6 +2,7 @@ package net.scottec.TrickOrTreat.Ghosts;
 
 import net.scottec.TrickOrTreat.Config;
 import net.scottec.TrickOrTreat.Trick;
+import net.scottec.TrickOrTreat.TrickOrTreat;
 import net.scottec.TrickOrTreat.util;
 
 import org.bukkit.Location;
@@ -42,6 +43,7 @@ public class Ghost implements Listener
     public Ghost(JavaPlugin plugin)
     {
         this.plugin = plugin;
+        plugin.getServer().getPluginManager().registerEvents(this, plugin);
 
         // load config
         this.maxLived = Config.getCfg().getInt("ghost.maxLived");
@@ -129,7 +131,7 @@ public class Ghost implements Listener
         }
     }
 
-    public static void killAllGhosts()
+    public void killAllGhosts()
     {
         List<Entity> entities = util.getWorld().getEntities();
 
@@ -181,7 +183,7 @@ public class Ghost implements Listener
                         this.cancel();
                     else
                     {
-                        util.dropItem(loc, Trick.getRndCandy(), 1);
+                        util.dropItem(loc, TrickOrTreat.oTrick.getRndCandy(), 1);
                         util.dropItem(loc, ghostscrap, 2);
                         cnt--;
                     }
@@ -192,7 +194,8 @@ public class Ghost implements Listener
         // if died entity is a bat
         else if (evt.getEntityType().equals(EntityType.BAT))
         {
-            util.dropItem(evt.getEntity().getLocation(), Trick.getRndCandy(), 1);
+            util.dropItem(evt.getEntity().getLocation(),
+                    TrickOrTreat.oTrick.getRndCandy(), 1);
             util.dropItem(evt.getEntity().getLocation(), ghostscrap, 1);
         }
     }
@@ -211,10 +214,10 @@ public class Ghost implements Listener
             evt.setCancelled(true);
     }
 
-    @EventHandler
-    public void onPlayerJoin(PlayerJoinEvent evt)
-    {
-        Player player = evt.getPlayer();
-        spawnGhost(player.getLocation());
-    }
+//    @EventHandler
+//    public void onPlayerJoin(PlayerJoinEvent evt)
+//    {
+//        Player player = evt.getPlayer();
+//        spawnGhost(player.getLocation());
+//    }
 }
