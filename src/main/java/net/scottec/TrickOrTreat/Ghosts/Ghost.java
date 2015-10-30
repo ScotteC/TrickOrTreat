@@ -211,10 +211,10 @@ public class Ghost implements Listener
             evt.setCancelled(true);
     }
 
-    @EventHandler
-    public void onPlayerJoin(PlayerJoinEvent evt)
-    {
-        Player player = evt.getPlayer();
-        spawnGhost(player.getLocation());
-    }
+//    @EventHandler
+//    public void onPlayerJoin(PlayerJoinEvent evt)
+//    {
+//        Player player = evt.getPlayer();
+//        spawnGhost(player.getLocation());
+//    }
 }

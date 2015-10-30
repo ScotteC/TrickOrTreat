@@ -46,58 +46,92 @@ public class Trick implements Listener
     }
 
 
-    @EventHandler
-    public void onPlayerIneractEntity(PlayerInteractEntityEvent evt)
+    public void shareCandy(Player bob, Player alice)
     {
-        if(evt.getRightClicked() instanceof Player
-                && (evt.getPlayer().getItemInHand().hasItemMeta()))
+        Request request = TrickOrTreat.oRequestHandler.checkRequest(bob, alice);
+        if (request != null && !request.getStatus())
         {
-            Request request = RequestHandler.checkRequest(
-                    (Player) evt.getRightClicked(),evt.getPlayer());
+            ItemStack is = alice.getItemInHand();
+            ItemStack clone = is.clone();
+            clone.setAmount(1);
 
-            if (request != null && !request.getStatus()
-                    && getCandyByName(evt.getPlayer().getItemInHand()
-                        .getItemMeta().getDisplayName()) != null)
-            {
-                Player alice = evt.getPlayer();
-                Player bob = (Player) evt.getRightClicked();
+            alice.getInventory().removeItem(clone);
+            bob.getInventory().addItem(clone);
 
-                ItemStack is = alice.getItemInHand();
-                is.setAmount(is.getAmount() - 1);
-                alice.getInventory().setItem(
-                        alice.getInventory().getHeldItemSlot(), is);
-
-                is.setAmount(1);
-                bob.getInventory().addItem(is);
-
-                request.setStatus(true);
-            }
+            request.setStatus(true);
         }
     }
 
 
-    @EventHandler
-    public void onPlayerInteract(PlayerInteractEvent evt)
+    public void eatCandy(Player bob)
     {
-        Player player = evt.getPlayer();
+        Candy getCandy = getCandyByName(
+                bob.getItemInHand().getItemMeta().getDisplayName());
 
-        if((evt.getAction().equals(Action.RIGHT_CLICK_AIR)
-                || evt.getAction().equals(Action.RIGHT_CLICK_BLOCK))
-                && player.getItemInHand().hasItemMeta() )
+        if (getCandy != null)
         {
-            Candy getCandy = getCandyByName(
-                    player.getItemInHand().getItemMeta().getDisplayName());
+            // call effect method
+            getCandy.effect(bob);
 
-            if (getCandy != null)
-            {
-                // call effect method
-                getCandy.effect(player);
-
-                ItemStack is = player.getItemInHand();
-                is.setAmount(is.getAmount() - 1);
-                player.getInventory().setItem(
-                        player.getInventory().getHeldItemSlot(), is);
-            }
+            ItemStack is = bob.getItemInHand();
+            ItemStack clone = is.clone();
+            clone.setAmount(1);
+            bob.getInventory().removeItem(clone);
         }
     }
+
+//    @EventHandler
+//    public void onPlayerIneractEntity(PlayerInteractEntityEvent evt)
+//    {
+//        if(evt.getRightClicked() instanceof Player
+//                && (evt.getPlayer().getItemInHand().hasItemMeta()))
+//        {
+//            Request request = RequestHandler.checkRequest(
+//                    (Player) evt.getRightClicked(), evt.getPlayer());
+//
+//            if (request != null && !request.getStatus()
+//                    && getCandyByName(evt.getPlayer().getItemInHand()
+//                        .getItemMeta().getDisplayName()) != null)
+//            {
+//                Player alice = evt.getPlayer();
+//                Player bob = (Player) evt.getRightClicked();
+//
+//                ItemStack is = alice.getItemInHand();
+//                is.setAmount(is.getAmount() - 1);
+//                alice.getInventory().setItem(
+//                        alice.getInventory().getHeldItemSlot(), is);
+//
+//                is.setAmount(1);
+//                bob.getInventory().addItem(is);
+//
+//                request.setStatus(true);
+//            }
+//        }
+//    }
+
+//
+//    @EventHandler
+//    public void onPlayerInteract(PlayerInteractEvent evt)
+//    {
+//        Player player = evt.getPlayer();
+//
+//        if((evt.getAction().equals(Action.RIGHT_CLICK_AIR)
+//                || evt.getAction().equals(Action.RIGHT_CLICK_BLOCK))
+//                && player.getItemInHand().hasItemMeta() )
+//        {
+//            Candy getCandy = getCandyByName(
+//                    player.getItemInHand().getItemMeta().getDisplayName());
+//
+//            if (getCandy != null)
+//            {
+//                // call effect method
+//                getCandy.effect(player);
+//
+//                ItemStack is = player.getItemInHand();
+//                is.setAmount(is.getAmount() - 1);
+//                player.getInventory().setItem(
+//                        player.getInventory().getHeldItemSlot(), is);
+//            }
+//        }
+//    }
 }
