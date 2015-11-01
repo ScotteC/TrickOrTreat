@@ -80,7 +80,5 @@ public class PlayerListener implements Listener
 
         evt.getPlayer().setSaturation(1);
         evt.getPlayer().setFoodLevel(19);
-
-        evt.getPlayer().getInventory().addItem(TrickOrTreat.oTrick.getRndCandy());
     }
 }
