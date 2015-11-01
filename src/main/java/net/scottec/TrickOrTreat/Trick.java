@@ -43,7 +43,7 @@ public class Trick
     }
 
 
-    public void shareCandy(Player bob, Player alice)
+    public void shareCandy(Player alice, Player bob)
     {
         Request request = TrickOrTreat.oRequestHandler.checkRequest(bob, alice);
         if (request != null && !request.getStatus())
