@@ -1,6 +1,5 @@
 package net.scottec.TrickOrTreat;
 
-import net.scottec.TrickOrTreat.Listener.CommandListener;
 import net.scottec.TrickOrTreat.Listener.EntityListener;
 import net.scottec.TrickOrTreat.Listener.PlayerListener;
 
