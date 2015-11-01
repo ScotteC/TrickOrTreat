@@ -4,6 +4,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -35,5 +36,31 @@ public class util
     {
         return Bukkit.getServer().getWorld(
                 Config.getCfg().getString("common.worldname"));
+    }
+
+    public static void giveHalloweenstick(Player player)
+    {
+        ItemStack halloweenstick = createItemStack(
+                Config.getTxt().getString("halloweenstick.name"),
+                Material.BLAZE_ROD,
+                Config.getTxt().getStringList("halloweenstick.lore"));
+
+        if (!(player.getInventory().contains(halloweenstick)))
+            player.getInventory().addItem(halloweenstick);
+    }
+
+    public static Location getLocationFromString(String locString)
+    {
+        String[] split = locString.split(":");
+        if(split.length == 5)
+        {
+            return new Location(util.getWorld(),
+                    Double.parseDouble(split[0]),
+                    Double.parseDouble(split[1]),
+                    Double.parseDouble(split[2]),
+                    Float.parseFloat(split[3]),
+                    Float.parseFloat(split[4]));
+        }
+        return null;
     }
 }

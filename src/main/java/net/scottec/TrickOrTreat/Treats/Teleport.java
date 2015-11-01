@@ -19,21 +19,12 @@ public class Teleport implements Treatment
     {
         List<String> locStrings = Config.getCfg().getStringList("treat.port");
         Location loc;
-        String[] split;
 
         for(String locString : locStrings)
         {
-            split = locString.split(":");
-            if(split.length == 5)
-            {
-                loc = new Location(util.getWorld(),
-                        Double.parseDouble(split[0]),
-                        Double.parseDouble(split[1]),
-                        Double.parseDouble(split[2]),
-                        Float.parseFloat(split[3]),
-                        Float.parseFloat(split[4]));
+            loc = util.getLocationFromString(locString);
+            if(loc != null)
                 locations.add(loc);
-            }
         }
     }
 
