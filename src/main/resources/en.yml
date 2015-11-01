@@ -43,12 +43,6 @@ request:
   occupied: "&4%s &6is occupied"
 
 candy:
-  sugar:
-    name: "Sugar"
-    lore:
-    - "Sweet powder of joy"
-    - "Dont eat too much of it"
-
   cookie:
     name: "Sweet Cookie"
     lore:
@@ -60,6 +54,30 @@ candy:
     lore:
     - "Creamy red sirup"
     - "Could it be blood?"
+
+  pumpkin:
+    name: "Pumpkin Pie"
+    lore:
+    - "Nothing but a pumpkin"
+    - "It's okay, just eat it"
+
+  bakedapple:
+    name: "Baked Apple"
+    lore:
+    - "Apple with caramel"
+    - "A little bit sticky"
+
+  brainstew:
+    name: "Brain Stew"
+    lore:
+    - "Tasty stew of cooked brains"
+    - "Fearfull thoughts inclusive"
+
+  ripofcryy:
+    name: "Rip of cryy_"
+    lore:
+    - "Grilled rip of cryy_"
+    - "Pure power, over 9000"
 
 treat:
 

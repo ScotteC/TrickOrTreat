@@ -17,8 +17,11 @@ public class Trick
 
     public Trick(JavaPlugin plugin)
     {
-        candyObjects.add(new Sugar());
+        candyObjects.add(new Pumpkin());
         candyObjects.add(new Cookie());
+        candyObjects.add(new BakedApple());
+        candyObjects.add(new BrainStew());
+        candyObjects.add(new RipOfCryy());
         candyObjects.add(new Sirup());
     }
 

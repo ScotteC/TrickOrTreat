@@ -1,5 +1,6 @@
 package net.scottec.TrickOrTreat;
 
+import net.scottec.TrickOrTreat.Listener.CommandListener;
 import net.scottec.TrickOrTreat.Listener.EntityListener;
 import net.scottec.TrickOrTreat.Listener.PlayerListener;
 
@@ -14,12 +15,14 @@ public class TrickOrTreat extends JavaPlugin
     public static Trick oTrick;
     public static Treat oTreat;
     public static Ghost oGhost;
+    public static JavaPlugin plugin;
 
     @Override
     public void onEnable()
     {
         // load config files
         Config.reloadConfig(this);
+        this.plugin = this;
         createObjects();
     }
 
