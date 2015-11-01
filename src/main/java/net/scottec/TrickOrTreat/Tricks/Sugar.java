@@ -23,6 +23,6 @@ public class Sugar extends Candy
     public void effect(Player player)
     {
         player.addPotionEffect(new PotionEffect(
-                PotionEffectType.SPEED, 10*20, 3));
+                PotionEffectType.SPEED, 10*20, 3),true);
     }
 }

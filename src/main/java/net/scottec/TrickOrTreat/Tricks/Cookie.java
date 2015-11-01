@@ -23,6 +23,6 @@ public class Cookie extends Candy
         public void effect(Player player)
         {
             player.addPotionEffect(new PotionEffect(
-                    PotionEffectType.JUMP, 10*20, 5));
+                    PotionEffectType.JUMP, 10*20, 5),true);
         }
 }

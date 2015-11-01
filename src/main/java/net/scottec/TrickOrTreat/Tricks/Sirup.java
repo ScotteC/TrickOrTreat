@@ -23,6 +23,6 @@ public class Sirup extends Candy
     public void effect(Player player)
     {
         player.addPotionEffect(new PotionEffect(
-                PotionEffectType.CONFUSION, 15*20, 3));
+                PotionEffectType.CONFUSION, 15*20, 3),true);
     }
 }
