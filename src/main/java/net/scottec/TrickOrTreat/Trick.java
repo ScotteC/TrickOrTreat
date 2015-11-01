@@ -42,6 +42,12 @@ public class Trick
         return null;
     }
 
+    public void addAllCandy(Player player)
+    {
+        for(Candy candy : candyObjects)
+            player.getInventory().addItem(candy.getItemStack());
+    }
+
 
     public void shareCandy(Player alice, Player bob)
     {
