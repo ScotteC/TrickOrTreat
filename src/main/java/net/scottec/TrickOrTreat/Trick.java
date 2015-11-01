@@ -71,11 +71,6 @@ public class Trick implements Listener
         {
             // call effect method
             getCandy.effect(bob);
-
-            ItemStack is = bob.getItemInHand();
-            ItemStack clone = is.clone();
-            clone.setAmount(1);
-            bob.getInventory().removeItem(clone);
         }
     }
 

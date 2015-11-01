@@ -1,17 +1,11 @@
 package net.scottec.TrickOrTreat.Listener;
 
 import net.scottec.TrickOrTreat.*;
-import net.scottec.TrickOrTreat.Ghosts.Ghost;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.block.Action;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
-import org.bukkit.event.player.PlayerInteractEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.inventory.InventoryHolder;
-import org.bukkit.inventory.ItemStack;
+import org.bukkit.event.entity.FoodLevelChangeEvent;
+import org.bukkit.event.player.*;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -34,7 +28,6 @@ public class PlayerListener implements Listener
             if(evt.getPlayer().getItemInHand().getItemMeta().getDisplayName()
                     .equals(Config.getTxt().getString("halloweenstick.name")))
             {
-                evt.getPlayer().sendMessage("Event1");
                 TrickOrTreat.oRequestHandler.prepareRequest(evt.getPlayer(),
                         (Player) evt.getRightClicked());
             }
@@ -42,42 +35,52 @@ public class PlayerListener implements Listener
             else if (TrickOrTreat.oTrick.getCandyByName(evt.getPlayer().getItemInHand()
                     .getItemMeta().getDisplayName()) != null)
             {
-                evt.getPlayer().sendMessage("Event2");
                 TrickOrTreat.oTrick.shareCandy(evt.getPlayer(),
                         (Player) evt.getRightClicked());
             }
         }
     }
 
+
     @EventHandler
-    public void onPlayerInteract(PlayerInteractEvent evt)
+    public void onPlayerConsume(PlayerItemConsumeEvent evt)
     {
-        if( (evt.getAction().equals(Action.RIGHT_CLICK_AIR)
-                || evt.getAction().equals(Action.RIGHT_CLICK_BLOCK))
-                && evt.getPlayer().getItemInHand().hasItemMeta()
-                && !(evt.getClickedBlock().getState() instanceof InventoryHolder) )
+        Player player = evt.getPlayer();
+
+        if(player.getItemInHand().hasItemMeta())
+            TrickOrTreat.oTrick.eatCandy(player);
+    }
+
+
+    @EventHandler
+    public void onFoodChange(FoodLevelChangeEvent evt)
+    {
+        if (evt.getEntity() instanceof Player)
         {
-            evt.getPlayer().sendMessage("Event3");
-            TrickOrTreat.oTrick.eatCandy(evt.getPlayer());
+            evt.setFoodLevel(19);
         }
     }
 
-    /*
-     * Check on player join, if player already has an Halloweenstick/Magic Wand
-     * in inventory, otherwise add one
-     */
+
+    @EventHandler
+    public void onPlayerRespawn(PlayerRespawnEvent evt)
+    {
+        evt.getPlayer().setSaturation(1);
+        evt.getPlayer().setFoodLevel(19);
+        util.giveHalloweenstick(evt.getPlayer());
+    }
+
+
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent evt)
     {
-        ItemStack halloweenstick = util.createItemStack(
-                Config.getTxt().getString("halloweenstick.name"),
-                Material.BLAZE_ROD,
-                Config.getTxt().getStringList("halloweenstick.lore"));
+        util.giveHalloweenstick(evt.getPlayer());
 
-        if (!evt.getPlayer().getInventory().contains(halloweenstick))
-            evt.getPlayer().getInventory().addItem(halloweenstick);
+        TrickOrTreat.oGhost.spawnGhost();
 
-        TrickOrTreat.oGhost.spawnGhost(evt.getPlayer().getLocation());
+        evt.getPlayer().setSaturation(1);
+        evt.getPlayer().setFoodLevel(19);
+
+        evt.getPlayer().getInventory().addItem(TrickOrTreat.oTrick.getRndCandy());
     }
-
 }
