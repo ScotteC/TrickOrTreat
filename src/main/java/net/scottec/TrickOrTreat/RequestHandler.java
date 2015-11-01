@@ -4,13 +4,7 @@ import de.craftstuebchen.ysl3000.api.messageapi.MessageAPI;
 import de.craftstuebchen.ysl3000.api.messageapi.interfaces.IActionbarManager;
 import de.craftstuebchen.ysl3000.api.messageapi.interfaces.ITitleManager;
 
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
-import org.bukkit.event.Listener;
-import org.bukkit.event.player.PlayerInteractEntityEvent;
-import org.bukkit.event.player.PlayerJoinEvent;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -20,7 +14,7 @@ import java.util.Map;
 /**
  * Created by Fabian on 22.10.2015.
  */
-public class RequestHandler implements Listener
+public class RequestHandler
 {
     private JavaPlugin plugin;
 
@@ -94,7 +88,8 @@ public class RequestHandler implements Listener
         return null;
     }
 
-    public static boolean checkRequests(Player alice)
+
+    public boolean checkRequests(Player alice)
     {
         for(Request request : requests.values())
         {
@@ -103,6 +98,7 @@ public class RequestHandler implements Listener
         }
         return true;
     }
+
 
     public void prepareRequest(Player bob, Player alice)
     {
@@ -139,77 +135,4 @@ public class RequestHandler implements Listener
             createRequest(bob, alice);
         }
     }
-
-
-//
-//    /*
-//     * if bob rightclicks alice with "Magic Wand" check if theres a pending
-//     * request by bob, otherwise create a new one
-//     */
-//    @EventHandler
-//    public void onPlayerInteractEntity(PlayerInteractEntityEvent evt)
-//    {
-//        // requests only on players and triggerd by "Magic Wand"(Blaze rod)
-//        if((evt.getRightClicked() instanceof Player)
-//                && evt.getPlayer().getItemInHand().hasItemMeta())
-//        {
-//            if(evt.getPlayer().getItemInHand().getItemMeta()
-//                    .getDisplayName().equals(
-//                            Config.getTxt().getString("halloweenstick.name")))
-//            {
-//                Player bob = evt.getPlayer();
-//                Player alice = (Player) evt.getRightClicked();
-//
-//                // check on pending requests from bob,
-//                // send error based on requeststatus
-//                if (requests.containsKey(bob))
-//                {
-//                    if (!requests.get(bob).getStatus())
-//                        actionBar.sendActionBarMessage(bob,
-//                                Config.getTxt().getString("request.onlyOne"));
-//                    else
-//                    {
-//                        long remainCool = (requests.get(bob).getRequestTime()
-//                                + (this.requestCooldown*1000)
-//                                - System.currentTimeMillis()) / 1000;
-//
-//                        actionBar.sendActionBarMessage(bob, String.format(
-//                                Config.getTxt().getString("request.cooldown"),
-//                                remainCool));
-//                    }
-//                }
-//                else if ((requests.containsKey(alice)
-//                            && !requests.get(alice).getStatus())
-//                        || ! checkRequests(alice) )
-//                {
-//                    actionBar.sendActionBarMessage(bob, String.format(
-//                            Config.getTxt().getString("request.occupied"),
-//                            alice.getDisplayName()));
-//                }
-//
-//                // no pending requests, so create one
-//                else
-//                {
-//                    createRequest(bob, alice);
-//                }
-//            } // if "Magic Wand"
-//        } // if valid action with possible item
-//    } // onPlayerInteractEntity
-
-
-//    /*
-//     * Check on player join, if player already has an Halloweenstick/Magic Wand
-//     * in inventory, otherwise add one
-//     */
-//    @EventHandler
-//    public void onPlayerJoin(PlayerJoinEvent evt)
-//    {
-//        ItemStack halloweenstick = util.createItemStack(
-//                Config.getTxt().getString("halloweenstick.name"),
-//                Material.BLAZE_ROD,
-//                Config.getTxt().getStringList("halloweenstick.lore"));
-//
-//        if (!evt.getPlayer().getInventory().contains(halloweenstick))
-//            evt.getPlayer().getInventory().addItem(halloweenstick);
-//    }
 }

@@ -1,10 +1,8 @@
 package net.scottec.TrickOrTreat;
 
-import net.scottec.TrickOrTreat.Ghosts.Ghost;
 import net.scottec.TrickOrTreat.Listener.EntityListener;
 import net.scottec.TrickOrTreat.Listener.PlayerListener;
 
-import org.bukkit.event.Listener;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -22,8 +20,6 @@ public class TrickOrTreat extends JavaPlugin
     {
         // load config files
         Config.reloadConfig(this);
-
-        // register EventListener
         createObjects();
     }
 
@@ -41,17 +37,5 @@ public class TrickOrTreat extends JavaPlugin
         oTreat = new Treat(this);
         new PlayerListener(this);
         new EntityListener(this);
-
-//        registerEvent(new RequestHandler(this));
-//        registerEvent(new Ghost(this));
-//        registerEvent(new Trick());
-//        registerEvent(new Treat());
-//        registerEvent(new PlayerListener());
     }
-
-//    private void registerEvent(Listener listener)
-//    {
-//        this.
-//        this.getServer().getPluginManager().registerEvents(listener,this);
-//    }
 }
