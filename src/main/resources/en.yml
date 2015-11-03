@@ -19,6 +19,7 @@ request:
     alice:
       header: "&6Trick or Treat!"
       footer: "&6Request from &4%s"
+      clue: "§6To answer the request, rightclick the other with some candy..."
 
   success:
     bob:

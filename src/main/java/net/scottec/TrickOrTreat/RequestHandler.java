@@ -65,6 +65,8 @@ public class RequestHandler
                 Config.getTxt().getString("request.new.alice.footer"),
                 bob.getDisplayName()));
 
+        alice.sendMessage(Config.getTxt().getString("request.new.alice.clue"));
+
         // create schedueled task to remove requestobject form map
         new BukkitRunnable()
         {
