@@ -111,9 +111,9 @@ public class RequestHandler
                         Config.getTxt().getString("request.onlyOne"));
             else
             {
-                long remainCool = (requests.get(bob).getRequestTime()
-                        + (requestCooldown*1000)
-                        - System.currentTimeMillis()) / 1000;
+                long remainCool = requestCooldown -
+                        (System.currentTimeMillis()
+                                - requests.get(bob).getRequestTime()) / 1000;
 
                 actionBar.sendActionBarMessage(bob, String.format(
                         Config.getTxt().getString("request.cooldown"),
