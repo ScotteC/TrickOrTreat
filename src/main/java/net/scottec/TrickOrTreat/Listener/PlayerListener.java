@@ -65,7 +65,7 @@ public class PlayerListener implements Listener
             {
                 if(is.getAmount() == 64)
                 {
-                    player.getInventory().remove(is);
+                    player.getInventory().removeItem(is);
                     player.updateInventory();
                     TrickOrTreat.oMySQL.addMoney(player.getDisplayName(), 1);
                     player.sendMessage(
