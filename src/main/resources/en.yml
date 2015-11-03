@@ -86,3 +86,12 @@ ghosts:
     name: "Ghostscrap"
     lore:
     - "Collect and trade"
+
+  shard:
+    name: "§6Coinshard"
+    lore:
+    - "Collect 64 shards and"
+    - "right click them to"
+    - "get one Votecoin."
+    success: "§7You've got a coin"
+    denied: "§7You don't have enough shards"

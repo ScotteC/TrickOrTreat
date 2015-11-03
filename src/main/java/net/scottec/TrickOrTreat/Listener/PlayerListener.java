@@ -1,11 +1,14 @@
 package net.scottec.TrickOrTreat.Listener;
 
 import net.scottec.TrickOrTreat.*;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.*;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
@@ -37,6 +40,40 @@ public class PlayerListener implements Listener
             {
                 TrickOrTreat.oTrick.shareCandy(evt.getPlayer(),
                         (Player) evt.getRightClicked());
+            }
+        }
+    }
+
+
+    @EventHandler
+    public void onPlayerInteract(PlayerInteractEvent evt)
+    {
+        Action action = evt.getAction();
+        Player player = evt.getPlayer();
+
+        if(action == Action.RIGHT_CLICK_AIR || action == Action.RIGHT_CLICK_BLOCK)
+        {
+            if (!player.getItemInHand().hasItemMeta()
+                    || player.getItemInHand() == null
+                    || player.getItemInHand().getType() == Material.BOW)
+                return;
+
+            ItemStack is = player.getItemInHand();
+
+            if (is.getItemMeta().getDisplayName().equals(
+                    Config.getTxt().getString("ghost.shard.name")))
+            {
+                if(is.getAmount() == 64)
+                {
+                    player.getInventory().remove(is);
+                    player.updateInventory();
+                    TrickOrTreat.oMySQL.addMoney(player.getDisplayName(), 1);
+                    player.sendMessage(
+                            Config.getTxt().getString("ghost.shard.success"));
+                    return;
+                }
+                player.sendMessage(
+                        Config.getTxt().getString("ghost.shard.denied"));
             }
         }
     }

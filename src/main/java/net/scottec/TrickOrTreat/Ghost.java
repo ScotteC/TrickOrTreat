@@ -30,6 +30,7 @@ public class Ghost
     private long cleanInterval;
 
     private ItemStack ghostscrap;
+    private ItemStack coinshard;
 
 
     public Ghost(JavaPlugin plugin)
@@ -48,6 +49,11 @@ public class Ghost
                 Config.getTxt().getString("ghosts.scraps.name"),
                 Material.ROTTEN_FLESH,
                 Config.getTxt().getStringList("ghosts.scraps.lore"));
+
+        this.coinshard = util.createItemStack(
+                Config.getTxt().getString("ghost.shard.name"),
+                Material.DIAMOND,
+                Config.getTxt().getStringList("ghost.shard.lore"));
 
         // scheduled task to remove old ghosts an wake up bats
         new BukkitRunnable()
@@ -153,8 +159,11 @@ public class Ghost
                         this.cancel();
                     else
                     {
-                        util.dropItem(loc, TrickOrTreat.oTrick.getRndCandy(), 1);
+                        if (cnt % 3 == 0)
+                            util.dropItem(loc, TrickOrTreat.oTrick.getRndCandy(), 1);
+
                         util.dropItem(loc, ghostscrap, 2);
+                        util.dropItem(loc, coinshard, 2);
                         cnt--;
                     }
                 }
@@ -164,6 +173,7 @@ public class Ghost
         {
             util.dropItem(loc, TrickOrTreat.oTrick.getRndCandy(), 1);
             util.dropItem(loc, ghostscrap, 1);
+            util.dropItem(loc, coinshard, 3);
         }
     }
 
