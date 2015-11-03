@@ -6,7 +6,7 @@ common:
   welcome: "Happy Halloween"
 
 halloweenstick:
-  name: "Magic Wand"
+  name: "§6Magic Wand"
   lore:
   - "Right click another player"
   - "to play >Trick or Treat<"
@@ -45,37 +45,37 @@ request:
 
 candy:
   cookie:
-    name: "Sweet Cookie"
+    name: "§6Sweet Cookie"
     lore:
     - "Very creepy cookie"
     - "Taste it, it is delicious"
 
   sirup:
-    name: "Sirup"
+    name: "§6Sirup"
     lore:
     - "Creamy red sirup"
     - "Could it be blood?"
 
   pumpkin:
-    name: "Pumpkin Pie"
+    name: "§6Pumpkin Pie"
     lore:
     - "Nothing but a pumpkin"
     - "It's okay, just eat it"
 
   bakedapple:
-    name: "Baked Apple"
+    name: "§6Baked Apple"
     lore:
     - "Apple with caramel"
     - "A little bit sticky"
 
   brainstew:
-    name: "Brain Stew"
+    name: "§6Brain Stew"
     lore:
     - "Tasty stew of cooked brains"
     - "Fearfull thoughts inclusive"
 
   ripofcryy:
-    name: "Rip of cryy_"
+    name: "§6Rip of cryy_"
     lore:
     - "Grilled rip of cryy_"
     - "Pure power, over 9000"
