@@ -80,11 +80,9 @@ candy:
     - "Grilled rip of cryy_"
     - "Pure power, over 9000"
 
-treat:
-
-ghosts:
-  scraps:
-    name: "Ghostscrap"
+ghost:
+  scrap:
+    name: "§6Ghostscrap"
     lore:
     - "Collect and trade"
 

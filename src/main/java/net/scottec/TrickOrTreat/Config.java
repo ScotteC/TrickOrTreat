@@ -44,7 +44,8 @@ public class Config
         File defLangFile = new File(plugin.getDataFolder(), "en.yml");
 
         txt = YamlConfiguration.loadConfiguration(
-                        plugin.getResource("en.yml"));
+                plugin.getResource("en.yml"));
+
         try
         {
             if(!defLangFile.exists())

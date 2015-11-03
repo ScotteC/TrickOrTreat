@@ -46,9 +46,9 @@ public class Ghost
         this.cleanInterval = Config.getCfg().getInt("ghost.cleanInterval");
 
         this.ghostscrap = util.createItemStack(
-                Config.getTxt().getString("ghosts.scraps.name"),
+                Config.getTxt().getString("ghost.scrap.name"),
                 Material.ROTTEN_FLESH,
-                Config.getTxt().getStringList("ghosts.scraps.lore"));
+                Config.getTxt().getStringList("ghost.scrap.lore"));
 
         this.coinshard = util.createItemStack(
                 Config.getTxt().getString("ghost.shard.name"),
