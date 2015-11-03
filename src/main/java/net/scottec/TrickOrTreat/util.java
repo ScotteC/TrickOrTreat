@@ -45,7 +45,7 @@ public class util
                 Material.BLAZE_ROD,
                 Config.getTxt().getStringList("halloweenstick.lore"));
 
-        if (!(player.getInventory().contains(halloweenstick)))
+        if (!(player.getInventory().containsAtLeast(halloweenstick, 1)))
             player.getInventory().addItem(halloweenstick);
     }
 
