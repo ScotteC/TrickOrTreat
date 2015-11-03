@@ -10,6 +10,7 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public class TrickOrTreat extends JavaPlugin
 {
+    public static MySQL oMySQL;
     public static RequestHandler oRequestHandler;
     public static Trick oTrick;
     public static Treat oTreat;
@@ -33,6 +34,7 @@ public class TrickOrTreat extends JavaPlugin
 
     private void createObjects()
     {
+        oMySQL = new MySQL(this);
         oRequestHandler = new RequestHandler(this);
         oGhost = new Ghost(this);
         oTrick = new Trick(this);
