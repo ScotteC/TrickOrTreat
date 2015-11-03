@@ -24,3 +24,4 @@ ghost:
   dropCount: 5
   dropDelay: 15
   spawn: "-225:75:200:0:0"
+  spawncooldown: 5000

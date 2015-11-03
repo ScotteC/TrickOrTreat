@@ -22,6 +22,8 @@ public class Ghost
 
     private static int ghostSwitch = 0;
 
+    private long lastSpawn;
+    private int spawnCooldown;
     private int maxLived;
     private long dropDelay;
     private int dropCount;
@@ -35,6 +37,8 @@ public class Ghost
         this.plugin = plugin;
 
         // load config
+        this.lastSpawn = System.currentTimeMillis();
+        this.spawnCooldown = Config.getCfg().getInt("ghost.spawncooldown");
         this.maxLived = Config.getCfg().getInt("ghost.maxLived");
         this.dropDelay = Config.getCfg().getInt("ghost.dropDelay");
         this.dropCount = Config.getCfg().getInt("ghost.dropCount");
@@ -76,6 +80,11 @@ public class Ghost
 
     public void spawnGhost()
     {
+        if ((System.currentTimeMillis() - lastSpawn) < spawnCooldown)
+            return;
+
+        lastSpawn = System.currentTimeMillis();
+
         Location loc = util.getLocationFromString(
                 Config.getCfg().getString("ghost.spawn"));
 
