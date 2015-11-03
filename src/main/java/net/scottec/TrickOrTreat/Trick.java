@@ -2,9 +2,11 @@ package net.scottec.TrickOrTreat;
 
 import net.scottec.TrickOrTreat.Tricks.*;
 
+import org.bukkit.Effect;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
 
@@ -13,6 +15,10 @@ import java.util.*;
  */
 public class Trick
 {
+    private int loveCount;
+    private int loveDelay;
+    private int cnt;
+
     private static final List<Candy> candyObjects = new ArrayList<>();
 
     public Trick(JavaPlugin plugin)
@@ -23,6 +29,10 @@ public class Trick
         candyObjects.add(new BrainStew());
         candyObjects.add(new RipOfCryy());
         candyObjects.add(new Sirup());
+
+        this.loveCount = Config.getCfg().getInt("trick.lovecount");
+        this.loveDelay = Config.getCfg().getInt("trick.lovedelay");
+        this.cnt = (20 / loveDelay) * loveCount;
     }
 
 
@@ -62,6 +72,21 @@ public class Trick
             bob.getInventory().addItem(clone);
 
             request.setStatus(true);
+
+            new BukkitRunnable()
+            {
+                @Override
+                public void run()
+                {
+                    if (cnt <= 1)
+                        this.cancel();
+                    else
+                    {
+                        util.getWorld().playEffect(alice.getLocation(), Effect.HEART, 1);
+                        cnt--;
+                    }
+                }
+            }.runTaskTimer(TrickOrTreat.plugin, 0L, loveDelay);
         }
     }
 

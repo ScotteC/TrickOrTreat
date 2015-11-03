@@ -11,6 +11,8 @@ request:
   requestCooldown: 10
 
 trick:
+  lovecount: 10
+  lovedelay: 10
 
 treat:
   port:
