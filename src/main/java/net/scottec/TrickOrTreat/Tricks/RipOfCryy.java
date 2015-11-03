@@ -23,6 +23,6 @@ public class RipOfCryy extends Candy
     public void effect(Player player)
     {
         player.addPotionEffect(new PotionEffect(
-                PotionEffectType.INCREASE_DAMAGE, 10*20, 10),true);
+                PotionEffectType.INCREASE_DAMAGE, 10*20, 2),true);
     }
 }
