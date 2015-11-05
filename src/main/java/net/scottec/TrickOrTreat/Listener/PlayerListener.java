@@ -73,7 +73,7 @@ public class PlayerListener implements Listener
                 {
                     player.getInventory().removeItem(is);
                     player.updateInventory();
-                    TrickOrTreat.oMySQL.addMoney(player.getDisplayName(), 1);
+                    TrickOrTreat.oMySQL.addMoney(player.getName(), 1);
                     player.sendMessage(
                             Config.getTxt().getString("ghost.shard.success"));
                     return;
