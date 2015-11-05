@@ -28,6 +28,9 @@ public class PlayerListener implements Listener
         if((evt.getRightClicked() instanceof Player)
                 && evt.getPlayer().getItemInHand().hasItemMeta())
         {
+            if (!(evt.getPlayer().getItemInHand().getItemMeta().hasDisplayName()))
+                return;
+
             if(evt.getPlayer().getItemInHand().getItemMeta().getDisplayName()
                     .equals(Config.getTxt().getString("halloweenstick.name")))
             {
@@ -56,6 +59,9 @@ public class PlayerListener implements Listener
             if (!player.getItemInHand().hasItemMeta()
                     || player.getItemInHand() == null
                     || player.getItemInHand().getType() == Material.BOW)
+                return;
+
+            if (!(player.getItemInHand().getItemMeta().hasDisplayName()))
                 return;
 
             ItemStack is = player.getItemInHand();
