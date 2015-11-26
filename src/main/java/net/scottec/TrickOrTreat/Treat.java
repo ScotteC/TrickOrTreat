@@ -3,7 +3,6 @@ package net.scottec.TrickOrTreat;
 import net.scottec.TrickOrTreat.Treats.*;
 
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -15,7 +14,7 @@ public class Treat
 {
     private static final List<Treatment> treats = new ArrayList<>();
 
-    public Treat(JavaPlugin plugin)
+    public Treat(TrickOrTreat plugin)
     {
         treats.add(new Explosion());
         treats.add(new Teleport());

@@ -6,15 +6,17 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
-import org.bukkit.plugin.java.JavaPlugin;
 
 /**
  * Created by Fabian on 30.10.2015.
  */
 public class EntityListener implements Listener
 {
-    public EntityListener(JavaPlugin plugin)
+    private TrickOrTreat plugin;
+
+    public EntityListener(TrickOrTreat plugin)
     {
+        this.plugin = plugin;
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
@@ -38,13 +40,13 @@ public class EntityListener implements Listener
             evt.getDrops().clear();
 
             // spawn custom drops
-            TrickOrTreat.oGhost.spawnDrops(evt.getEntity(), true);
+            plugin.oGhost.spawnDrops(evt.getEntity(), true);
         }
 
         // if died entity is a bat
         else if (evt.getEntityType().equals(EntityType.BAT))
         {
-            TrickOrTreat.oGhost.spawnDrops(evt.getEntity(), false);
+            plugin.oGhost.spawnDrops(evt.getEntity(), false);
         }
     }
 

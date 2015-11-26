@@ -5,7 +5,6 @@ import de.craftstuebchen.ysl3000.api.messageapi.interfaces.IActionbarManager;
 import de.craftstuebchen.ysl3000.api.messageapi.interfaces.ITitleManager;
 
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 
@@ -21,7 +20,7 @@ import org.bukkit.scheduler.BukkitRunnable;
  */
 public class Request
 {
-    private JavaPlugin plugin;
+    private TrickOrTreat plugin;
 
     private Player bob;
     private Player alice;
@@ -38,7 +37,7 @@ public class Request
      * constructor
      * starts also runnable task for countdown
      */
-    public Request(JavaPlugin plugin, Player bob, Player alice, int timeout)
+    public Request(TrickOrTreat plugin, Player bob, Player alice, int timeout)
     {
         this.plugin = plugin;
 
@@ -87,7 +86,7 @@ public class Request
                 // treat alice if countdown reaches 0 without reaction from alice
                 else if (!status && countdown == 0)
                 {
-                    TrickOrTreat.oTreat.treat(alice);
+                    plugin.oTreat.treat(alice);
 
                     titleBar.sendTitleMessageHeader(bob,
                             Config.getTxt().getString("request.denied.bob.header"));

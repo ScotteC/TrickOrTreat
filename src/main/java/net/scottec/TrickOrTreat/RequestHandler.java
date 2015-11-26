@@ -5,7 +5,6 @@ import de.craftstuebchen.ysl3000.api.messageapi.interfaces.IActionbarManager;
 import de.craftstuebchen.ysl3000.api.messageapi.interfaces.ITitleManager;
 
 import org.bukkit.entity.Player;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashMap;
@@ -16,7 +15,7 @@ import java.util.Map;
  */
 public class RequestHandler
 {
-    private JavaPlugin plugin;
+    private TrickOrTreat plugin;
 
     private int requestTimeout;
     private long requestCooldown;
@@ -29,7 +28,7 @@ public class RequestHandler
     /*
      * constructor
      */
-    public RequestHandler(JavaPlugin plugin)
+    public RequestHandler(TrickOrTreat plugin)
     {
         this.plugin = plugin;
 

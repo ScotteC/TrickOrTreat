@@ -9,15 +9,17 @@ import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.*;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.java.JavaPlugin;
 
 /**
  * Created by Fabian on 30.10.2015.
  */
 public class PlayerListener implements Listener
 {
-    public PlayerListener(JavaPlugin plugin)
+    private TrickOrTreat plugin;
+
+    public PlayerListener(TrickOrTreat plugin)
     {
+        this.plugin = plugin;
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
@@ -34,14 +36,14 @@ public class PlayerListener implements Listener
             if(evt.getPlayer().getItemInHand().getItemMeta().getDisplayName()
                     .equals(Config.getTxt().getString("halloweenstick.name")))
             {
-                TrickOrTreat.oRequestHandler.prepareRequest(evt.getPlayer(),
+                plugin.oRequestHandler.prepareRequest(evt.getPlayer(),
                         (Player) evt.getRightClicked());
             }
 
-            else if (TrickOrTreat.oTrick.getCandyByName(evt.getPlayer().getItemInHand()
+            else if (plugin.oTrick.getCandyByName(evt.getPlayer().getItemInHand()
                     .getItemMeta().getDisplayName()) != null)
             {
-                TrickOrTreat.oTrick.shareCandy(evt.getPlayer(),
+                plugin.oTrick.shareCandy(evt.getPlayer(),
                         (Player) evt.getRightClicked());
             }
         }
@@ -73,7 +75,7 @@ public class PlayerListener implements Listener
                 {
                     player.getInventory().removeItem(is);
                     player.updateInventory();
-                    TrickOrTreat.oMySQL.addMoney(player.getName(), 1);
+                    plugin.oMySQL.addMoney(player.getName(), 1);
                     player.sendMessage(
                             Config.getTxt().getString("ghost.shard.success"));
                     return;
@@ -91,7 +93,7 @@ public class PlayerListener implements Listener
         Player player = evt.getPlayer();
 
         if(player.getItemInHand().hasItemMeta())
-            TrickOrTreat.oTrick.eatCandy(player);
+            plugin.oTrick.eatCandy(player);
     }
 
 
@@ -119,7 +121,7 @@ public class PlayerListener implements Listener
     {
         util.giveHalloweenstick(evt.getPlayer());
 
-        TrickOrTreat.oGhost.spawnGhost();
+        plugin.oGhost.spawnGhost();
 
         evt.getPlayer().setSaturation(1);
         evt.getPlayer().setFoodLevel(19);

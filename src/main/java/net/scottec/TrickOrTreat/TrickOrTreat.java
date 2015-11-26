@@ -10,19 +10,20 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public class TrickOrTreat extends JavaPlugin
 {
-    public static MySQL oMySQL;
-    public static RequestHandler oRequestHandler;
-    public static Trick oTrick;
-    public static Treat oTreat;
-    public static Ghost oGhost;
-    public static JavaPlugin plugin;
+    public static TrickOrTreat plugin;
+
+    public MySQL oMySQL;
+    public RequestHandler oRequestHandler;
+    public Trick oTrick;
+    public Treat oTreat;
+    public Ghost oGhost;
 
     @Override
     public void onEnable()
     {
         // load config files
         Config.reloadConfig(this);
-        this.plugin = this;
+        plugin = this;
         createObjects();
     }
 

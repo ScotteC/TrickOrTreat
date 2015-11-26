@@ -5,7 +5,6 @@ import net.scottec.TrickOrTreat.Tricks.*;
 import org.bukkit.Effect;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.*;
@@ -15,14 +14,17 @@ import java.util.*;
  */
 public class Trick
 {
+    private TrickOrTreat plugin;
+
     private int loveCount;
     private int loveDelay;
     private int cnt;
 
     private static final List<Candy> candyObjects = new ArrayList<>();
 
-    public Trick(JavaPlugin plugin)
+    public Trick(TrickOrTreat plugin)
     {
+        this.plugin = plugin;
         candyObjects.add(new Pumpkin());
         candyObjects.add(new Cookie());
         candyObjects.add(new BakedApple());
@@ -61,7 +63,7 @@ public class Trick
 
     public void shareCandy(Player alice, Player bob)
     {
-        Request request = TrickOrTreat.oRequestHandler.checkRequest(bob, alice);
+        Request request = plugin.oRequestHandler.checkRequest(bob, alice);
         if (request != null && !request.getStatus())
         {
             ItemStack is = alice.getItemInHand();
@@ -86,7 +88,7 @@ public class Trick
                         cnt--;
                     }
                 }
-            }.runTaskTimer(TrickOrTreat.plugin, 0L, loveDelay);
+            }.runTaskTimer(this.plugin, 0L, this.loveDelay);
         }
     }
 

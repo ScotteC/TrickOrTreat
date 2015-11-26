@@ -2,7 +2,6 @@ package net.scottec.TrickOrTreat;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.plugin.java.JavaPlugin;
 
 import java.io.File;
 
@@ -14,7 +13,7 @@ public class Config
     private static FileConfiguration cfg;
     private static FileConfiguration txt;
 
-    public static void reloadConfig(JavaPlugin plugin)
+    public static void reloadConfig(TrickOrTreat plugin)
     {
         File cfgFile = new File(plugin.getDataFolder(), "config.yml");
 

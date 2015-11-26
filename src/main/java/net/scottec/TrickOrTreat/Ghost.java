@@ -4,7 +4,6 @@ import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.*;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -18,7 +17,7 @@ import java.util.List;
  */
 public class Ghost
 {
-    private JavaPlugin plugin;
+    private TrickOrTreat plugin;
 
     private static int ghostSwitch = 0;
 
@@ -33,7 +32,7 @@ public class Ghost
     private ItemStack coinshard;
 
 
-    public Ghost(JavaPlugin plugin)
+    public Ghost(TrickOrTreat plugin)
     {
         this.plugin = plugin;
 
@@ -160,7 +159,7 @@ public class Ghost
                     else
                     {
                         if (cnt % 3 == 0)
-                            util.dropItem(loc, TrickOrTreat.oTrick.getRndCandy(), 1);
+                            util.dropItem(loc, plugin.oTrick.getRndCandy(), 1);
 
                         util.dropItem(loc, ghostscrap, 2);
                         util.dropItem(loc, coinshard, 2);
@@ -171,7 +170,7 @@ public class Ghost
         }
         else
         {
-            util.dropItem(loc, TrickOrTreat.oTrick.getRndCandy(), 1);
+            util.dropItem(loc, plugin.oTrick.getRndCandy(), 1);
             util.dropItem(loc, ghostscrap, 1);
             util.dropItem(loc, coinshard, 3);
         }
