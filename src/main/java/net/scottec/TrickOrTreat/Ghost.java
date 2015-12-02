@@ -18,6 +18,7 @@ import java.util.List;
 public class Ghost
 {
     private TrickOrTreat plugin;
+    private TrickOrTreat.ToTFace adapter;
 
     private static int ghostSwitch = 0;
 
@@ -32,9 +33,10 @@ public class Ghost
     private ItemStack coinshard;
 
 
-    public Ghost(TrickOrTreat plugin)
+    public Ghost(TrickOrTreat plugin, TrickOrTreat.ToTFace adapter)
     {
         this.plugin = plugin;
+        this.adapter = adapter;
 
         // load config
         this.lastSpawn = System.currentTimeMillis();
@@ -159,7 +161,7 @@ public class Ghost
                     else
                     {
                         if (cnt % 3 == 0)
-                            util.dropItem(loc, plugin.oTrick.getRndCandy(), 1);
+                            util.dropItem(loc, adapter.getTrick().getRndCandy(), 1);
 
                         util.dropItem(loc, ghostscrap, 2);
                         util.dropItem(loc, coinshard, 2);
@@ -170,7 +172,7 @@ public class Ghost
         }
         else
         {
-            util.dropItem(loc, plugin.oTrick.getRndCandy(), 1);
+            util.dropItem(loc, adapter.getTrick().getRndCandy(), 1);
             util.dropItem(loc, ghostscrap, 1);
             util.dropItem(loc, coinshard, 3);
         }

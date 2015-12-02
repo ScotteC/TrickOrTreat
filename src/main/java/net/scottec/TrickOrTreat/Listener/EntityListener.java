@@ -13,10 +13,12 @@ import org.bukkit.event.entity.EntityDeathEvent;
 public class EntityListener implements Listener
 {
     private TrickOrTreat plugin;
+    private TrickOrTreat.ToTFace adapter;
 
-    public EntityListener(TrickOrTreat plugin)
+    public EntityListener(TrickOrTreat plugin, TrickOrTreat.ToTFace adapter)
     {
         this.plugin = plugin;
+        this.adapter = adapter;
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
@@ -40,13 +42,13 @@ public class EntityListener implements Listener
             evt.getDrops().clear();
 
             // spawn custom drops
-            plugin.oGhost.spawnDrops(evt.getEntity(), true);
+            adapter.getGhost().spawnDrops(evt.getEntity(), true);
         }
 
         // if died entity is a bat
         else if (evt.getEntityType().equals(EntityType.BAT))
         {
-            plugin.oGhost.spawnDrops(evt.getEntity(), false);
+            adapter.getGhost().spawnDrops(evt.getEntity(), false);
         }
     }
 

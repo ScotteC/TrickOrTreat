@@ -16,6 +16,7 @@ import java.util.Map;
 public class RequestHandler
 {
     private TrickOrTreat plugin;
+    private TrickOrTreat.ToTFace adapter;
 
     private int requestTimeout;
     private long requestCooldown;
@@ -28,9 +29,10 @@ public class RequestHandler
     /*
      * constructor
      */
-    public RequestHandler(TrickOrTreat plugin)
+    public RequestHandler(TrickOrTreat plugin, TrickOrTreat.ToTFace adapter)
     {
         this.plugin = plugin;
+        this.adapter = adapter;
 
         this.requestTimeout = Config.getCfg()
                 .getInt("request.requestTimeout");
@@ -49,7 +51,7 @@ public class RequestHandler
      */
     private void createRequest(Player bob, Player alice)
     {
-        Request newRequest = new Request(this.plugin, bob, alice, this.requestTimeout);
+        Request newRequest = new Request(this.plugin, this.adapter, bob, alice, this.requestTimeout);
         requests.put(bob, newRequest);
 
         // inform bob and alice about started request

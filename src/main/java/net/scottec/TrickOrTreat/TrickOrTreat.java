@@ -10,20 +10,20 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public class TrickOrTreat extends JavaPlugin
 {
-    public static TrickOrTreat plugin;
+    //private static TrickOrTreat plugin;
 
-    public MySQL oMySQL;
-    public RequestHandler oRequestHandler;
-    public Trick oTrick;
-    public Treat oTreat;
-    public Ghost oGhost;
+    private MySQL oMySQL;
+    private RequestHandler oRequestHandler;
+    private Trick oTrick;
+    private Treat oTreat;
+    private Ghost oGhost;
 
     @Override
     public void onEnable()
     {
         // load config files
         Config.reloadConfig(this);
-        plugin = this;
+        //plugin = this;
         createObjects();
     }
 
@@ -36,11 +36,48 @@ public class TrickOrTreat extends JavaPlugin
     private void createObjects()
     {
         oMySQL = new MySQL(this);
-        oRequestHandler = new RequestHandler(this);
-        oGhost = new Ghost(this);
-        oTrick = new Trick(this);
+        oRequestHandler = new RequestHandler(this, new ToTAdapter());
+        oGhost = new Ghost(this, new ToTAdapter());
+        oTrick = new Trick(this, new ToTAdapter());
         oTreat = new Treat(this);
-        new PlayerListener(this);
-        new EntityListener(this);
+        new PlayerListener(this, new ToTAdapter());
+        new EntityListener(this, new ToTAdapter());
+    }
+
+    private class ToTAdapter implements ToTFace
+    {
+        @Override
+        public MySQL getMySQL(){
+            return oMySQL;
+        }
+
+        @Override
+        public RequestHandler getRequestHandler(){
+            return oRequestHandler;
+        }
+
+        @Override
+        public Trick getTrick(){
+            return oTrick;
+        }
+
+        @Override
+        public Treat getTreat(){
+            return oTreat;
+        }
+
+        @Override
+        public Ghost getGhost(){
+            return oGhost;
+        }
+    }
+
+    public interface ToTFace
+    {
+        MySQL getMySQL();
+        RequestHandler getRequestHandler();
+        Trick getTrick();
+        Treat getTreat();
+        Ghost getGhost();
     }
 }

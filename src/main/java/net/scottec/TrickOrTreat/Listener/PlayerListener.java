@@ -16,10 +16,12 @@ import org.bukkit.inventory.ItemStack;
 public class PlayerListener implements Listener
 {
     private TrickOrTreat plugin;
+    private TrickOrTreat.ToTFace adapter;
 
-    public PlayerListener(TrickOrTreat plugin)
+    public PlayerListener(TrickOrTreat plugin, TrickOrTreat.ToTFace adapter)
     {
         this.plugin = plugin;
+        this.adapter = adapter;
         plugin.getServer().getPluginManager().registerEvents(this, plugin);
     }
 
@@ -36,14 +38,14 @@ public class PlayerListener implements Listener
             if(evt.getPlayer().getItemInHand().getItemMeta().getDisplayName()
                     .equals(Config.getTxt().getString("halloweenstick.name")))
             {
-                plugin.oRequestHandler.prepareRequest(evt.getPlayer(),
+                adapter.getRequestHandler().prepareRequest(evt.getPlayer(),
                         (Player) evt.getRightClicked());
             }
 
-            else if (plugin.oTrick.getCandyByName(evt.getPlayer().getItemInHand()
+            else if (adapter.getTrick().getCandyByName(evt.getPlayer().getItemInHand()
                     .getItemMeta().getDisplayName()) != null)
             {
-                plugin.oTrick.shareCandy(evt.getPlayer(),
+                adapter.getTrick().shareCandy(evt.getPlayer(),
                         (Player) evt.getRightClicked());
             }
         }
@@ -75,7 +77,7 @@ public class PlayerListener implements Listener
                 {
                     player.getInventory().removeItem(is);
                     player.updateInventory();
-                    plugin.oMySQL.addMoney(player.getName(), 1);
+                    adapter.getMySQL().addMoney(player.getName(), 1);
                     player.sendMessage(
                             Config.getTxt().getString("ghost.shard.success"));
                     return;
@@ -93,7 +95,7 @@ public class PlayerListener implements Listener
         Player player = evt.getPlayer();
 
         if(player.getItemInHand().hasItemMeta())
-            plugin.oTrick.eatCandy(player);
+            adapter.getTrick().eatCandy(player);
     }
 
 
@@ -121,7 +123,7 @@ public class PlayerListener implements Listener
     {
         util.giveHalloweenstick(evt.getPlayer());
 
-        plugin.oGhost.spawnGhost();
+        adapter.getGhost().spawnGhost();
 
         evt.getPlayer().setSaturation(1);
         evt.getPlayer().setFoodLevel(19);

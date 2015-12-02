@@ -15,6 +15,7 @@ import java.util.*;
 public class Trick
 {
     private TrickOrTreat plugin;
+    private TrickOrTreat.ToTFace adapter;
 
     private int loveCount;
     private int loveDelay;
@@ -22,9 +23,10 @@ public class Trick
 
     private static final List<Candy> candyObjects = new ArrayList<>();
 
-    public Trick(TrickOrTreat plugin)
+    public Trick(TrickOrTreat plugin, TrickOrTreat.ToTFace adapter)
     {
         this.plugin = plugin;
+        this.adapter = adapter;
         candyObjects.add(new Pumpkin());
         candyObjects.add(new Cookie());
         candyObjects.add(new BakedApple());
@@ -63,7 +65,7 @@ public class Trick
 
     public void shareCandy(Player alice, Player bob)
     {
-        Request request = plugin.oRequestHandler.checkRequest(bob, alice);
+        Request request = adapter.getRequestHandler().checkRequest(bob, alice);
         if (request != null && !request.getStatus())
         {
             ItemStack is = alice.getItemInHand();
