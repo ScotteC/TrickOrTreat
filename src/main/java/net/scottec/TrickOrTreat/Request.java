@@ -7,6 +7,7 @@ import de.craftstuebchen.ysl3000.api.messageapi.interfaces.ITitleManager;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.UUID;
 
 /**
  * Created by Fabian on 22.10.2015.
@@ -19,11 +20,10 @@ import org.bukkit.scheduler.BukkitRunnable;
  *
  */
 
-    private Player bob;
-    private Player alice;
-
+public class Request {
+    private UUID bob;
+    private UUID alice;
     private boolean status;
-
     private long time;
     private int countdown;
 
@@ -35,8 +35,7 @@ import org.bukkit.scheduler.BukkitRunnable;
      * starts also runnable task for countdown
      */
     public Request(TrickOrTreat.ITrickOrTreat iToT,
-                   Player bob, Player alice, int timeout)
-    {
+                   UUID bob, UUID alice, int timeout) {
 
         this.actionBar = MessageAPI.inst().getActionbarManager();
         this.titleBar = MessageAPI.inst().getTitleManager();
@@ -52,11 +51,11 @@ import org.bukkit.scheduler.BukkitRunnable;
         this.countdown = timeout;
 
         // create new task to handle countdown until treatment
-        new BukkitRunnable()
-        {
+        new BukkitRunnable() {
             @Override
-            public void run()
-            {
+            public void run() {
+                Player pBob = Bukkit.getPlayer(bob);
+                Player pAlice = Bukkit.getPlayer(alice);
                 actionBar.sendActionBarMessage(bob,
                         "&6&l>> &4" + countdown + " &6&l<<");
                 actionBar.sendActionBarMessage(alice,
@@ -103,8 +102,14 @@ import org.bukkit.scheduler.BukkitRunnable;
     }
 
     // Getter
-    public Player getBob() {return this.bob;}
-    public Player getAlice() {return this.alice;}
+    public UUID getBob() {
+        return this.bob;
+    }
+
+    public UUID getAlice() {
+        return alice;
+    }
+
     public long getRequestTime() {return this.time;}
     public boolean getStatus() {return this.status;}
 

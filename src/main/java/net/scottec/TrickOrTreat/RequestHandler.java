@@ -9,8 +9,10 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.UUID;
 
 public class RequestHandler {
+    private Map<UUID, Request> requests = new HashMap<>();
     private TrickOrTreat.ITrickOrTreat iToT;
     private int requestTimeout;
     private long requestCooldown;
@@ -18,7 +20,6 @@ public class RequestHandler {
     private IActionbarManager actionBar;
     private ITitleManager titleBar;
 
-    public static Map<Player, Request> requests = new HashMap<>();
 
     public RequestHandler(TrickOrTreat.ITrickOrTreat iToT) {
         this.iToT = iToT;
@@ -38,10 +39,9 @@ public class RequestHandler {
      * players and current time and store it in hashmap
      * also start delayed task to delete request after timeout
      */
-    private void createRequest(Player bob, Player alice)
-    {
-        Request newRequest = new Request(this.plugin, this.adapter, bob, alice, this.requestTimeout);
-        requests.put(bob, newRequest);
+    private void createRequest(Player bob, Player alice) {
+        requests.put(bob.getUniqueId(),
+                new Request(this.iToT, bob.getUniqueId(), alice.getUniqueId(), this.requestTimeout));
 
         // inform bob and alice about started request
         titleBar.sendTitleMessageHeader(bob,
@@ -68,35 +68,35 @@ public class RequestHandler {
         }.runTaskLater(this.iToT.getPlugin(), (this.requestCooldown * 20));
     }
 
-
-    /*
+    /**
      * check if theres a request from bob on alice
      */
-    public Request checkRequest(Player bob, Player alice)
-    {
-        Request request = requests.get(bob);
-        if (request != null && request.getAlice() == alice)
+    public Request checkRequest(Player bob, Player alice) {
+        Request request = requests.get(bob.getUniqueId());
+        if (request != null && request.getAlice().equals(alice.getUniqueId()))
             return request;
         return null;
     }
 
-
-    public boolean checkRequests(Player alice)
-    {
-        for(Request request : requests.values())
-        {
-            if(request.getAlice().equals(alice))
+    /**
+     * Check if there are open requests on alice
+     * @param alice : Player been requestet
+     * @return boolean :
+     */
+    public boolean checkRequests(Player alice) {
+        for (Request request : requests.values()) {
+            if (request.getAlice().equals(alice.getUniqueId()) && !request.getStatus())
                 return request.getStatus();
         }
         return true;
     }
 
-
-    public void prepareRequest(Player bob, Player alice)
-    {
-        // check on pending requests from bob,
+    public void prepareRequest(Player bob, Player alice) {
+        // check on pending requests from bob
         // send error based on requeststatus
-        if (requests.containsKey(bob))
+        if (requests.containsKey(bob.getUniqueId())) {
+            // check if request is active or on cooldown
+            if (!requests.get(bob.getUniqueId()).getStatus())
         {
             if (!requests.get(bob).getStatus())
                 actionBar.sendActionBarMessage(bob,
@@ -112,9 +112,10 @@ public class RequestHandler {
                         remainCool));
             }
         }
-        else if ((requests.containsKey(alice)
-                && !requests.get(alice).getStatus())
-                || ! checkRequests(alice) )
+        // bob is okay, now check alice
+        else if ((requests.containsKey(alice.getUniqueId())         // request found?
+                && !requests.get(alice.getUniqueId()).getStatus())  // request active?
+                || !checkRequests(alice))                           // alice already requested
         {
             actionBar.sendActionBarMessage(bob, String.format(
                     Config.getTxt().getString("request.occupied"),
