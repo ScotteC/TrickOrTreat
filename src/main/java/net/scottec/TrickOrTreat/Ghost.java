@@ -40,14 +40,14 @@ public class Ghost {
         this.cleanInterval = Config.getCfg().getInt("ghost.cleanInterval");
 
         this.ghostscrap = util.createItemStack(
-                Config.getTxt().getString("ghost.scrap.name"),
+                util.getString("GHOST_SCRAP_NAME"),
                 Material.ROTTEN_FLESH,
-                Config.getTxt().getStringList("ghost.scrap.lore"));
+                util.getStringList("GHOST_SCRAP_LORE"));
 
         this.coinshard = util.createItemStack(
-                Config.getTxt().getString("ghost.shard.name"),
+                util.getString("GHOST_SHARD_NAME"),
                 Material.DIAMOND,
-                Config.getTxt().getStringList("ghost.shard.lore"));
+                util.getStringList("GHOST_SHARD_LORE"));
 
         // scheduled task to remove old ghosts an wake up bats
         new BukkitRunnable()

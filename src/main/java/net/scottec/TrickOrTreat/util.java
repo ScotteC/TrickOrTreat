@@ -63,4 +63,24 @@ public class util
         }
         return null;
     }
+
+    public static String getString(String messageCode, Object... args){
+        Locale locale = new Locale("en", "US");
+        ResourceBundle message = ResourceBundle.getBundle("messages");
+
+        MessageFormat format = new MessageFormat("");
+        format.setLocale(locale);
+        format.applyPattern(message.getString(messageCode));
+        return format.format(args);
+    }
+
+    public static List<String> getStringList(String messageCode, Object... args){
+        Locale locale = new Locale("en", "US");
+        ResourceBundle message = ResourceBundle.getBundle("messages");
+
+        MessageFormat format = new MessageFormat("");
+        format.setLocale(locale);
+        format.applyPattern(message.getString(messageCode));
+        return Arrays.asList(format.format(args).split("\\|"));
+    }
 }

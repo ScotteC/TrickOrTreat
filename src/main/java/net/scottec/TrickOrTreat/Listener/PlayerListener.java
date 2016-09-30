@@ -47,37 +47,34 @@ public class PlayerListener implements Listener {
 
 
     @EventHandler
-    public void onPlayerInteract(PlayerInteractEvent evt)
-    {
-        Action action = evt.getAction();
+    public void onPlayerInteract(PlayerInteractEvent evt) {
         Player player = evt.getPlayer();
 
-        if(action == Action.RIGHT_CLICK_AIR || action == Action.RIGHT_CLICK_BLOCK)
-        {
-            if (!player.getItemInHand().hasItemMeta()
-                    || player.getItemInHand() == null
-                    || player.getItemInHand().getType() == Material.BOW)
+        if (evt.getAction() == Action.RIGHT_CLICK_AIR
+                || evt.getAction() == Action.RIGHT_CLICK_BLOCK) {
+            // return if clicking item cant be a ghostshard
+            ItemStack itemInHand = evt.getItem();
+            if (itemInHand == null
+                    || !itemInHand.hasItemMeta()
+                    || !itemInHand.getItemMeta().hasDisplayName()
+                    || itemInHand.getType() == Material.BOW)
                 return;
 
-            if (!(player.getItemInHand().getItemMeta().hasDisplayName()))
-                return;
-
-            ItemStack is = player.getItemInHand();
-
-            if (is.getItemMeta().getDisplayName().equals(
-                    Config.getTxt().getString("ghost.shard.name")))
-            {
-                if(is.getAmount() == 64)
-                {
-                    player.getInventory().removeItem(is);
+            // check if itemInHand is a full stack of 64 ghostshards
+            if (itemInHand.getItemMeta().getDisplayName().equals(
+                    util.getString("GHOST_SHARD_NAME"))) {
+                if (itemInHand.getAmount() == 64) {
+                    // these are enough ghostshards, remove them
+                    player.getInventory().removeItem(itemInHand);
                     player.updateInventory();
-                    adapter.getMySQL().addMoney(player.getName(), 1);
-                    player.sendMessage(
-                            Config.getTxt().getString("ghost.shard.success"));
-                    return;
+                    // give the player a votecoin and some nice message
+                    iToT.getDatabase().addMoney(player.getName(), 1);
+                    player.sendMessage(util.getString("GHOST_SHARD_SUCCESS"));
+                    util.getWorld().playEffect(player.getLocation(), Effect.FIREWORKS_SPARK, 5);
                 }
-                player.sendMessage(
-                        Config.getTxt().getString("ghost.shard.denied"));
+                // not enough shards
+                else
+                    player.sendMessage(util.getString("GHOST_SHARD_DENIED"));
             }
         }
     }

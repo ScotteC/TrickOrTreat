@@ -3,7 +3,7 @@
 #
 
 common:
-  languagefile: "en.yml"
+  locale: "en-US"
   worldname: "world"
 
 request:

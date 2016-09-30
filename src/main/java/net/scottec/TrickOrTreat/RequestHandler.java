@@ -33,8 +33,8 @@ public class RequestHandler {
                 new Request(this.iToT, bob.getUniqueId(), alice.getUniqueId(), this.requestTimeout));
 
         // inform bob and alice about started request
+        alice.sendMessage(util.getString("REQUEST_NEW_ALICE_CLUE"));
 
-        alice.sendMessage(Config.getTxt().getString("request.new.alice.clue"));
 
         // create schedueled task to remove requestobject form map
         new BukkitRunnable()
