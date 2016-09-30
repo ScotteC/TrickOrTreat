@@ -1,4 +1,4 @@
-package net.scottec.TrickOrTreat.Treats;
+package net.scottec.TrickOrTreat.Tricks;
 
 import net.scottec.TrickOrTreat.Config;
 import net.scottec.TrickOrTreat.util;
@@ -9,27 +9,25 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Fabian on 25.10.2015.
+ * Teleport - Trickeffect
+ * The player is teleported to a random location
  */
-public class Teleport implements Treatment
-{
+
+public class Teleport implements Trick {
     private static List<Location> locations = new ArrayList<>();
 
-    public Teleport()
-    {
+    public Teleport() {
         List<String> locStrings = Config.getCfg().getStringList("treat.port");
         Location loc;
 
-        for(String locString : locStrings)
-        {
+        for (String locString : locStrings) {
             loc = util.getLocationFromString(locString);
-            if(loc != null)
+            if (loc != null)
                 locations.add(loc);
         }
     }
 
-    public void effect(Player player)
-    {
-        player.teleport(locations.get((int)(Math.random()*100) % locations.size()));
+    public void effect(Player player) {
+        player.teleport(locations.get((int) (Math.random() * 100) % locations.size()));
     }
 }
