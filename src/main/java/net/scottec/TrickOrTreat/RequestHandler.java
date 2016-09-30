@@ -1,9 +1,5 @@
 package net.scottec.TrickOrTreat;
 
-import de.craftstuebchen.ysl3000.api.messageapi.MessageAPI;
-import de.craftstuebchen.ysl3000.api.messageapi.interfaces.IActionbarManager;
-import de.craftstuebchen.ysl3000.api.messageapi.interfaces.ITitleManager;
-
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -17,10 +13,6 @@ public class RequestHandler {
     private int requestTimeout;
     private long requestCooldown;
 
-    private IActionbarManager actionBar;
-    private ITitleManager titleBar;
-
-
     public RequestHandler(TrickOrTreat.ITrickOrTreat iToT) {
         this.iToT = iToT;
 
@@ -28,9 +20,6 @@ public class RequestHandler {
                 .getInt("request.requestTimeout");
         this.requestCooldown = Config.getCfg()
                 .getLong("request.requestCooldown");
-
-        this.actionBar = MessageAPI.inst().getActionbarManager();
-        this.titleBar = MessageAPI.inst().getTitleManager();
     }
 
 
@@ -44,16 +33,6 @@ public class RequestHandler {
                 new Request(this.iToT, bob.getUniqueId(), alice.getUniqueId(), this.requestTimeout));
 
         // inform bob and alice about started request
-        titleBar.sendTitleMessageHeader(bob,
-                Config.getTxt().getString("request.new.bob.header"));
-        titleBar.sendTitleMessageFooter(bob, String.format(
-                Config.getTxt().getString("request.new.bob.footer"),
-                alice.getDisplayName()));
-        titleBar.sendTitleMessageHeader(alice,
-                Config.getTxt().getString("request.new.alice.header"));
-        titleBar.sendTitleMessageFooter(alice, String.format(
-                Config.getTxt().getString("request.new.alice.footer"),
-                bob.getDisplayName()));
 
         alice.sendMessage(Config.getTxt().getString("request.new.alice.clue"));
 
@@ -97,30 +76,17 @@ public class RequestHandler {
         if (requests.containsKey(bob.getUniqueId())) {
             // check if request is active or on cooldown
             if (!requests.get(bob.getUniqueId()).getStatus())
-        {
-            if (!requests.get(bob).getStatus())
-                actionBar.sendActionBarMessage(bob,
-                        Config.getTxt().getString("request.onlyOne"));
             else
             {
                 long remainCool = requestCooldown -
                         (System.currentTimeMillis()
                                 - requests.get(bob).getRequestTime()) / 1000;
-
-                actionBar.sendActionBarMessage(bob, String.format(
-                        Config.getTxt().getString("request.cooldown"),
-                        remainCool));
             }
         }
         // bob is okay, now check alice
         else if ((requests.containsKey(alice.getUniqueId())         // request found?
                 && !requests.get(alice.getUniqueId()).getStatus())  // request active?
                 || !checkRequests(alice))                           // alice already requested
-        {
-            actionBar.sendActionBarMessage(bob, String.format(
-                    Config.getTxt().getString("request.occupied"),
-                    alice.getDisplayName()));
-        }
 
         // no pending requests, so create one
         else

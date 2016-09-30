@@ -1,9 +1,5 @@
 package net.scottec.TrickOrTreat;
 
-import de.craftstuebchen.ysl3000.api.messageapi.MessageAPI;
-import de.craftstuebchen.ysl3000.api.messageapi.interfaces.IActionbarManager;
-import de.craftstuebchen.ysl3000.api.messageapi.interfaces.ITitleManager;
-
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -27,19 +23,12 @@ public class Request {
     private long time;
     private int countdown;
 
-    private IActionbarManager actionBar;
-    private ITitleManager titleBar;
-
     /*
      * constructor
      * starts also runnable task for countdown
      */
     public Request(TrickOrTreat.ITrickOrTreat iToT,
                    UUID bob, UUID alice, int timeout) {
-
-        this.actionBar = MessageAPI.inst().getActionbarManager();
-        this.titleBar = MessageAPI.inst().getTitleManager();
-
         this.bob = bob;
         this.alice = alice;
 
@@ -56,22 +45,10 @@ public class Request {
             public void run() {
                 Player pBob = Bukkit.getPlayer(bob);
                 Player pAlice = Bukkit.getPlayer(alice);
-                actionBar.sendActionBarMessage(bob,
-                        "&6&l>> &4" + countdown + " &6&l<<");
-                actionBar.sendActionBarMessage(alice,
-                        "&6&l>> &4" + countdown + " &6&l<<");
+
+                pBob.sendMessage("Countdown: " + countdown);
 
                 // cancel task if status is set true
-                if (status)
-                {
-                    titleBar.sendTitleMessageHeader(bob,
-                            Config.getTxt().getString("request.success.bob.header"));
-                    titleBar.sendTitleMessageFooter(bob,
-                            Config.getTxt().getString("request.success.bob.footer"));
-                    titleBar.sendTitleMessageHeader(alice,
-                            Config.getTxt().getString("request.success.alice.header"));
-                    titleBar.sendTitleMessageFooter(alice,
-                            Config.getTxt().getString("request.success.alice.footer"));
                     this.cancel();
                 }
                 // countdown if alice hasnt jet tricked bob
@@ -80,19 +57,6 @@ public class Request {
                     countdown--;
                 }
                 // treat alice if countdown reaches 0 without reaction from alice
-                else if (!status && countdown == 0)
-                {
-                    adapter.getTreat().treat(alice);
-
-                    titleBar.sendTitleMessageHeader(bob,
-                            Config.getTxt().getString("request.denied.bob.header"));
-                    titleBar.sendTitleMessageFooter(bob,
-                            Config.getTxt().getString("request.denied.bob.footer"));
-                    titleBar.sendTitleMessageHeader(alice,
-                            Config.getTxt().getString("request.denied.alice.header"));
-                    titleBar.sendTitleMessageFooter(alice,
-                            Config.getTxt().getString("request.denied.alice.footer"));
-
                     status = true;
                     this.cancel();
                 }
