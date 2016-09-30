@@ -12,7 +12,7 @@ public class TrickOrTreat extends JavaPlugin
 {
     //private static TrickOrTreat plugin;
 
-    private MySQL oMySQL;
+    private Database oDatabase;
     private RequestHandler oRequestHandler;
     private Trick oTrick;
     private Treat oTreat;
