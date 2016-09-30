@@ -10,14 +10,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by Fabian on 22.10.2015.
- */
-public class RequestHandler
-{
-    private TrickOrTreat plugin;
-    private TrickOrTreat.ToTFace adapter;
-
+public class RequestHandler {
+    private TrickOrTreat.ITrickOrTreat iToT;
     private int requestTimeout;
     private long requestCooldown;
 
@@ -26,13 +20,8 @@ public class RequestHandler
 
     public static Map<Player, Request> requests = new HashMap<>();
 
-    /*
-     * constructor
-     */
-    public RequestHandler(TrickOrTreat plugin, TrickOrTreat.ToTFace adapter)
-    {
-        this.plugin = plugin;
-        this.adapter = adapter;
+    public RequestHandler(TrickOrTreat.ITrickOrTreat iToT) {
+        this.iToT = iToT;
 
         this.requestTimeout = Config.getCfg()
                 .getInt("request.requestTimeout");
@@ -76,7 +65,7 @@ public class RequestHandler
             {
                 requests.remove(bob, newRequest);
             }
-        }.runTaskLater(this.plugin, (this.requestCooldown*20));
+        }.runTaskLater(this.iToT.getPlugin(), (this.requestCooldown * 20));
     }
 
 

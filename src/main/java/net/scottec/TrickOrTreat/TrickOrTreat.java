@@ -1,83 +1,103 @@
 package net.scottec.TrickOrTreat;
 
+import net.scottec.TrickOrTreat.Items.Halloweenstick;
 import net.scottec.TrickOrTreat.Listener.EntityListener;
 import net.scottec.TrickOrTreat.Listener.PlayerListener;
-
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
-/**
- * Created by Fabian on 16.10.2015.
- */
-public class TrickOrTreat extends JavaPlugin
-{
-    //private static TrickOrTreat plugin;
-
+public class TrickOrTreat extends JavaPlugin {
+    private TrickOrTreat plugin;
     private Database oDatabase;
     private RequestHandler oRequestHandler;
     private TreatHandler oTreatHandler;
     private TrickHandler oTrickHandler;
     private Ghost oGhost;
+    private CSMessageHandler oCSMessageHandler;
+    private Halloweenstick oHalloweenstick;
+
+    private ITrickOrTreat iTrickOrTreat = new ATrickOrTreat();
 
     @Override
-    public void onEnable()
-    {
+    public void onEnable() {
+        this.plugin = this;
         // load config files
         Config.reloadConfig(this);
-        //plugin = this;
-        createObjects();
+
+        // create objects
+        this.oDatabase = new Database(this.iTrickOrTreat);
+        this.oRequestHandler = new RequestHandler(this.iTrickOrTreat);
+        this.oTreatHandler = new TreatHandler(this.iTrickOrTreat);
+        this.oTrickHandler = new TrickHandler(this.iTrickOrTreat);
+        this.oGhost = new Ghost(this.iTrickOrTreat);
+        new PlayerListener(this.iTrickOrTreat);
+        new EntityListener(this.iTrickOrTreat);
+        this.oHalloweenstick = new Halloweenstick(this.iTrickOrTreat);
+        //this.oCSMessageHandler = new CSMessageHandler();
+        this.oCSMessageHandler = null;
     }
 
     @Override
-    public void onDisable()
-    {
-        oGhost.killAllGhosts();
+    public void onDisable() {
+        this.oGhost.killAllGhosts();
     }
 
-    private void createObjects()
-    {
-        oMySQL = new MySQL(this);
-        oRequestHandler = new RequestHandler(this, new ToTAdapter());
-        oGhost = new Ghost(this, new ToTAdapter());
-        oTrick = new Trick(this, new ToTAdapter());
-        oTreat = new Treat(this);
-        new PlayerListener(this, new ToTAdapter());
-        new EntityListener(this, new ToTAdapter());
+
+    public interface ITrickOrTreat {
+        TrickOrTreat getPlugin();
+
+        Database getDatabase();
+
+        RequestHandler getRequestHandler();
+
+        TreatHandler getTreatHandler();
+
+        TrickHandler getTrickHandler();
+
+        Ghost getGhost();
+
+        CSMessageHandler getCSMessageHandler();
+
+        ItemStack getHalloweenstick();
     }
 
-    private class ToTAdapter implements ToTFace
-    {
+    private class ATrickOrTreat implements ITrickOrTreat {
         @Override
-        public MySQL getMySQL(){
-            return oMySQL;
+        public TrickOrTreat getPlugin() {
+            return plugin;
         }
 
         @Override
-        public RequestHandler getRequestHandler(){
+        public Database getDatabase() {
+            return oDatabase;
+        }
+
+        @Override
+        public RequestHandler getRequestHandler() {
             return oRequestHandler;
         }
 
         @Override
-        public Trick getTrick(){
-            return oTrick;
+        public TreatHandler getTreatHandler() {
+            return oTreatHandler;
         }
 
         @Override
-        public Treat getTreat(){
-            return oTreat;
+        public TrickHandler getTrickHandler() {
+            return oTrickHandler;
         }
 
         @Override
-        public Ghost getGhost(){
+        public Ghost getGhost() {
             return oGhost;
         }
-    }
 
-    public interface ToTFace
-    {
-        MySQL getMySQL();
-        RequestHandler getRequestHandler();
-        Trick getTrick();
-        Treat getTreat();
-        Ghost getGhost();
+        @Override
+        public CSMessageHandler getCSMessageHandler() {
+            return oCSMessageHandler;
+        }
+
+        @Override
+        public ItemStack getHalloweenstick() { return oHalloweenstick.getHalloweenstick(); }
     }
 }

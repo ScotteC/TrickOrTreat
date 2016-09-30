@@ -15,13 +15,9 @@ import java.util.List;
  * Initial idea and code written by Titian, Oct 2014
  * Edited by Fabian, Oct 2015
  */
-public class Ghost
-{
-    private TrickOrTreat plugin;
-    private TrickOrTreat.ToTFace adapter;
-
+public class Ghost {
     private static int ghostSwitch = 0;
-
+    private TrickOrTreat.ITrickOrTreat iToT;
     private long lastSpawn;
     private int spawnCooldown;
     private int maxLived;
@@ -32,11 +28,8 @@ public class Ghost
     private ItemStack ghostscrap;
     private ItemStack coinshard;
 
-
-    public Ghost(TrickOrTreat plugin, TrickOrTreat.ToTFace adapter)
-    {
-        this.plugin = plugin;
-        this.adapter = adapter;
+    public Ghost(TrickOrTreat.ITrickOrTreat iToT) {
+        this.iToT = iToT;
 
         // load config
         this.lastSpawn = System.currentTimeMillis();
@@ -81,7 +74,7 @@ public class Ghost
                     }
                 }
             }
-        }.runTaskTimer(this.plugin, 0L, this.cleanInterval);
+        }.runTaskTimer(this.iToT.getPlugin(), 0L, this.cleanInterval);
     }
 
 
@@ -168,11 +161,9 @@ public class Ghost
                         cnt--;
                     }
                 }
-            }.runTaskTimer(this.plugin, 0, this.dropDelay);
-        }
-        else
-        {
-            util.dropItem(loc, adapter.getTrick().getRndCandy(), 1);
+            }.runTaskTimer(this.iToT.getPlugin(), 0, this.dropDelay);
+        } else {
+            util.dropItem(loc, iToT.getTreatHandler().getRandomTreat(), 1);
             util.dropItem(loc, ghostscrap, 1);
             util.dropItem(loc, coinshard, 3);
         }

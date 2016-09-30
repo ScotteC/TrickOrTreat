@@ -7,19 +7,13 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.entity.EntityDeathEvent;
 
-/**
- * Created by Fabian on 30.10.2015.
- */
-public class EntityListener implements Listener
-{
-    private TrickOrTreat plugin;
-    private TrickOrTreat.ToTFace adapter;
+public class EntityListener implements Listener {
+    private TrickOrTreat.ITrickOrTreat iToT;
 
-    public EntityListener(TrickOrTreat plugin, TrickOrTreat.ToTFace adapter)
-    {
-        this.plugin = plugin;
-        this.adapter = adapter;
-        plugin.getServer().getPluginManager().registerEvents(this, plugin);
+    public EntityListener(TrickOrTreat.ITrickOrTreat iToT) {
+        this.iToT = iToT;
+        this.iToT.getPlugin().getServer().getPluginManager()
+            .registerEvents(this, this.iToT.getPlugin());
     }
 
 

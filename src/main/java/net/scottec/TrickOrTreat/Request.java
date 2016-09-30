@@ -18,9 +18,6 @@ import org.bukkit.scheduler.BukkitRunnable;
  * after specified delay
  *
  */
-public class Request
-{
-    private TrickOrTreat plugin;
 
     private Player bob;
     private Player alice;
@@ -37,10 +34,9 @@ public class Request
      * constructor
      * starts also runnable task for countdown
      */
-    public Request(TrickOrTreat plugin, TrickOrTreat.ToTFace adapter,
+    public Request(TrickOrTreat.ITrickOrTreat iToT,
                    Player bob, Player alice, int timeout)
     {
-        this.plugin = plugin;
 
         this.actionBar = MessageAPI.inst().getActionbarManager();
         this.titleBar = MessageAPI.inst().getTitleManager();
@@ -102,7 +98,7 @@ public class Request
                     this.cancel();
                 }
             }
-        }.runTaskTimer(this.plugin, 0L, 20L);
+        }.runTaskTimer(iToT.getPlugin(), 0L, 20L);
         // run task every second without delay until cancelled
     }
 
