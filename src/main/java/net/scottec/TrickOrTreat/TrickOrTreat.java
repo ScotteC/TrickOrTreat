@@ -14,8 +14,8 @@ public class TrickOrTreat extends JavaPlugin
 
     private Database oDatabase;
     private RequestHandler oRequestHandler;
-    private Trick oTrick;
-    private Treat oTreat;
+    private TreatHandler oTreatHandler;
+    private TrickHandler oTrickHandler;
     private Ghost oGhost;
 
     @Override
