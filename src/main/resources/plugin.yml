@@ -1,5 +1,7 @@
 name: TrickOrTreat
-version: 1.2.3
+version: 2.0
 author: scottec
 description:
+depend:
 main: net.scottec.TrickOrTreat.TrickOrTreat
+

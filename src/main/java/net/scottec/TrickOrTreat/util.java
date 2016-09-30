@@ -4,19 +4,17 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
-import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.text.MessageFormat;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
+import java.util.ResourceBundle;
 
-/**
- * Created by Fabian on 29.10.2015.
- */
-public class util
-{
-    public static ItemStack createItemStack(String name, Material item, List<String> lore)
-    {
+public class util {
+    public static ItemStack createItemStack(String name, Material item, List<String> lore) {
         ItemStack is = new ItemStack(item);
         ItemMeta im = is.getItemMeta();
         im.setDisplayName(name);
@@ -26,34 +24,20 @@ public class util
         return is;
     }
 
-    public static void dropItem(Location loc, ItemStack item, int amount)
-    {
+    public static void dropItem(Location loc, ItemStack item, int amount) {
         item.setAmount(amount);
         getWorld().dropItemNaturally(loc, item);
     }
 
-    public static World getWorld()
-    {
+    public static World getWorld() {
         return Bukkit.getServer().getWorld(
                 Config.getCfg().getString("common.worldname"));
     }
 
-    public static void giveHalloweenstick(Player player)
-    {
-        ItemStack halloweenstick = createItemStack(
-                Config.getTxt().getString("halloweenstick.name"),
-                Material.BLAZE_ROD,
-                Config.getTxt().getStringList("halloweenstick.lore"));
 
-        if (!(player.getInventory().containsAtLeast(halloweenstick, 1)))
-            player.getInventory().addItem(halloweenstick);
-    }
-
-    public static Location getLocationFromString(String locString)
-    {
+    public static Location getLocationFromString(String locString) {
         String[] split = locString.split(":");
-        if(split.length == 5)
-        {
+        if (split.length == 5) {
             return new Location(util.getWorld(),
                     Double.parseDouble(split[0]),
                     Double.parseDouble(split[1]),

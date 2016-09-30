@@ -10,7 +10,6 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.List;
 
-
 /**
  * Initial idea and code written by Titian, Oct 2014
  * Edited by Fabian, Oct 2015
@@ -50,24 +49,19 @@ public class Ghost {
                 util.getStringList("GHOST_SHARD_LORE"));
 
         // scheduled task to remove old ghosts an wake up bats
-        new BukkitRunnable()
-        {
+        new BukkitRunnable() {
             @Override
-            public void run()
-            {
+            public void run() {
                 List<Entity> entities = util.getWorld().getEntities();
 
-                for(Entity entity : entities)
-                {
-                    if (entity instanceof LivingEntity)
-                    {
-                        if((entity.getType().equals(EntityType.SKELETON)
-                            || entity.getType().equals(EntityType.CREEPER)
-                            || entity.getType().equals(EntityType.BAT))
-                            && entity.getTicksLived() >= maxLived )
+                for (Entity entity : entities) {
+                    if (entity instanceof LivingEntity) {
+                        if ((entity.getType().equals(EntityType.SKELETON)
+                                || entity.getType().equals(EntityType.CREEPER)
+                                || entity.getType().equals(EntityType.BAT))
+                                && entity.getTicksLived() >= maxLived)
                             entity.remove();
-                        if (entity.getType().equals(EntityType.BAT))
-                        {
+                        if (entity.getType().equals(EntityType.BAT)) {
                             Bat bat = (Bat) entity;
                             bat.setAwake(true);
                         }
@@ -77,9 +71,7 @@ public class Ghost {
         }.runTaskTimer(this.iToT.getPlugin(), 0L, this.cleanInterval);
     }
 
-
-    public void spawnGhost()
-    {
+    public void spawnGhost() {
         if ((System.currentTimeMillis() - lastSpawn) < spawnCooldown)
             return;
 
@@ -94,10 +86,8 @@ public class Ghost {
         carrier.addPotionEffect(new PotionEffect(
                 PotionEffectType.INVISIBILITY, 99999, 1));
 
-        switch (ghostSwitch)
-        {
-            case 0:
-            {
+        switch (ghostSwitch) {
+            case 0: {
                 LivingEntity passenger = (LivingEntity) util.getWorld()
                         .spawnEntity(loc, EntityType.SKELETON);
 
@@ -107,15 +97,14 @@ public class Ghost {
                         new ItemStack(Material.PUMPKIN));
                 passenger.getEquipment().setChestplate(
                         new ItemStack(Material.CHAINMAIL_CHESTPLATE));
-                passenger.getEquipment().setItemInHand(
+                passenger.getEquipment().setItemInMainHand(
                         new ItemStack(Material.GHAST_TEAR));
                 carrier.setPassenger(passenger);
                 ghostSwitch++;
                 break;
             }
 
-            case 1:
-            {
+            case 1: {
                 Creeper creeper = (Creeper) util.getWorld()
                         .spawnEntity(loc, EntityType.CREEPER);
                 creeper.addPotionEffect(new PotionEffect(
@@ -126,8 +115,7 @@ public class Ghost {
                 break;
             }
 
-            case 2:
-            {
+            case 2: {
                 carrier.removePotionEffect(PotionEffectType.INVISIBILITY);
                 ghostSwitch = 0;
                 break;
@@ -135,26 +123,20 @@ public class Ghost {
         }
     }
 
-
-    public void spawnDrops(LivingEntity entity, Boolean runnable)
-    {
+    public void spawnDrops(LivingEntity entity, Boolean runnable) {
         Location loc = entity.getLocation();
 
-        if (runnable)
-        {
-            new BukkitRunnable()
-            {
+        if (runnable) {
+            new BukkitRunnable() {
                 int cnt = dropCount;
 
                 @Override
-                public void run()
-                {
-                    if(cnt == 0)
+                public void run() {
+                    if (cnt == 0)
                         this.cancel();
-                    else
-                    {
+                    else {
                         if (cnt % 3 == 0)
-                            util.dropItem(loc, adapter.getTrick().getRndCandy(), 1);
+                            util.dropItem(loc, iToT.getTreatHandler().getRandomTreat(), 1);
 
                         util.dropItem(loc, ghostscrap, 2);
                         util.dropItem(loc, coinshard, 2);
@@ -169,18 +151,13 @@ public class Ghost {
         }
     }
 
-
-    public void killAllGhosts()
-    {
-        List<Entity> entities = util.getWorld().getEntities();
-
-        for(Entity entity : entities)
-        {
+    public void killAllGhosts() {
+        util.getWorld().getEntities().forEach(entity -> {
             if (entity instanceof LivingEntity
                     && (entity.getType().equals(EntityType.SKELETON)
                     || entity.getType().equals(EntityType.CREEPER)
                     || entity.getType().equals(EntityType.BAT)))
                 entity.remove();
-        }
+        });
     }
 }

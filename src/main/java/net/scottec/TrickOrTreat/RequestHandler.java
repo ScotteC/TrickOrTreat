@@ -11,7 +11,7 @@ public class RequestHandler {
     private Map<UUID, Request> requests = new HashMap<>();
     private TrickOrTreat.ITrickOrTreat iToT;
     private int requestTimeout;
-    private long requestCooldown;
+    private int requestCooldown;
 
     public RequestHandler(TrickOrTreat.ITrickOrTreat iToT) {
         this.iToT = iToT;
@@ -19,9 +19,8 @@ public class RequestHandler {
         this.requestTimeout = Config.getCfg()
                 .getInt("request.requestTimeout");
         this.requestCooldown = Config.getCfg()
-                .getLong("request.requestCooldown");
+                .getInt("request.requestCooldown");
     }
-
 
     /*
      * register request creating instance if ToTRequest to save involved
@@ -36,13 +35,11 @@ public class RequestHandler {
         alice.sendMessage(util.getString("REQUEST_NEW_ALICE_CLUE"));
 
 
-        // create schedueled task to remove requestobject form map
-        new BukkitRunnable()
-        {
+        // create schedueled task to remove requestobject from map
+        new BukkitRunnable() {
             @Override
-            public void run()
-            {
-                requests.remove(bob, newRequest);
+            public void run() {
+                requests.remove(bob.getUniqueId());
             }
         }.runTaskLater(this.iToT.getPlugin(), (this.requestCooldown * 20));
     }
@@ -76,11 +73,10 @@ public class RequestHandler {
         if (requests.containsKey(bob.getUniqueId())) {
             // check if request is active or on cooldown
             if (!requests.get(bob.getUniqueId()).getStatus())
-            else
-            {
-                long remainCool = requestCooldown -
-                        (System.currentTimeMillis()
-                                - requests.get(bob).getRequestTime()) / 1000;
+            else {
+                // cooldown on next request
+                long remainCool = requestCooldown - (System.currentTimeMillis()
+                                - requests.get(bob.getUniqueId()).getRequestTime()) / 1000;
             }
         }
         // bob is okay, now check alice
@@ -90,8 +86,6 @@ public class RequestHandler {
 
         // no pending requests, so create one
         else
-        {
             createRequest(bob, alice);
-        }
     }
 }

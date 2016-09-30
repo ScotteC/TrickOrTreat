@@ -46,6 +46,11 @@ public class PlayerListener implements Listener {
     }
 
 
+
+    /**
+     * Transfer ghostshards to votecoins
+     * @param evt : PlayerInteractEvent
+     */
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent evt) {
         Player player = evt.getPlayer();
@@ -79,44 +84,58 @@ public class PlayerListener implements Listener {
         }
     }
 
-
+    /**
+     * A Player eats something, check if its some candy
+     * @param evt : PlayerItemConsumeEvent
+     */
     @EventHandler
-    public void onPlayerConsume(PlayerItemConsumeEvent evt)
-    {
-        Player player = evt.getPlayer();
-
-        if(player.getItemInHand().hasItemMeta())
-            adapter.getTrick().eatCandy(player);
+    public void onPlayerConsume(PlayerItemConsumeEvent evt) {
+        if (evt.getItem().hasItemMeta() && evt.getItem().getItemMeta().hasDisplayName())
+            iToT.getTreatHandler().eatTreaty(evt.getPlayer(), evt.getItem());
     }
 
-
+    /**
+     * Hold Player on constant FoodLevel, so he can
+     * always eat some candy
+     * @param evt : FoodLevelChangeEvent
+     */
     @EventHandler
-    public void onFoodChange(FoodLevelChangeEvent evt)
-    {
-        if (evt.getEntity() instanceof Player)
-        {
+    public void onFoodChange(FoodLevelChangeEvent evt) {
+        if (evt.getEntity() instanceof Player) {
             evt.setFoodLevel(19);
         }
     }
 
-
+    /**
+     * If a Player respawns after death, give him a new Halloweenstick
+     * and reset foodlevel and saturation
+     * @param evt : PlayerRespawnEvent
+     */
     @EventHandler
-    public void onPlayerRespawn(PlayerRespawnEvent evt)
-    {
+    public void onPlayerRespawn(PlayerRespawnEvent evt) {
         evt.getPlayer().setSaturation(1);
         evt.getPlayer().setFoodLevel(19);
-        util.giveHalloweenstick(evt.getPlayer());
+
+        ItemStack stick = this.iToT.getHalloweenstick();
+        if (!evt.getPlayer().getInventory().containsAtLeast(stick, 1))
+            evt.getPlayer().getInventory().addItem(stick);
     }
 
-
+    /**
+     * Give a Halloweenstick to joined Player
+     * and spawn a new ghost
+     * @param evt : PlayerJoinEvent
+     */
     @EventHandler
-    public void onPlayerJoin(PlayerJoinEvent evt)
-    {
-        util.giveHalloweenstick(evt.getPlayer());
-
-        adapter.getGhost().spawnGhost();
-
+    public void onPlayerJoin(PlayerJoinEvent evt) {
+        this.iToT.getGhost().spawnGhost();
         evt.getPlayer().setSaturation(1);
         evt.getPlayer().setFoodLevel(19);
+        this.iToT.getTreatHandler().addAllTreats(evt.getPlayer());
+
+        evt.getPlayer().getInventory().addItem(this.iToT.getHalloweenstick());
+        ItemStack stick = this.iToT.getHalloweenstick();
+        if (!evt.getPlayer().getInventory().containsAtLeast(stick, 1))
+            evt.getPlayer().getInventory().addItem(stick);
     }
 }

@@ -1,5 +1,6 @@
 package net.scottec.TrickOrTreat;
 
+import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -8,12 +9,11 @@ import java.util.UUID;
 /**
  * Created by Fabian on 22.10.2015.
  *
- * Defines a Trick Or Treat-Request from player Bob to player Alice
+ * Defines a TreatHandler Or TrickHandler-Request from player Bob to player Alice
  *
  * On construction a new task is scheduled to represent the countdown
  * Request-Object will be deleted by another task scheduled by RequestHandler
  * after specified delay
- *
  */
 
 public class Request {
@@ -52,8 +52,7 @@ public class Request {
                     this.cancel();
                 }
                 // countdown if alice hasnt jet tricked bob
-                else if (!status && countdown > 0)
-                {
+                else if (!status && countdown > 0) {
                     countdown--;
                 }
                 // treat alice if countdown reaches 0 without reaction from alice
@@ -74,9 +73,16 @@ public class Request {
         return alice;
     }
 
-    public long getRequestTime() {return this.time;}
-    public boolean getStatus() {return this.status;}
+    public long getRequestTime() {
+        return this.time;
+    }
+
+    public boolean getStatus() {
+        return this.status;
+    }
 
     // Setter
-    public void setStatus(Boolean status) {this.status = status;}
+    public void setStatus(Boolean status) {
+        this.status = status;
+    }
 }
