@@ -51,7 +51,7 @@ public class TreatHandler {
 
 
     public void shareTreat(Player alice, Player bob, EquipmentSlot hand) {
-        Request request = iToT.getRequestHandler().checkRequest(bob, alice);
+        Request request = iToT.getRequestHandler().getRequest(bob, alice);
 
         if (request != null && !request.getStatus()) {
             // find item in hand

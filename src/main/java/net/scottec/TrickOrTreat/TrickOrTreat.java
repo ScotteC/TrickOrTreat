@@ -1,6 +1,6 @@
 package net.scottec.TrickOrTreat;
 
-import net.scottec.TrickOrTreat.Items.Halloweenstick;
+//import net.scottec.TrickOrTreat.Items.Halloweenstick;
 import net.scottec.TrickOrTreat.Listener.EntityListener;
 import net.scottec.TrickOrTreat.Listener.PlayerListener;
 import org.bukkit.inventory.ItemStack;
@@ -13,8 +13,8 @@ public class TrickOrTreat extends JavaPlugin {
     private TreatHandler oTreatHandler;
     private TrickHandler oTrickHandler;
     private Ghost oGhost;
-    private CSMessageHandler oCSMessageHandler;
-    private Halloweenstick oHalloweenstick;
+//    private CSMessageHandler oCSMessageHandler;
+//    private Halloweenstick oHalloweenstick;
 
     private ITrickOrTreat iTrickOrTreat = new ATrickOrTreat();
 
@@ -32,9 +32,9 @@ public class TrickOrTreat extends JavaPlugin {
         this.oGhost = new Ghost(this.iTrickOrTreat);
         new PlayerListener(this.iTrickOrTreat);
         new EntityListener(this.iTrickOrTreat);
-        this.oHalloweenstick = new Halloweenstick(this.iTrickOrTreat);
-        //this.oCSMessageHandler = new CSMessageHandler();
-        this.oCSMessageHandler = null;
+//        this.oHalloweenstick = new Halloweenstick(this.iTrickOrTreat);
+//        this.oCSMessageHandler = new CSMessageHandler();
+//        this.oCSMessageHandler = null;
     }
 
     @Override
@@ -56,9 +56,9 @@ public class TrickOrTreat extends JavaPlugin {
 
         Ghost getGhost();
 
-        CSMessageHandler getCSMessageHandler();
+//        CSMessageHandler getCSMessageHandler();
 
-        ItemStack getHalloweenstick();
+//        ItemStack getHalloweenstick();
     }
 
     private class ATrickOrTreat implements ITrickOrTreat {
@@ -92,12 +92,12 @@ public class TrickOrTreat extends JavaPlugin {
             return oGhost;
         }
 
-        @Override
-        public CSMessageHandler getCSMessageHandler() {
-            return oCSMessageHandler;
-        }
+//        @Override
+//        public CSMessageHandler getCSMessageHandler() {
+//            return oCSMessageHandler;
+//        }
 
-        @Override
-        public ItemStack getHalloweenstick() { return oHalloweenstick.getHalloweenstick(); }
+//        @Override
+//        public ItemStack getHalloweenstick() { return oHalloweenstick.getHalloweenstick(); }
     }
 }

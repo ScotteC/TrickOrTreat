@@ -39,25 +39,26 @@ public class Request {
         this.time = System.currentTimeMillis();
         this.countdown = timeout;
 
-        // create new task to handle countdown until treatment
+        // create new task to handle countdown until trick, abort if treated
         new BukkitRunnable() {
             @Override
             public void run() {
-                Player pBob = Bukkit.getPlayer(bob);
-                Player pAlice = Bukkit.getPlayer(alice);
+                Bukkit.getPlayer(bob).sendMessage("Countdown: " + countdown);
+                Bukkit.getPlayer(alice).sendMessage("Countdown: " + countdown);
 
-                pBob.sendMessage("Countdown: " + countdown);
-
-                // cancel task if status is set true
+                // cancel task and finish request if status is set true
+                if (status) {
                     this.cancel();
+                    finish();
                 }
-                // countdown if alice hasnt jet tricked bob
+                // countdown if alice hasnt jet treated bob
                 else if (!status && countdown > 0) {
                     countdown--;
                 }
-                // treat alice if countdown reaches 0 without reaction from alice
-                    status = true;
+                // finish request on countdown reaching 0
+                else if (countdown == 0) {
                     this.cancel();
+                    finish();
                 }
             }
         }.runTaskTimer(iToT.getPlugin(), 0L, 20L);
@@ -84,5 +85,17 @@ public class Request {
     // Setter
     public void setStatus(Boolean status) {
         this.status = status;
+    }
+
+    private void finish() {
+        Player pBob = Bukkit.getPlayer(bob);
+        Player pAlice = Bukkit.getPlayer(alice);
+
+        if (status){
+            pBob.sendMessage(util.getString("REQUEST_SUCCESS_BOB_TITLE"));
+            pAlice.sendMessage(util.getString("REQUEST_SUCCESS_ALICE_TITLE"));
+
+
+        }
     }
 }

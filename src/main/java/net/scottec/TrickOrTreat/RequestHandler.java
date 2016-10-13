@@ -30,10 +30,10 @@ public class RequestHandler {
     private void createRequest(Player bob, Player alice) {
         requests.put(bob.getUniqueId(),
                 new Request(this.iToT, bob.getUniqueId(), alice.getUniqueId(), this.requestTimeout));
-
         // inform bob and alice about started request
+        bob.sendMessage(util.getString("REQUEST_NEW_BOB_TITLE"));
+        alice.sendMessage(util.getString("REQUEST_NEW_ALICE_TITLE"));
         alice.sendMessage(util.getString("REQUEST_NEW_ALICE_CLUE"));
-
 
         // create schedueled task to remove requestobject from map
         new BukkitRunnable() {
@@ -47,7 +47,7 @@ public class RequestHandler {
     /**
      * check if theres a request from bob on alice
      */
-    public Request checkRequest(Player bob, Player alice) {
+    public Request getRequest(Player bob, Player alice) {
         Request request = requests.get(bob.getUniqueId());
         if (request != null && request.getAlice().equals(alice.getUniqueId()))
             return request;
@@ -73,17 +73,19 @@ public class RequestHandler {
         if (requests.containsKey(bob.getUniqueId())) {
             // check if request is active or on cooldown
             if (!requests.get(bob.getUniqueId()).getStatus())
+                bob.sendMessage(util.getString("REQUEST_ONLY_ONE"));
             else {
                 // cooldown on next request
                 long remainCool = requestCooldown - (System.currentTimeMillis()
                                 - requests.get(bob.getUniqueId()).getRequestTime()) / 1000;
+                bob.sendMessage(util.getString("REQUEST_COOLDOWN", remainCool));
             }
         }
         // bob is okay, now check alice
         else if ((requests.containsKey(alice.getUniqueId())         // request found?
                 && !requests.get(alice.getUniqueId()).getStatus())  // request active?
                 || !checkRequests(alice))                           // alice already requested
-
+            bob.sendMessage(util.getString("REQUEST_OCCUPIED", alice.getDisplayName()));
         // no pending requests, so create one
         else
             createRequest(bob, alice);
