@@ -1,6 +1,9 @@
 package net.scottec.TrickOrTreat.Listener;
 
 import net.scottec.TrickOrTreat.*;
+import net.scottec.TrickOrTreat.Items.Halloweenstick.Halloweenstick;
+import net.scottec.TrickOrTreat.Items.Halloweenstick.HalloweenstickEvent;
+import org.bukkit.Effect;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -19,33 +22,14 @@ public class PlayerListener implements Listener {
                 .registerEvents(this, this.iToT.getPlugin());
     }
 
-
+    /**
+     * Someone rightclicked someone other with an halloweenstick
+     * @param event : HalloweenstickEvent (custom)
+     */
     @EventHandler
-    public void onPlayerInteractEntity(PlayerInteractEntityEvent evt)
-    {
-        if((evt.getRightClicked() instanceof Player)
-                && evt.getPlayer().getItemInHand().hasItemMeta())
-        {
-            if (!(evt.getPlayer().getItemInHand().getItemMeta().hasDisplayName()))
-                return;
-
-            if(evt.getPlayer().getItemInHand().getItemMeta().getDisplayName()
-                    .equals(Config.getTxt().getString("halloweenstick.name")))
-            {
-                adapter.getRequestHandler().prepareRequest(evt.getPlayer(),
-                        (Player) evt.getRightClicked());
-            }
-
-            else if (adapter.getTrick().getCandyByName(evt.getPlayer().getItemInHand()
-                    .getItemMeta().getDisplayName()) != null)
-            {
-                adapter.getTrick().shareCandy(evt.getPlayer(),
-                        (Player) evt.getRightClicked());
-            }
-        }
+    public void onHalloweenstickEvent(HalloweenstickEvent event) {
+        this.iToT.getRequestHandler().prepareRequest(event.getPlayer(), event.getTarget());
     }
-
-
 
     /**
      * Transfer ghostshards to votecoins
@@ -116,7 +100,7 @@ public class PlayerListener implements Listener {
         evt.getPlayer().setSaturation(1);
         evt.getPlayer().setFoodLevel(19);
 
-        ItemStack stick = this.iToT.getHalloweenstick();
+        ItemStack stick = new Halloweenstick();
         if (!evt.getPlayer().getInventory().containsAtLeast(stick, 1))
             evt.getPlayer().getInventory().addItem(stick);
     }
@@ -131,11 +115,12 @@ public class PlayerListener implements Listener {
         this.iToT.getGhost().spawnGhost();
         evt.getPlayer().setSaturation(1);
         evt.getPlayer().setFoodLevel(19);
-        this.iToT.getTreatHandler().addAllTreats(evt.getPlayer());
 
-        evt.getPlayer().getInventory().addItem(this.iToT.getHalloweenstick());
-        ItemStack stick = this.iToT.getHalloweenstick();
+        ItemStack stick = new Halloweenstick();
         if (!evt.getPlayer().getInventory().containsAtLeast(stick, 1))
             evt.getPlayer().getInventory().addItem(stick);
+
+        // dev
+        this.iToT.getTreatHandler().addAllTreats(evt.getPlayer());
     }
 }
