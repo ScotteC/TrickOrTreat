@@ -58,6 +58,8 @@ public class TreatHandler {
 
 
     public void shareTreat(Player alice, Player bob, EquipmentSlot hand) {
+        System.out.println("Share candy: " + alice.getDisplayName() + " -> " + bob.getDisplayName());
+
         Request request = iToT.getRequestHandler().getRequest(bob, alice);
 
         if (request != null && !request.getStatus()) {
