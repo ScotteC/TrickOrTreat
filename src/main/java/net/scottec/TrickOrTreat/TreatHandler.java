@@ -37,6 +37,13 @@ public class TreatHandler {
                 .getItem();
     }
 
+    public Treat getTreatByItem(ItemStack stack) {
+        for(Treat treat : treats)
+            if (treat.getItem().isSimilar(stack))
+                return treat;
+        return null;
+    }
+
     public Treat getTreatByName(String name) {
         for (Treat treat : treats)
             if (treat.getName().equals(name))
@@ -83,7 +90,7 @@ public class TreatHandler {
     }
 
     public void eatTreaty(Player bob, ItemStack item) {
-        Treat getTreat = getTreatByName(item.getItemMeta().getDisplayName());
+        Treat getTreat = getTreatByItem(item);
         if (getTreat != null) {
             // call effect method
             getTreat.effect(bob);

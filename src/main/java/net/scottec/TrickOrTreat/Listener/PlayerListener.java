@@ -11,6 +11,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.entity.FoodLevelChangeEvent;
 import org.bukkit.event.player.*;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 
 public class PlayerListener implements Listener {
@@ -30,6 +31,21 @@ public class PlayerListener implements Listener {
     public void onHalloweenstickEvent(HalloweenstickEvent event) {
         this.iToT.getRequestHandler().prepareRequest(event.getPlayer(), event.getTarget());
     }
+
+    @EventHandler
+    public void onPlayerInteractEntity(PlayerInteractEntityEvent event){
+        if (event.getRightClicked() instanceof Player) {
+            if(event.getHand() == EquipmentSlot.HAND
+                    && iToT.getTreatHandler().getTreatByItem(event.getPlayer().getInventory().getItemInMainHand()) == null)
+                return;
+            if(event.getHand() == EquipmentSlot.OFF_HAND
+                    && iToT.getTreatHandler().getTreatByItem(event.getPlayer().getInventory().getItemInOffHand()) == null)
+                return;
+
+            this.iToT.getTreatHandler().shareTreat(event.getPlayer(), (Player)event.getRightClicked(), event.getHand());
+        }
+    }
+
 
     /**
      * Transfer ghostshards to votecoins
@@ -70,12 +86,12 @@ public class PlayerListener implements Listener {
 
     /**
      * A Player eats something, check if its some candy
-     * @param evt : PlayerItemConsumeEvent
+     * @param event : PlayerItemConsumeEvent
      */
     @EventHandler
-    public void onPlayerConsume(PlayerItemConsumeEvent evt) {
-        if (evt.getItem().hasItemMeta() && evt.getItem().getItemMeta().hasDisplayName())
-            iToT.getTreatHandler().eatTreaty(evt.getPlayer(), evt.getItem());
+    public void onPlayerConsume(PlayerItemConsumeEvent event) {
+        if (this.iToT.getTreatHandler().getTreatByItem(event.getItem()) != null)
+            iToT.getTreatHandler().eatTreaty(event.getPlayer(), event.getItem());
     }
 
     /**
