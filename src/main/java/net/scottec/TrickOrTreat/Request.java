@@ -1,6 +1,7 @@
 package net.scottec.TrickOrTreat;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Effect;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -9,7 +10,7 @@ import java.util.UUID;
 /**
  * Created by Fabian on 22.10.2015.
  *
- * Defines a TreatHandler Or TrickHandler-Request from player Bob to player Alice
+ * Defines a TrickOrTreat-Request from player Bob to player Alice
  *
  * On construction a new task is scheduled to represent the countdown
  * Request-Object will be deleted by another task scheduled by RequestHandler
@@ -43,13 +44,16 @@ public class Request {
         new BukkitRunnable() {
             @Override
             public void run() {
-                Bukkit.getPlayer(bob).sendMessage("Countdown: " + countdown);
-                Bukkit.getPlayer(alice).sendMessage("Countdown: " + countdown);
+                Player pBob = Bukkit.getPlayer(bob);
+                Player pAlice = Bukkit.getPlayer(alice);
+                pBob.sendMessage("Countdown: " + countdown);
+                pAlice.sendMessage("Countdown: " + countdown);
 
                 // cancel task and finish request if status is set true
                 if (status) {
                     this.cancel();
-                    finish();
+                    pBob.sendMessage(util.getString("REQUEST_SUCCESS_BOB_TITLE"));
+                    pAlice.sendMessage(util.getString("REQUEST_SUCCESS_ALICE_TITLE"));
                 }
                 // countdown if alice hasnt jet treated bob
                 else if (!status && countdown > 0) {
@@ -58,7 +62,9 @@ public class Request {
                 // finish request on countdown reaching 0
                 else if (countdown == 0) {
                     this.cancel();
-                    finish();
+                    pBob.sendMessage(util.getString("REQUEST_DENIED_BOB_TITLE"));
+                    pAlice.sendMessage(util.getString("REQUEST_DENIED_ALICE_TITLE"));
+                    iToT.getTrickHandler().trick(pAlice);
                 }
             }
         }.runTaskTimer(iToT.getPlugin(), 0L, 20L);
@@ -85,17 +91,5 @@ public class Request {
     // Setter
     public void setStatus(Boolean status) {
         this.status = status;
-    }
-
-    private void finish() {
-        Player pBob = Bukkit.getPlayer(bob);
-        Player pAlice = Bukkit.getPlayer(alice);
-
-        if (status){
-            pBob.sendMessage(util.getString("REQUEST_SUCCESS_BOB_TITLE"));
-            pAlice.sendMessage(util.getString("REQUEST_SUCCESS_ALICE_TITLE"));
-
-
-        }
     }
 }
