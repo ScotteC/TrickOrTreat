@@ -17,12 +17,12 @@ public class TrickHandler {
         treats.add(new Lightning());
     }
 
-    public void treat(Player player) {
+    public void trick(Player player) {
         treats.get(((int) (Math.random() * 100)) % treats.size())
                 .effect(player);
     }
 
-    public void treat(Player player, Trick trick) {
+    public void trick(Player player, Trick trick) {
         trick.effect(player);
     }
 }
