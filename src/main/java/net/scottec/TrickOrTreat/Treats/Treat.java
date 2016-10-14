@@ -8,8 +8,8 @@ import org.bukkit.inventory.ItemStack;
 import java.util.List;
 
 public abstract class Treat {
-    protected String name;
-    protected ItemStack item;
+    private String name;
+    private ItemStack item;
 
     public Treat(String name, Material material, List<String> lore) {
         this.name = name;
