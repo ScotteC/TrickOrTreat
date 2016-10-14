@@ -15,4 +15,11 @@ public class Halloweenstick extends ItemStack {
         this.setItemMeta(im);
         this.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 5);
     }
+
+    @Override
+    public boolean isSimilar(ItemStack stack) {
+        ItemStack clone = stack.clone();
+        clone.setAmount(1);
+        return clone.hashCode() == this.hashCode();
+    }
 }
