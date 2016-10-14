@@ -1,9 +1,8 @@
 package net.scottec.TrickOrTreat;
 
-//import net.scottec.TrickOrTreat.Items.Halloweenstick;
 import net.scottec.TrickOrTreat.Listener.EntityListener;
+import net.scottec.TrickOrTreat.Listener.ItemListeners;
 import net.scottec.TrickOrTreat.Listener.PlayerListener;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class TrickOrTreat extends JavaPlugin {
@@ -14,7 +13,6 @@ public class TrickOrTreat extends JavaPlugin {
     private TrickHandler oTrickHandler;
     private Ghost oGhost;
 //    private CSMessageHandler oCSMessageHandler;
-//    private Halloweenstick oHalloweenstick;
 
     private ITrickOrTreat iTrickOrTreat = new ATrickOrTreat();
 
@@ -32,7 +30,7 @@ public class TrickOrTreat extends JavaPlugin {
         this.oGhost = new Ghost(this.iTrickOrTreat);
         new PlayerListener(this.iTrickOrTreat);
         new EntityListener(this.iTrickOrTreat);
-//        this.oHalloweenstick = new Halloweenstick(this.iTrickOrTreat);
+        new ItemListeners(this.iTrickOrTreat);
 //        this.oCSMessageHandler = new CSMessageHandler();
 //        this.oCSMessageHandler = null;
     }
@@ -57,8 +55,6 @@ public class TrickOrTreat extends JavaPlugin {
         Ghost getGhost();
 
 //        CSMessageHandler getCSMessageHandler();
-
-//        ItemStack getHalloweenstick();
     }
 
     private class ATrickOrTreat implements ITrickOrTreat {
@@ -96,8 +92,5 @@ public class TrickOrTreat extends JavaPlugin {
 //        public CSMessageHandler getCSMessageHandler() {
 //            return oCSMessageHandler;
 //        }
-
-//        @Override
-//        public ItemStack getHalloweenstick() { return oHalloweenstick.getHalloweenstick(); }
     }
 }
