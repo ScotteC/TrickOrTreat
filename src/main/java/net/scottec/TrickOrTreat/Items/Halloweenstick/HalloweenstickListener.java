@@ -7,28 +7,27 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.EquipmentSlot;
 
-/**
- * Created by Fabian on 04.10.2016.
- */
+
 public class HalloweenstickListener  implements Listener {
-    TrickOrTreat.ITrickOrTreat iToT;
+    private TrickOrTreat.ITrickOrTreat iToT;
+    private Halloweenstick halloweenstick;
+
     public HalloweenstickListener(TrickOrTreat.ITrickOrTreat iToT) {
         this.iToT = iToT;
+        this.halloweenstick = new Halloweenstick();
         this.iToT.getPlugin().getServer().getPluginManager().registerEvents(this, this.iToT.getPlugin());
     }
 
     @EventHandler
-    public void onPlayerInteractEntity(PlayerInteractEntityEvent event) {
-        if (event.getRightClicked() instanceof Player
-            && ( (event.getHand().equals(EquipmentSlot.HAND)
-                    && event.getPlayer().getInventory().getItemInMainHand().isSimilar(new Halloweenstick()) )
-                || (event.getHand().equals(EquipmentSlot.OFF_HAND)
-                    && event.getPlayer().getInventory().getItemInOffHand().isSimilar(new Halloweenstick()) ) )) {
-            this.iToT.getPlugin().getServer().getPluginManager().callEvent(
-                    new HalloweenstickEvent(event.getPlayer(), (Player) event.getRightClicked(), event.getHand()));
-
+    public void onPlayerInteractEntityHand(PlayerInteractEntityEvent event) {
+        if (event.getRightClicked() instanceof Player) {
+            if ((event.getHand() == EquipmentSlot.HAND
+                    && this.halloweenstick.isSimilar(event.getPlayer().getInventory().getItemInMainHand()))
+                    || (event.getHand() == EquipmentSlot.OFF_HAND
+                    && this.halloweenstick.isSimilar(event.getPlayer().getInventory().getItemInOffHand())))
+                this.iToT.getPlugin().getServer().getPluginManager().callEvent(
+                        new HalloweenstickEvent(event.getPlayer(), (Player) event.getRightClicked()));
         }
     }
-
-
 }
+
