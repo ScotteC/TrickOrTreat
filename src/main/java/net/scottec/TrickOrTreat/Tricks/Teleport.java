@@ -14,10 +14,10 @@ import java.util.List;
  */
 
 public class Teleport implements Trick {
-    private static List<Location> locations = new ArrayList<>();
+    private List<Location> locations = new ArrayList<>();
 
     public Teleport() {
-        List<String> locStrings = Config.getCfg().getStringList("treat.port");
+        List<String> locStrings = Config.getCfg().getStringList("trick.port");
         Location loc;
 
         for (String locString : locStrings) {
@@ -26,6 +26,17 @@ public class Teleport implements Trick {
                 locations.add(loc);
         }
     }
+
+    public void addPortLocation(Location newPortLocation){
+        this.locations.add(newPortLocation);
+        List<String> ports = Config.getCfg().getStringList("trick.port");
+        ports.add(newPortLocation.getX() + ":"
+                + newPortLocation.getY() + ":"
+                + newPortLocation.getZ() + ":"
+                + newPortLocation.getYaw() + ":"
+                + newPortLocation.getPitch());
+    }
+
 
     public void effect(Player player) {
         player.teleport(locations.get((int) (Math.random() * 100) % locations.size()));

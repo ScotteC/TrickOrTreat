@@ -1,5 +1,10 @@
 package net.scottec.TrickOrTreat;
 
+import com.sk89q.worldguard.bukkit.WGBukkit;
+import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
+import net.scottec.TrickOrTreat.Command.CommandHandler;
+import net.scottec.TrickOrTreat.Command.commands.CmdTrickOrTreat;
+import net.scottec.TrickOrTreat.Command.commands.CmdTrickTeleport;
 import net.scottec.TrickOrTreat.Listener.EntityListener;
 import net.scottec.TrickOrTreat.Listener.ItemListeners;
 import net.scottec.TrickOrTreat.Listener.PlayerListener;
@@ -31,6 +36,10 @@ public class TrickOrTreat extends JavaPlugin {
         new PlayerListener(this.iTrickOrTreat);
         new EntityListener(this.iTrickOrTreat);
         new ItemListeners(this.iTrickOrTreat);
+
+        CommandHandler.init(this.iTrickOrTreat);
+        CommandHandler.instance.addCommand(new CmdTrickOrTreat(this.iTrickOrTreat));
+
 //        this.oCSMessageHandler = new CSMessageHandler();
 //        this.oCSMessageHandler = null;
     }
@@ -39,7 +48,6 @@ public class TrickOrTreat extends JavaPlugin {
     public void onDisable() {
         this.oGhost.killAllGhosts();
     }
-
 
     public interface ITrickOrTreat {
         TrickOrTreat getPlugin();
@@ -53,6 +61,8 @@ public class TrickOrTreat extends JavaPlugin {
         TrickHandler getTrickHandler();
 
         Ghost getGhost();
+
+        WorldGuardPlugin getWorldGuard();
 
 //        CSMessageHandler getCSMessageHandler();
     }
@@ -86,6 +96,11 @@ public class TrickOrTreat extends JavaPlugin {
         @Override
         public Ghost getGhost() {
             return oGhost;
+        }
+
+        @Override
+        public WorldGuardPlugin getWorldGuard() {
+            return WGBukkit.getPlugin();
         }
 
 //        @Override

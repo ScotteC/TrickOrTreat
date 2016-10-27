@@ -24,6 +24,8 @@ public class Ghost {
     private int dropCount;
     private long cleanInterval;
 
+    private Location spawnLocation;
+
     private ItemStack ghostscrap;
     private ItemStack coinshard;
 
@@ -37,6 +39,9 @@ public class Ghost {
         this.dropDelay = Config.getCfg().getInt("ghost.dropDelay");
         this.dropCount = Config.getCfg().getInt("ghost.dropCount");
         this.cleanInterval = Config.getCfg().getInt("ghost.cleanInterval");
+
+        this.spawnLocation = util.getLocationFromString(
+                Config.getCfg().getString("ghost.spawn"));
 
         this.ghostscrap = util.createItemStack(
                 util.getString("GHOST_SCRAP_NAME"),
@@ -71,17 +76,22 @@ public class Ghost {
         }.runTaskTimer(this.iToT.getPlugin(), 0L, this.cleanInterval);
     }
 
+    public void setSpawnLocation(Location newSpawnLocation) {
+        this.spawnLocation = newSpawnLocation;
+        String locString = this.spawnLocation.getX() + ":"
+                + this.spawnLocation.getY() + ":"
+                + this.spawnLocation.getZ() + ":0:0";
+        Config.getCfg().set("ghost.spawn", locString);
+    }
+
     public void spawnGhost() {
         if ((System.currentTimeMillis() - lastSpawn) < spawnCooldown)
             return;
 
         lastSpawn = System.currentTimeMillis();
 
-        Location loc = util.getLocationFromString(
-                Config.getCfg().getString("ghost.spawn"));
-
         LivingEntity carrier = (LivingEntity) util.getWorld()
-                .spawnEntity(loc, EntityType.BAT);
+                .spawnEntity(spawnLocation, EntityType.BAT);
 
         carrier.addPotionEffect(new PotionEffect(
                 PotionEffectType.INVISIBILITY, 99999, 1));
@@ -89,7 +99,7 @@ public class Ghost {
         switch (ghostSwitch) {
             case 0: {
                 LivingEntity passenger = (LivingEntity) util.getWorld()
-                        .spawnEntity(loc, EntityType.SKELETON);
+                        .spawnEntity(spawnLocation, EntityType.SKELETON);
 
                 passenger.addPotionEffect(new PotionEffect(
                         PotionEffectType.INVISIBILITY, 99999, 1));
@@ -106,7 +116,7 @@ public class Ghost {
 
             case 1: {
                 Creeper creeper = (Creeper) util.getWorld()
-                        .spawnEntity(loc, EntityType.CREEPER);
+                        .spawnEntity(spawnLocation, EntityType.CREEPER);
                 creeper.addPotionEffect(new PotionEffect(
                         PotionEffectType.INVISIBILITY, 99999, 1));
                 creeper.setPowered(true);
