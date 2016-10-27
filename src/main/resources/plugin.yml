@@ -2,6 +2,6 @@ name: TrickOrTreat
 version: 2.0
 author: scottec
 description:
-depend:
+depend: [WorldGuard]
 main: net.scottec.TrickOrTreat.TrickOrTreat
 
