@@ -32,6 +32,10 @@ public class PlayerListener implements Listener {
         this.iToT.getRequestHandler().prepareRequest(event.getPlayer(), event.getTarget());
     }
 
+    /**
+     * Share some treats on ToTrequest
+     * @param event : PlayerInteractEvent
+     */
     @EventHandler
     public void onPlayerInteractEntity(PlayerInteractEntityEvent event){
         if (event.getRightClicked() instanceof Player) {
@@ -45,7 +49,6 @@ public class PlayerListener implements Listener {
             this.iToT.getTreatHandler().shareTreat(event.getPlayer(), (Player)event.getRightClicked(), event.getHand());
         }
     }
-
 
     /**
      * Transfer ghostshards to votecoins
