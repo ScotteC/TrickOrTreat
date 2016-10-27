@@ -17,8 +17,9 @@ public class Halloweenstick extends ItemStack {
         this.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 5);
     }
 
-    @Override
-    public boolean isSimilar(ItemStack stack) {
+    public boolean isStick(ItemStack stack) {
+        if (stack == null)
+            return false;
         ItemStack clone = stack.clone();
         clone.setAmount(1);
         return clone.hashCode() == this.hashCode();

@@ -22,9 +22,9 @@ public class HalloweenstickListener  implements Listener {
     public void onPlayerInteractEntityHand(PlayerInteractEntityEvent event) {
         if (event.getRightClicked() instanceof Player) {
             if ((event.getHand() == EquipmentSlot.HAND
-                    && this.halloweenstick.isSimilar(event.getPlayer().getInventory().getItemInMainHand()))
+                    && this.halloweenstick.isStick(event.getPlayer().getInventory().getItemInMainHand()))
                     || (event.getHand() == EquipmentSlot.OFF_HAND
-                    && this.halloweenstick.isSimilar(event.getPlayer().getInventory().getItemInOffHand())))
+                    && this.halloweenstick.isStick(event.getPlayer().getInventory().getItemInOffHand())))
                 this.iToT.getPlugin().getServer().getPluginManager().callEvent(
                         new HalloweenstickEvent(event.getPlayer(), (Player) event.getRightClicked()));
         }
