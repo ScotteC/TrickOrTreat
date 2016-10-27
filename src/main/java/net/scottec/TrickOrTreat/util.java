@@ -1,17 +1,11 @@
 package net.scottec.TrickOrTreat;
 
-import org.bukkit.Bukkit;
-import org.bukkit.Location;
-import org.bukkit.Material;
-import org.bukkit.World;
+import org.bukkit.*;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
 import java.text.MessageFormat;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Locale;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class util {
     public static ItemStack createItemStack(String name, Material item, List<String> lore) {
@@ -34,7 +28,6 @@ public class util {
                 Config.getCfg().getString("common.worldname"));
     }
 
-
     public static Location getLocationFromString(String locString) {
         String[] split = locString.split(":");
         if (split.length == 5) {
@@ -50,21 +43,33 @@ public class util {
 
     public static String getString(String messageCode, Object... args){
         Locale locale = new Locale("en", "US");
-        ResourceBundle message = ResourceBundle.getBundle("messages");
+        try {
+            ResourceBundle message = ResourceBundle.getBundle("messages", locale);
 
-        MessageFormat format = new MessageFormat("");
-        format.setLocale(locale);
-        format.applyPattern(message.getString(messageCode));
-        return format.format(args);
+            MessageFormat format = new MessageFormat("");
+            format.setLocale(locale);
+            format.applyPattern(ChatColor.translateAlternateColorCodes('&', message.getString(messageCode)));
+            return format.format(args);
+        }
+        catch (MissingResourceException exp){
+            exp.printStackTrace();
+            return "Error";
+        }
     }
 
     public static List<String> getStringList(String messageCode, Object... args){
         Locale locale = new Locale("en", "US");
-        ResourceBundle message = ResourceBundle.getBundle("messages");
+        try {
+            ResourceBundle message = ResourceBundle.getBundle("messages", locale);
 
-        MessageFormat format = new MessageFormat("");
-        format.setLocale(locale);
-        format.applyPattern(message.getString(messageCode));
-        return Arrays.asList(format.format(args).split("\\|"));
+            MessageFormat format = new MessageFormat("");
+            format.setLocale(locale);
+            format.applyPattern(ChatColor.translateAlternateColorCodes('&', message.getString(messageCode)));
+            return Arrays.asList(format.format(args).split("\\|"));
+        }
+        catch (MissingResourceException exp) {
+            exp.printStackTrace();
+            return Arrays.asList("Error");
+        }
     }
 }
