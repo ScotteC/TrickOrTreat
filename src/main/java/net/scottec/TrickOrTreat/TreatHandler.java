@@ -27,14 +27,13 @@ public class TreatHandler {
         treats.add(new RipOfCryy());
         treats.add(new Sirup());
 
-        this.loveCount = Config.getCfg().getInt("trick.lovecount");
-        this.loveDelay = Config.getCfg().getInt("trick.lovedelay");
+        this.loveCount = Config.getCfg().getInt("treat.lovecount");
+        this.loveDelay = Config.getCfg().getInt("treat.lovedelay");
         this.cnt = (20 / loveDelay) * loveCount;
     }
 
     public ItemStack getRandomTreat() {
-        return treats.get(((int) (Math.random() * 100)) % treats.size())
-                .getItem();
+        return treats.get(((int) (Math.random() * 100)) % treats.size()).getItem();
     }
 
     public Treat getTreatByItem(ItemStack stack) {
@@ -44,24 +43,16 @@ public class TreatHandler {
         return null;
     }
 
-    public Treat getTreatByName(String name) {
-        for (Treat treat : treats)
-            if (treat.getName().equals(name))
-                return treat;
-        return null;
-    }
-
     public void addAllTreats(Player player) {
         for (Treat treat : treats)
             player.getInventory().addItem(treat.getItem());
     }
 
-
     public void shareTreat(Player alice, Player bob, EquipmentSlot hand) {
-        System.out.println("Share candy: " + alice.getDisplayName() + " -> " + bob.getDisplayName());
-
+        // look for request from Bob to Alice
         Request request = iToT.getRequestHandler().getRequest(bob, alice);
 
+        // is there an open request?
         if (request != null && !request.getStatus()) {
             // find item in hand
             ItemStack clone;
@@ -93,9 +84,8 @@ public class TreatHandler {
 
     public void eatTreaty(Player bob, ItemStack item) {
         Treat getTreat = getTreatByItem(item);
-        if (getTreat != null) {
+        if (getTreat != null)
             // call effect method
             getTreat.effect(bob);
-        }
     }
 }

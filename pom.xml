@@ -17,11 +17,6 @@
         <finalName>${project.artifactId}_${project.version}</finalName>
         <directory>${basedir}/target</directory>
         <sourceDirectory>${basedir}/src/main/java</sourceDirectory>
-        <resources>
-            <resource>
-                <directory>${basedir}/src/main/resources</directory>
-            </resource>
-        </resources>
 
         <plugins>
             <plugin>

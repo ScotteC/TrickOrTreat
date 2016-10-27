@@ -10,11 +10,11 @@ request:
   requestTimeout: 5
   requestCooldown: 10
 
-trick:
+treat:
   lovecount: 10
   lovedelay: 10
 
-treat:
+trick:
   port:
   - "170:67:269:0:0"
   - "158:67:269:0:0"
