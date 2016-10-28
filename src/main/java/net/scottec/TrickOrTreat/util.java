@@ -8,6 +8,10 @@ import java.text.MessageFormat;
 import java.util.*;
 
 public class util {
+
+    private static Locale locale;
+    private static ResourceBundle messages;
+
     public static ItemStack createItemStack(String name, Material item, List<String> lore) {
         ItemStack is = new ItemStack(item);
         ItemMeta im = is.getItemMeta();
@@ -41,14 +45,28 @@ public class util {
         return null;
     }
 
+    public static Locale getLocale() {
+        if(locale == null) {
+            String[] split = Config.getCfg().getString("common.locale").split("-");
+            locale = new Locale(split[0], split[1]);
+        }
+        return locale;
+    }
+
+    public static void clearRessources() {
+        if(messages != null)
+            messages.clearCache();
+    }
+
+
     public static String getString(String messageCode, Object... args){
-        Locale locale = new Locale("en", "US");
         try {
-            ResourceBundle message = ResourceBundle.getBundle("messages", locale);
+            if (messages == null)
+                messages = ResourceBundle.getBundle("messages", getLocale());
 
             MessageFormat format = new MessageFormat("");
-            format.setLocale(locale);
-            format.applyPattern(ChatColor.translateAlternateColorCodes('&', message.getString(messageCode)));
+            format.setLocale(getLocale());
+            format.applyPattern(ChatColor.translateAlternateColorCodes('&', messages.getString(messageCode)));
             return format.format(args);
         }
         catch (MissingResourceException exp){
@@ -58,13 +76,13 @@ public class util {
     }
 
     public static List<String> getStringList(String messageCode, Object... args){
-        Locale locale = new Locale("en", "US");
         try {
-            ResourceBundle message = ResourceBundle.getBundle("messages", locale);
+            if (messages == null)
+                messages = ResourceBundle.getBundle("messages", getLocale());
 
             MessageFormat format = new MessageFormat("");
-            format.setLocale(locale);
-            format.applyPattern(ChatColor.translateAlternateColorCodes('&', message.getString(messageCode)));
+            format.setLocale(getLocale());
+            format.applyPattern(ChatColor.translateAlternateColorCodes('&', messages.getString(messageCode)));
             return Arrays.asList(format.format(args).split("\\|"));
         }
         catch (MissingResourceException exp) {

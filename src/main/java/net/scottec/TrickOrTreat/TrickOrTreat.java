@@ -47,6 +47,7 @@ public class TrickOrTreat extends JavaPlugin {
     @Override
     public void onDisable() {
         this.oGhostHandler.killAllGhosts();
+        util.clearRessources();
     }
 
     public interface ITrickOrTreat {
