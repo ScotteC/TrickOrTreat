@@ -18,7 +18,7 @@ public class TrickOrTreat extends JavaPlugin {
     private TreatHandler oTreatHandler;
     private TrickHandler oTrickHandler;
     private GhostHandler oGhostHandler;
-//    private CSMessageHandler oCSMessageHandler;
+    private CSMessageHandler oCSMessageHandler;
 
     private ITrickOrTreat iTrickOrTreat = new ATrickOrTreat();
 
@@ -41,8 +41,7 @@ public class TrickOrTreat extends JavaPlugin {
         CommandHandler.init(this.iTrickOrTreat);
         CommandHandler.instance.addCommand(new CmdTrickOrTreat(this.iTrickOrTreat));
 
-//        this.oCSMessageHandler = new CSMessageHandler();
-//        this.oCSMessageHandler = null;
+        this.oCSMessageHandler = new CSMessageHandler();
     }
 
     @Override
@@ -65,7 +64,7 @@ public class TrickOrTreat extends JavaPlugin {
 
         WorldGuardPlugin getWorldGuard();
 
-//        CSMessageHandler getCSMessageHandler();
+        CSMessageHandler getCSMessageHandler();
     }
 
     private class ATrickOrTreat implements ITrickOrTreat {
@@ -104,9 +103,9 @@ public class TrickOrTreat extends JavaPlugin {
             return WGBukkit.getPlugin();
         }
 
-//        @Override
-//        public CSMessageHandler getCSMessageHandler() {
-//            return oCSMessageHandler;
-//        }
+        @Override
+        public CSMessageHandler getCSMessageHandler() {
+            return oCSMessageHandler;
+        }
     }
 }

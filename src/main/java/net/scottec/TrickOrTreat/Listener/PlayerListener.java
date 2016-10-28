@@ -77,12 +77,12 @@ public class PlayerListener implements Listener {
                     player.updateInventory();
                     // give the player a votecoin and some nice message
                     iToT.getCSVoteHandler().addMoney(player.getName(), 1);
-                    player.sendMessage(util.getString("GHOST_SHARD_SUCCESS"));
+                    this.iToT.getCSMessageHandler().sendActionBarMessage(player, util.getString("GHOST_SHARD_SUCCESS"));
                     util.getWorld().playEffect(player.getLocation(), Effect.FIREWORKS_SPARK, 5);
                 }
                 // not enough shards
                 else
-                    player.sendMessage(util.getString("GHOST_SHARD_DENIED"));
+                    this.iToT.getCSMessageHandler().sendActionBarMessage(player, util.getString("GHOST_SHARD_DENIED"));
             }
         }
     }

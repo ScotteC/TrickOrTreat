@@ -40,20 +40,36 @@ public class Request {
         this.time = System.currentTimeMillis();
         this.countdown = timeout;
 
+        // inform bob and alice about started request
+        iToT.getCSMessageHandler().sendTitleMessage(Bukkit.getPlayer(bob),
+                util.getString("REQUEST_NEW_BOB_TITLE"),
+                util.getString("REQUEST_NEW_BOB_SUBTITLE", Bukkit.getPlayer(alice).getName()));
+
+        iToT.getCSMessageHandler().sendTitleMessage(Bukkit.getPlayer(alice),
+                util.getString("REQUEST_NEW_ALICE_TITLE"),
+                util.getString("REQUEST_NEW_ALICE_SUBTITLE", Bukkit.getPlayer(bob).getName()));
+        Bukkit.getPlayer(alice).sendMessage(util.getString("REQUEST_NEW_ALICE_CLUE", Bukkit.getPlayer(bob).getName()));
+
         // create new task to handle countdown until trick, abort if treated
         new BukkitRunnable() {
             @Override
             public void run() {
                 Player pBob = Bukkit.getPlayer(bob);
                 Player pAlice = Bukkit.getPlayer(alice);
-                pBob.sendMessage("Countdown: " + countdown);
-                pAlice.sendMessage("Countdown: " + countdown);
+
+                iToT.getCSMessageHandler().sendActionBarMessage(pBob, "Countdown: " + countdown);
+                iToT.getCSMessageHandler().sendActionBarMessage(pAlice, "Countdown: " + countdown);
 
                 // cancel task and finish request if status is set true
                 if (status) {
                     this.cancel();
-                    pBob.sendMessage(util.getString("REQUEST_SUCCESS_BOB_TITLE"));
-                    pAlice.sendMessage(util.getString("REQUEST_SUCCESS_ALICE_TITLE"));
+
+                    iToT.getCSMessageHandler().sendTitleMessage(pBob,
+                            util.getString("REQUEST_SUCCESS_BOB_TITLE"),
+                            util.getString("REQUEST_SUCCESS_BOB_SUBTITLE"));
+                    iToT.getCSMessageHandler().sendTitleMessage(pAlice,
+                            util.getString("REQUEST_SUCCESS_ALICE_TITLE"),
+                            util.getString("REQUEST_SUCCESS_ALICE_SUBTITLE"));
                 }
                 // countdown if alice hasnt jet treated bob
                 else if (!status && countdown > 0) {
@@ -62,8 +78,14 @@ public class Request {
                 // finish request on countdown reaching 0
                 else if (countdown == 0) {
                     this.cancel();
-                    pBob.sendMessage(util.getString("REQUEST_DENIED_BOB_TITLE"));
-                    pAlice.sendMessage(util.getString("REQUEST_DENIED_ALICE_TITLE"));
+
+                    iToT.getCSMessageHandler().sendTitleMessage(pBob,
+                            util.getString("REQUEST_DENIED_BOB_TITLE"),
+                            util.getString("REQUEST_DENIED_BOB_SUBTITLE"));
+                    iToT.getCSMessageHandler().sendTitleMessage(pAlice,
+                            util.getString("REQUEST_DENIED_ALICE_TITLE"),
+                            util.getString("REQUEST_DENIED_ALICE_SUBTITLE"));
+                    // trick alice
                     iToT.getTrickHandler().trick(pAlice);
                 }
             }
