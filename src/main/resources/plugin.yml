@@ -5,3 +5,10 @@ description:
 depend: [WorldGuard]
 main: net.scottec.TrickOrTreat.TrickOrTreat
 
+commands:
+  tot:
+    description:
+    usage: /tot <subcommand...>
+    aliases:
+    permission: trickortreat.config
+    permission-message: No permission
