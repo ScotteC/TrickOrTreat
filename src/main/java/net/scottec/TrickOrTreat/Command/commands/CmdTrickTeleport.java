@@ -7,6 +7,7 @@ public class CmdTrickTeleport extends CommandTop {
 
     public CmdTrickTeleport(TrickOrTreat.ITrickOrTreat iToT) {
         super(iToT, "teleport");
+        this.setCommandUsage("/tot trick teleport <args> : Edit teleport targets");
 
         this.addSubCommand(new CmdTrickTeleportAdd(iToT));
     }

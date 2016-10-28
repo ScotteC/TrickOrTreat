@@ -10,6 +10,7 @@ public class CmdRequest extends CommandTop {
 
     public CmdRequest(TrickOrTreat.ITrickOrTreat iToT) {
         super(iToT, "request");
+        this.setCommandUsage("/tot request <args> : Handling requests");
 
         this.addSubCommand(new CmdRequestSetCooldown(iToT));
         this.addSubCommand(new CmdRequestSetTimeout(iToT));

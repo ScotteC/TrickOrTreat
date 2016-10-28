@@ -9,7 +9,7 @@ import java.util.List;
 public class CmdGhostKill extends CommandBase {
     public CmdGhostKill(TrickOrTreat.ITrickOrTreat iToT){
         super(iToT, "kill");
-        this.setCommandUsage("/tot ghost kill");
+        this.setCommandUsage("/tot ghost kill : Kill all ghosts");
     }
 
     @Override

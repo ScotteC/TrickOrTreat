@@ -37,14 +37,14 @@ public abstract class CommandTop extends CommandBase implements ICommand {
                 command.execute(player, args.subList(1, args.size()));
             }
             else {
-                player.sendMessage("Usage: /" + this.getCommandName());
+                player.sendMessage("Usage:");
                 for (Map.Entry<String, ICommand> entry : subCommands.entrySet()) {
                     player.sendMessage(entry.getValue().getCommandUsage());
                 }
             }
         }
         else {
-            player.sendMessage("Usage: /" + this.getCommandName());
+            player.sendMessage("Usage:");
             for (Map.Entry<String, ICommand> entry : subCommands.entrySet()) {
                 player.sendMessage(entry.getValue().getCommandUsage());
             }

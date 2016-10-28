@@ -10,7 +10,7 @@ public class CmdGhostSetSpawn extends CommandBase {
 
     public CmdGhostSetSpawn(TrickOrTreat.ITrickOrTreat iToT){
         super(iToT, "setspawn");
-        this.setCommandUsage("/tot ghost setspawn");
+        this.setCommandUsage("/tot ghost setspawn : Set a new spawnpoint in config");
     }
 
     @Override

@@ -10,7 +10,7 @@ public class CmdTrickTeleportAdd extends CommandBase{
 
     public CmdTrickTeleportAdd(TrickOrTreat.ITrickOrTreat iToT) {
         super(iToT, "add");
-        this.setCommandUsage("/tot trick teleport add");
+        this.setCommandUsage("/tot trick teleport add : Add actual position as TeleportLocation");
     }
 
     @Override
