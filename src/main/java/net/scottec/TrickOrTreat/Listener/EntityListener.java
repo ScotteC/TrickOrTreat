@@ -31,12 +31,12 @@ public class EntityListener implements Listener {
             evt.getDrops().clear();
 
             // spawn custom drops
-            this.iToT.getGhost().spawnDrops(evt.getEntity(), true);
+            this.iToT.getGhostHandler().spawnDrops(evt.getEntity(), true);
         }
 
         // if died entity is a bat
         else if (evt.getEntityType().equals(EntityType.BAT))
-            this.iToT.getGhost().spawnDrops(evt.getEntity(), false);
+            this.iToT.getGhostHandler().spawnDrops(evt.getEntity(), false);
     }
 
     @EventHandler

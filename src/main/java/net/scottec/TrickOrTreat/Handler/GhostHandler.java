@@ -1,5 +1,8 @@
-package net.scottec.TrickOrTreat;
+package net.scottec.TrickOrTreat.Handler;
 
+import net.scottec.TrickOrTreat.Config;
+import net.scottec.TrickOrTreat.TrickOrTreat;
+import net.scottec.TrickOrTreat.util;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.entity.*;
@@ -12,9 +15,9 @@ import java.util.List;
 
 /**
  * Initial idea and code written by Titian, Oct 2014
- * Edited by Fabian, Oct 2015
+ * Edited by Fabian,
  */
-public class Ghost {
+public class GhostHandler {
     private static int ghostSwitch = 0;
     private TrickOrTreat.ITrickOrTreat iToT;
     private long lastSpawn;
@@ -29,7 +32,7 @@ public class Ghost {
     private ItemStack ghostscrap;
     private ItemStack coinshard;
 
-    public Ghost(TrickOrTreat.ITrickOrTreat iToT) {
+    public GhostHandler(TrickOrTreat.ITrickOrTreat iToT) {
         this.iToT = iToT;
 
         // load config
@@ -82,6 +85,17 @@ public class Ghost {
                 + this.spawnLocation.getY() + ":"
                 + this.spawnLocation.getZ() + ":0:0";
         Config.getCfg().set("ghost.spawn", locString);
+        Config.saveCfg();
+    }
+
+    public void setDrops(int count, int delay) {
+        if(count >= 0 && delay >= 0) {
+            this.dropCount = count;
+            this.dropDelay = delay;
+            Config.getCfg().set("ghost.dropCount", count);
+            Config.getCfg().set("ghost.dropDelay", delay);
+            Config.saveCfg();
+        }
     }
 
     public void spawnGhost() {

@@ -1,7 +1,11 @@
-package net.scottec.TrickOrTreat;
+package net.scottec.TrickOrTreat.Handler;
 
+import net.scottec.TrickOrTreat.Config;
+import net.scottec.TrickOrTreat.Request;
 import net.scottec.TrickOrTreat.Treats.*;
 import net.scottec.TrickOrTreat.Treats.Treat;
+import net.scottec.TrickOrTreat.TrickOrTreat;
+import net.scottec.TrickOrTreat.util;
 import org.bukkit.Effect;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.EquipmentSlot;
@@ -24,7 +28,7 @@ public class TreatHandler {
         treats.add(new Cookie());
         treats.add(new BakedApple());
         treats.add(new BrainStew());
-        treats.add(new RipOfCryy());
+        treats.add(new RibOfCryy());
         treats.add(new Sirup());
 
         this.loveCount = Config.getCfg().getInt("treat.lovecount");

@@ -15,7 +15,7 @@ public class CmdGhostKill extends CommandBase {
     @Override
     public void execute(Player sender, List<String> args){
         if(sender.hasPermission("trickortreat.ghost.kill")){
-            this.plugin.getGhost().killAllGhosts();
+            this.plugin.getGhostHandler().killAllGhosts();
             sender.sendMessage("[ToT] All ghosts killed");
         }
         else

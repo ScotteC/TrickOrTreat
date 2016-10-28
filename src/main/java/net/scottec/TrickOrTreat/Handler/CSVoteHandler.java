@@ -1,4 +1,4 @@
-package net.scottec.TrickOrTreat;
+package net.scottec.TrickOrTreat.Handler;
 
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
@@ -10,7 +10,7 @@ import java.sql.*;
 /**
  * Created by Titian
  */
-public class Database {
+public class CSVoteHandler {
     private String host;
     private int port;
     private String user;
@@ -19,7 +19,7 @@ public class Database {
 
     private Connection connection;
 
-    public Database(TrickOrTreat.ITrickOrTreat iToT) {
+    public CSVoteHandler() {
         File file = new File("plugins/csvote/", "database.yml");
         FileConfiguration cfg = YamlConfiguration.loadConfiguration(file);
 
@@ -56,6 +56,7 @@ public class Database {
             return connection;
         } catch (SQLException|ClassNotFoundException e) {
             e.printStackTrace();
+            System.out.println("CS-Vote > Connection refused");
             return null;
         }
     }

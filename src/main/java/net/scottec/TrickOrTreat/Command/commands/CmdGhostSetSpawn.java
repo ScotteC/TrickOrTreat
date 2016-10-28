@@ -16,7 +16,7 @@ public class CmdGhostSetSpawn extends CommandBase {
     @Override
     public void execute(Player sender, List<String> args){
         if(sender.hasPermission("trickortreat.config")){
-            this.plugin.getGhost().setSpawnLocation(sender.getLocation());
+            this.plugin.getGhostHandler().setSpawnLocation(sender.getLocation());
             sender.sendMessage("[ToT] New ghostspawn set");
         }
     }

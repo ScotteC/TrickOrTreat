@@ -76,7 +76,7 @@ public class PlayerListener implements Listener {
                     player.getInventory().removeItem(itemInHand);
                     player.updateInventory();
                     // give the player a votecoin and some nice message
-                    iToT.getDatabase().addMoney(player.getName(), 1);
+                    iToT.getCSVoteHandler().addMoney(player.getName(), 1);
                     player.sendMessage(util.getString("GHOST_SHARD_SUCCESS"));
                     util.getWorld().playEffect(player.getLocation(), Effect.FIREWORKS_SPARK, 5);
                 }
@@ -131,7 +131,7 @@ public class PlayerListener implements Listener {
      */
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent evt) {
-        this.iToT.getGhost().spawnGhost();
+        this.iToT.getGhostHandler().spawnGhost();
         evt.getPlayer().setSaturation(1);
         evt.getPlayer().setFoodLevel(19);
 
