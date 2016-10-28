@@ -5,7 +5,6 @@ import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import net.scottec.TrickOrTreat.Command.CommandHandler;
 import net.scottec.TrickOrTreat.Command.commands.CmdTrickOrTreat;
 import net.scottec.TrickOrTreat.Handler.*;
-import net.scottec.TrickOrTreat.Command.commands.CmdTrickTeleport;
 import net.scottec.TrickOrTreat.Listener.EntityListener;
 import net.scottec.TrickOrTreat.Listener.ItemListeners;
 import net.scottec.TrickOrTreat.Listener.PlayerListener;

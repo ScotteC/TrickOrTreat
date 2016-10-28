@@ -14,7 +14,7 @@ public class Halloweenstick extends ItemStack {
         im.setDisplayName(util.getString("HALLOWEENSTICK_NAME"));
         im.setLore(util.getStringList("HALLOWEENSTICK_LORE"));
         this.setItemMeta(im);
-        this.addUnsafeEnchantment(Enchantment.FIRE_ASPECT, 5);
+        this.addUnsafeEnchantment(Enchantment.ARROW_INFINITE, 5);
     }
 
     public boolean isStick(ItemStack stack) {

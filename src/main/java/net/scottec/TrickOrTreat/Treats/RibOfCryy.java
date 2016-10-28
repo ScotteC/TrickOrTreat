@@ -6,11 +6,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 
-public class RipOfCryy extends Treat {
-    public RipOfCryy() {
-        super(util.getString("RIPPOFCRYY_NAME"),
+public class RibOfCryy extends Treat {
+    public RibOfCryy() {
+        super(util.getString("RIBOFCRYY_NAME"),
                 Material.COOKED_MUTTON,
-                util.getStringList("RIPPOFCRYY_LORE"));
+                util.getStringList("RIBOFCRYY_LORE"));
     }
 
     public void effect(Player player) {

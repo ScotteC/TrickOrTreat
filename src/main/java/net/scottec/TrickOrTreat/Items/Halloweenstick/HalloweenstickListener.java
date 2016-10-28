@@ -7,7 +7,6 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerInteractEntityEvent;
 import org.bukkit.inventory.EquipmentSlot;
 
-
 public class HalloweenstickListener  implements Listener {
     private TrickOrTreat.ITrickOrTreat iToT;
     private Halloweenstick halloweenstick;
