@@ -10,7 +10,7 @@ public class CmdTrickOrTreat extends CommandTop {
         this.setCommandUsage("/tot <args> : Basecommand");
 
         this.addSubCommand(new CmdGhost(iToT));
-        this.addSubCommand(new CmdTrick(iToT));
+//        this.addSubCommand(new CmdTrick(iToT));
         this.addSubCommand(new CmdRequest(iToT));
     }
 }
