@@ -4,12 +4,14 @@ import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.File;
+import java.io.IOException;
 
 public class Config {
     private static FileConfiguration cfg;
+    private static File cfgFile;
 
     public static void reloadConfig(TrickOrTreat plugin) {
-        File cfgFile = new File(plugin.getDataFolder(), "config.yml");
+        cfgFile = new File(plugin.getDataFolder(), "config.yml");
 
         if (cfgFile.isFile()) {
             try {
@@ -26,5 +28,14 @@ public class Config {
 
     public static FileConfiguration getCfg() {
         return cfg;
+    }
+
+    public static void saveCfg() {
+        try {
+            cfg.save(cfgFile);
+        }
+        catch (IOException exp) {
+            System.out.println("[TrickOrTret] Saving configuration failed");
+        }
     }
 }
