@@ -87,6 +87,7 @@ public class Request {
                             util.getString("REQUEST_DENIED_ALICE_SUBTITLE"));
                     // trick alice
                     iToT.getTrickHandler().trick(pAlice);
+                    status = true;
                 }
             }
         }.runTaskTimer(iToT.getPlugin(), 0L, 20L);
