@@ -1,7 +1,7 @@
 package net.scottec.TrickOrTreat;
 
 import org.bukkit.Bukkit;
-import org.bukkit.Effect;
+import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -43,12 +43,11 @@ public class Request {
         // inform bob and alice about started request
         iToT.getCSMessageHandler().sendTitleMessage(Bukkit.getPlayer(bob),
                 util.getString("REQUEST_NEW_BOB_TITLE"),
-                util.getString("REQUEST_NEW_BOB_SUBTITLE", Bukkit.getPlayer(alice).getName()));
+                util.getString("REQUEST_NEW_BOB_SUBTITLE", Bukkit.getPlayer(alice).getName()), timeout * 20);
 
         iToT.getCSMessageHandler().sendTitleMessage(Bukkit.getPlayer(alice),
                 util.getString("REQUEST_NEW_ALICE_TITLE"),
-                util.getString("REQUEST_NEW_ALICE_SUBTITLE", Bukkit.getPlayer(bob).getName()));
-        Bukkit.getPlayer(alice).sendMessage(util.getString("REQUEST_NEW_ALICE_CLUE", Bukkit.getPlayer(bob).getName()));
+                util.getString("REQUEST_NEW_ALICE_CLUE", Bukkit.getPlayer(bob).getName()), timeout * 20);
 
         // create new task to handle countdown until trick, abort if treated
         new BukkitRunnable() {
@@ -57,8 +56,8 @@ public class Request {
                 Player pBob = Bukkit.getPlayer(bob);
                 Player pAlice = Bukkit.getPlayer(alice);
 
-                iToT.getCSMessageHandler().sendActionBarMessage(pBob, "Countdown: " + countdown);
-                iToT.getCSMessageHandler().sendActionBarMessage(pAlice, "Countdown: " + countdown);
+                iToT.getCSMessageHandler().sendActionBarMessage(pBob, "Countdown: " + ChatColor.RED + countdown);
+                iToT.getCSMessageHandler().sendActionBarMessage(pAlice, "Countdown: " + ChatColor.RED + countdown);
 
                 // cancel task and finish request if status is set true
                 if (status) {

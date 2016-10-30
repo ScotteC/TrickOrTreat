@@ -152,7 +152,7 @@ public class PlayerListener implements Listener {
         if (!evt.getPlayer().getInventory().containsAtLeast(stick, 1))
             evt.getPlayer().getInventory().addItem(stick);
 
-        // dev
-        this.iToT.getTreatHandler().addAllTreats(evt.getPlayer());
+//        // dev
+//        this.iToT.getTreatHandler().addAllTreats(evt.getPlayer());
     }
 }

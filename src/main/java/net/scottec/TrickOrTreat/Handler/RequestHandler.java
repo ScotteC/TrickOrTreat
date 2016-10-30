@@ -44,11 +44,12 @@ public class RequestHandler {
         requests.put(bob.getUniqueId(),
                 new Request(this.iToT, bob.getUniqueId(), alice.getUniqueId(), this.requestTimeout));
 
+        final UUID uuidBob = bob.getUniqueId();
         // create schedueled task to remove requestobject from map
         new BukkitRunnable() {
             @Override
             public void run() {
-                requests.remove(bob.getUniqueId());
+                requests.remove(uuidBob);
             }
         }.runTaskLater(this.iToT.getPlugin(), (this.requestCooldown * 20));
     }
