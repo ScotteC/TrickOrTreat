@@ -19,7 +19,7 @@ public class TrickHandler {
     }
 
     public void trick(Player player) {
-        if (player.isOnline())
+        if (player != null)
             tricks.get(((int) (Math.random() * 100)) % tricks.size())
                     .effect(player);
     }

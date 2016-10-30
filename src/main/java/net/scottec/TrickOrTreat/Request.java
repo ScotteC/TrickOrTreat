@@ -56,6 +56,8 @@ public class Request {
                 Player pBob = Bukkit.getPlayer(bob);
                 Player pAlice = Bukkit.getPlayer(alice);
 
+                countdown--;
+
                 iToT.getCSMessageHandler().sendActionBarMessage(pBob, "Countdown: " + ChatColor.RED + countdown);
                 iToT.getCSMessageHandler().sendActionBarMessage(pAlice, "Countdown: " + ChatColor.RED + countdown);
 
@@ -69,10 +71,6 @@ public class Request {
                     iToT.getCSMessageHandler().sendTitleMessage(pAlice,
                             util.getString("REQUEST_SUCCESS_ALICE_TITLE"),
                             util.getString("REQUEST_SUCCESS_ALICE_SUBTITLE"));
-                }
-                // countdown if alice hasnt jet treated bob
-                else if (!status && countdown > 0) {
-                    countdown--;
                 }
                 // finish request on countdown reaching 0
                 else if (countdown == 0) {
