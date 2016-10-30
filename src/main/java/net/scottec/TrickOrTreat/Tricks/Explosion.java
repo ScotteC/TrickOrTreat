@@ -19,10 +19,11 @@ public class Explosion implements Trick {
         player.getWorld().playEffect(
                 player.getLocation(),Effect.EXPLOSION_HUGE, 10);
         player.getWorld().playSound(player.getLocation(), Sound.ENTITY_GENERIC_EXPLODE, 1, 1);
-        player.addPotionEffect(new PotionEffect(
-                PotionEffectType.CONFUSION, 10 * 20, 100));
-        player.addPotionEffect(new PotionEffect(
-                PotionEffectType.SLOW, 10 * 20, 5));
-        player.setVelocity(new Vector((Math.random() * 5) + 1.5, (Math.random() * 5) + 1.5, (Math.random() * 5) + 1.5));
+        player.addPotionEffect(new PotionEffect(PotionEffectType.CONFUSION, 10 * 20, 100));
+        player.addPotionEffect(new PotionEffect(PotionEffectType.SLOW, 10 * 20, 5));
+
+        // shoot player in some random direction
+        player.setVelocity(new Vector(( Math.sin(Math.random()) * 5) + 1.5,
+                (Math.random() * 5) + 1.5, (Math.sin(Math.random()) * 5) + 1.5));
     }
 }
