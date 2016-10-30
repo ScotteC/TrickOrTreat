@@ -2,6 +2,7 @@ package net.scottec.TrickOrTreat.Tricks;
 
 import net.scottec.TrickOrTreat.Config;
 import net.scottec.TrickOrTreat.util;
+import org.bukkit.Effect;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 
@@ -39,6 +40,8 @@ public class Teleport implements Trick {
 
 
     public void effect(Player player) {
+        player.getWorld().playEffect(
+                player.getLocation(), Effect.LARGE_SMOKE, 10);
         player.teleport(locations.get((int) (Math.random() * 100) % locations.size()));
     }
 }
