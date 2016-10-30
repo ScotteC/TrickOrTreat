@@ -1,5 +1,6 @@
 package net.scottec.TrickOrTreat.Listener;
 
+import com.sk89q.worldguard.protection.flags.DefaultFlag;
 import net.scottec.TrickOrTreat.*;
 import net.scottec.TrickOrTreat.Items.Halloweenstick.Halloweenstick;
 import net.scottec.TrickOrTreat.Items.Halloweenstick.HalloweenstickEvent;
@@ -29,7 +30,19 @@ public class PlayerListener implements Listener {
      */
     @EventHandler
     public void onHalloweenstickEvent(HalloweenstickEvent event) {
-        this.iToT.getRequestHandler().prepareRequest(event.getPlayer(), event.getTarget());
+        // check whether player or target is located in pvp-ALLOW region
+        if(this.iToT.getWorldGuard().getRegionManager(util.getWorld())
+                .getApplicableRegions(event.getPlayer().getLocation()).testState(null, DefaultFlag.PVP)
+                || this.iToT.getWorldGuard().getRegionManager(util.getWorld())
+                .getApplicableRegions(event.getTarget().getLocation()).testState(null, DefaultFlag.PVP)) {
+            // block TrickOrTreat if true, send message
+            this.iToT.getCSMessageHandler().sendActionBarMessage(event.getPlayer(), util.getString("REQUEST_PVP"));
+        }
+        else {
+            // start ToTRequest
+            this.iToT.getRequestHandler().prepareRequest(event.getPlayer(), event.getTarget());
+        }
+
     }
 
     /**
