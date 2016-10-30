@@ -15,6 +15,7 @@ public class TrickHandler {
         tricks.add(new Teleport());
         tricks.add(new Flames());
         tricks.add(new Lightning());
+        tricks.add(new Pumpkin(iToT));
     }
 
     public void trick(Player player) {
