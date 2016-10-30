@@ -9,6 +9,6 @@ public class CmdTrick extends CommandTop {
         super(iToT, "trick");
         this.setCommandUsage("/tot trick <args> : Handling tricks");
 
-//        this.addSubCommand(new CmdTrickTeleport(iToT));
+        this.addSubCommand(new CmdTrickTeleport(iToT));
     }
 }

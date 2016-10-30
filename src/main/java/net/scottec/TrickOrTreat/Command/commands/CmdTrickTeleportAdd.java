@@ -2,6 +2,7 @@ package net.scottec.TrickOrTreat.Command.commands;
 
 import net.scottec.TrickOrTreat.Command.CommandBase;
 import net.scottec.TrickOrTreat.TrickOrTreat;
+import net.scottec.TrickOrTreat.Tricks.Teleport;
 import org.bukkit.entity.Player;
 
 import java.util.List;
@@ -16,7 +17,8 @@ public class CmdTrickTeleportAdd extends CommandBase{
     @Override
     public void execute(Player sender, List<String> args) {
         if (sender.hasPermission("trickortreat.config")) {
-            //TODO: add new teleportlocation to trick Teleport
+            ((Teleport) this.plugin.getTrickHandler().getTrickByName("teleport"))
+                    .addPortLocation(sender.getLocation());
         }
         else
             sender.sendMessage("No permission");
