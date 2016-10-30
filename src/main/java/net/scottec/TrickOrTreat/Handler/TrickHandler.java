@@ -22,8 +22,4 @@ public class TrickHandler {
         tricks.get(((int) (Math.random() * 100)) % tricks.size())
                 .effect(player);
     }
-
-//    public void trick(Player player, Trick trick) {
-//        trick.effect(player);
-//    }
 }
