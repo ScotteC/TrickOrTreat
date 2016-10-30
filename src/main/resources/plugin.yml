@@ -12,3 +12,8 @@ commands:
     aliases:
     permission: trickortreat.config
     permission-message: No permission
+
+  tottoggle:
+    description:
+    usage: /tottoggle
+    aliases:

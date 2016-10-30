@@ -7,12 +7,11 @@ import net.scottec.TrickOrTreat.util;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class RequestHandler {
     private Map<UUID, Request> requests = new HashMap<>();
+    private List<UUID> denyRequest = new ArrayList<>();
     private TrickOrTreat.ITrickOrTreat iToT;
     private int requestTimeout;
     private int requestCooldown;
@@ -80,24 +79,38 @@ public class RequestHandler {
     public void prepareRequest(Player bob, Player alice) {
         // check on pending requests from bob
         // send error based on requeststatus
-        if (requests.containsKey(bob.getUniqueId())) {
-            // check if request is active or on cooldown
-            if (!requests.get(bob.getUniqueId()).getStatus())
-                this.iToT.getCSMessageHandler().sendActionBarMessage(bob, util.getString("REQUEST_ONLY_ONE"));
-            else {
-                // cooldown on next request
-                long remainCool = requestCooldown - (System.currentTimeMillis()
-                                - requests.get(bob.getUniqueId()).getRequestTime()) / 1000;
-                this.iToT.getCSMessageHandler().sendActionBarMessage(bob, util.getString("REQUEST_COOLDOWN", remainCool));
-            }
+        if (denyRequest.contains(alice.getUniqueId())) {
+            this.iToT.getCSMessageHandler().sendActionBarMessage(bob, util.getString("REQUEST_TEAMLER"));
         }
-        // bob is okay, now check alice
-        else if ((requests.containsKey(alice.getUniqueId())         // request found?
-                && !requests.get(alice.getUniqueId()).getStatus())  // request active?
-                || !checkRequests(alice))                           // alice already requested
-            this.iToT.getCSMessageHandler().sendActionBarMessage(bob, util.getString("REQUEST_OCCUPIED", alice.getDisplayName()));
-        // no pending requests, so create one
+        else {
+            if (requests.containsKey(bob.getUniqueId())) {
+                // check if request is active or on cooldown
+                if (!requests.get(bob.getUniqueId()).getStatus())
+                    this.iToT.getCSMessageHandler().sendActionBarMessage(bob, util.getString("REQUEST_ONLY_ONE"));
+                else {
+                    // cooldown on next request
+                    long remainCool = requestCooldown - (System.currentTimeMillis()
+                            - requests.get(bob.getUniqueId()).getRequestTime()) / 1000;
+                    this.iToT.getCSMessageHandler().sendActionBarMessage(bob, util.getString("REQUEST_COOLDOWN", remainCool));
+                }
+            }
+            // bob is okay, now check alice
+            else if ((requests.containsKey(alice.getUniqueId())         // request found?
+                    && !requests.get(alice.getUniqueId()).getStatus())  // request active?
+                    || !checkRequests(alice))                           // alice already requested
+                this.iToT.getCSMessageHandler().sendActionBarMessage(bob, util.getString("REQUEST_OCCUPIED", alice.getDisplayName()));
+                // no pending requests, so create one
+            else
+                createRequest(bob, alice);
+        }
+    }
+
+    public boolean requestToggle(Player player) {
+        if(denyRequest.contains(player.getUniqueId()))
+            denyRequest.remove(player.getUniqueId());
         else
-            createRequest(bob, alice);
+            denyRequest.add(player.getUniqueId());
+
+        return denyRequest.contains(player.getUniqueId());
     }
 }

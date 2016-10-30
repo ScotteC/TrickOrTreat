@@ -4,6 +4,7 @@ import com.sk89q.worldguard.bukkit.WGBukkit;
 import com.sk89q.worldguard.bukkit.WorldGuardPlugin;
 import net.scottec.TrickOrTreat.Command.CommandHandler;
 import net.scottec.TrickOrTreat.Command.commands.CmdTrickOrTreat;
+import net.scottec.TrickOrTreat.Command.commands.CmdTrickOrTreatToggle;
 import net.scottec.TrickOrTreat.Handler.*;
 import net.scottec.TrickOrTreat.Listener.EntityListener;
 import net.scottec.TrickOrTreat.Listener.ItemListeners;
@@ -39,6 +40,7 @@ public class TrickOrTreat extends JavaPlugin {
 
         CommandHandler.init(this.iTrickOrTreat);
         CommandHandler.instance.addCommand(new CmdTrickOrTreat(this.iTrickOrTreat));
+        CommandHandler.instance.addCommand(new CmdTrickOrTreatToggle(this.iTrickOrTreat));
 
         this.oCSMessageHandler = new CSMessageHandler();
     }
