@@ -4,6 +4,7 @@ import net.scottec.TrickOrTreat.Config;
 import net.scottec.TrickOrTreat.util;
 import org.bukkit.Effect;
 import org.bukkit.Location;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -38,10 +39,11 @@ public class Teleport implements Trick {
                 + newPortLocation.getPitch());
     }
 
-
     public void effect(Player player) {
         player.getWorld().playEffect(
                 player.getLocation(), Effect.LARGE_SMOKE, 10);
+        player.getWorld().playSound(
+                player.getLocation(), Sound.ENTITY_ENDERMEN_TELEPORT, 2, 1);
         player.teleport(locations.get((int) (Math.random() * 100) % locations.size()));
     }
 }
