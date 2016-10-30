@@ -30,12 +30,16 @@ public class CSMessageHandler {
     }
 
     public void sendTitleMessage(Player player, String title, String subtitle) {
-        if (player != null)
+        if (player != null){
+            this.titleMessageBuilder.resetTitleMessage(userManager.getPlayer(player.getUniqueId().toString()));
             this.titleMessageBuilder.sendTitleMessage(userManager.getPlayer(player.getUniqueId().toString()), title, subtitle);
+        }
     }
 
     public void sendTitleMessage(Player player, String title, String subtitle, int timeout) {
-        if (player != null)
+        if (player != null) {
+            this.titleMessageBuilder.resetTitleMessage(userManager.getPlayer(player.getUniqueId().toString()));
             this.titleMessageBuilder.sendTitleMessage(userManager.getPlayer(player.getUniqueId().toString()), title, subtitle, 0, timeout, 0);
+        }
     }
 }
