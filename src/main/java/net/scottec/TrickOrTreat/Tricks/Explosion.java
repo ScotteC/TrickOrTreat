@@ -4,6 +4,7 @@ import org.bukkit.Effect;
 import org.bukkit.entity.Player;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
+import org.bukkit.util.Vector;
 
 /**
  * Explosion - Trickeffect
@@ -20,5 +21,6 @@ public class Explosion implements Trick {
                 PotionEffectType.CONFUSION, 10 * 20, 100));
         player.addPotionEffect(new PotionEffect(
                 PotionEffectType.SLOW, 10 * 20, 5));
+        player.setVelocity(new Vector((Math.random() * 5) + 1.5, (Math.random() * 5) + 1.5, (Math.random() * 5) + 1.5));
     }
 }
