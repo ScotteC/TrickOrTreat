@@ -14,7 +14,7 @@ public class Flames implements Trick {
     public void effect(Player player) {
         player.addPotionEffect(new PotionEffect(
                 PotionEffectType.FIRE_RESISTANCE, 10 * 20, 10));
-        player.playSound(player.getLocation(), Sound.BLOCK_FIRE_EXTINGUISH, 1, 0);
+        player.playSound(player.getLocation(), Sound.BLOCK_FIRE_EXTINGUISH, 2, 1);
         player.setFireTicks(10 * 20);
     }
 }
