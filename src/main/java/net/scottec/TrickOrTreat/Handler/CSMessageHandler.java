@@ -25,10 +25,17 @@ public class CSMessageHandler {
     }
 
     public void sendActionBarMessage(Player player, String msg) {
-        this.actionBarMessageBuilder.sendActionBar(userManager.getPlayer(player.getUniqueId().toString()), msg);
+        if (player.isOnline())
+            this.actionBarMessageBuilder.sendActionBar(userManager.getPlayer(player.getUniqueId().toString()), msg);
     }
 
     public void sendTitleMessage(Player player, String title, String subtitle) {
-        this.titleMessageBuilder.sendTitleMessage(userManager.getPlayer(player.getUniqueId().toString()), title, subtitle);
+        if (player.isOnline())
+            this.titleMessageBuilder.sendTitleMessage(userManager.getPlayer(player.getUniqueId().toString()), title, subtitle);
+    }
+
+    public void sendTitleMessage(Player player, String title, String subtitle, int timeout) {
+        if (player.isOnline())
+            this.titleMessageBuilder.sendTitleMessage(userManager.getPlayer(player.getUniqueId().toString()), title, subtitle, 0, timeout, 0);
     }
 }
