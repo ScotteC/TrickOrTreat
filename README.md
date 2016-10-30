@@ -1,4 +1,4 @@
-TrickOrTreat
+TrickOrTreat v2.0
 
 This Minecraft-Plugin ports the common known halloween
 tradition "Trick or Treat" to Minecraft.
