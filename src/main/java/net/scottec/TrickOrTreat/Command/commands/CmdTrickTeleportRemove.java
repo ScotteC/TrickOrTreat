@@ -18,11 +18,15 @@ public class CmdTrickTeleportRemove extends CommandBase {
     public void execute(Player sender, List<String> args) {
         if (sender.hasPermission("trickortreat.config")) {
             if (args.size() > 0) {
-                if (((Teleport) this.plugin.getTrickHandler().getTrickByName("teleport"))
-                        .removePortLocation(Integer.parseInt(args.get(0))))
-                    sender.sendMessage("[ToT] Teleport removed");
-                else
-                    sender.sendMessage("[ToT] Index not found");
+                try {
+                    if (((Teleport) this.plugin.getTrickHandler().getTrickByName("teleport"))
+                            .removePortLocation(Integer.parseInt(args.get(0))))
+                        sender.sendMessage("[ToT] Teleport removed");
+                    else
+                        sender.sendMessage("[ToT] Index not found");
+                } catch (NumberFormatException exp){
+                    sender.sendMessage("[ToT] Invalid index");
+                }
             }
             else
                 sender.sendMessage("[ToT] Not enough arguments");

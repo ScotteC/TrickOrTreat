@@ -46,7 +46,15 @@ public class Teleport implements Trick {
     }
 
     public boolean removePortLocation(int index) {
-        return locations.remove(locations.get(index));
+        if(index >= 0 && index < locations.size()) {
+            locations.remove(index);
+            List<String> ports = Config.getCfg().getStringList("trick.port");
+            ports.remove(index);
+            Config.getCfg().set("trick.port", ports);
+            Config.saveCfg();
+            return true;
+        }
+        return false;
     }
 
     public void effect(Player player) {
