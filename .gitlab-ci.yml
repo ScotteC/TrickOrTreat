@@ -1,0 +1,13 @@
+stages:
+  - package
+package:
+  stage: package
+  script:
+  - "mvn clean"
+  - "mvn package"
+  artifacts:
+    paths:
+    - "target/*.jar"
+  only:
+    - master
+    - release
