@@ -11,6 +11,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -22,12 +23,13 @@ public class GhostHandler {
     private TrickOrTreat.ITrickOrTreat iToT;
     private long lastSpawn;
     private int spawnCooldown;
+    private int spawnCount;
     private int maxLived;
     private long dropDelay;
     private int dropCount;
     private long cleanInterval;
 
-    private Location spawnLocation;
+    private List<Location> spawnLocations = new ArrayList<>();
 
     private ItemStack ghostscrap;
     private ItemStack coinshard;
@@ -38,13 +40,20 @@ public class GhostHandler {
         // load config
         this.lastSpawn = System.currentTimeMillis();
         this.spawnCooldown = Config.getCfg().getInt("ghost.spawncooldown");
+        this.spawnCount = Config.getCfg().getInt("ghost.spawnCount");
         this.maxLived = Config.getCfg().getInt("ghost.maxLived");
         this.dropDelay = Config.getCfg().getInt("ghost.dropDelay");
         this.dropCount = Config.getCfg().getInt("ghost.dropCount");
         this.cleanInterval = Config.getCfg().getInt("ghost.cleanInterval");
 
-        this.spawnLocation = util.getLocationFromString(
-                Config.getCfg().getString("ghost.spawn"));
+        // read spawn locations from config
+        List<String> locStrings = Config.getCfg().getStringList("ghost.spawn");
+        Location loc;
+        for (String locString : locStrings) {
+            loc = util.getLocationFromString(locString);
+            if (loc != null)
+                spawnLocations.add(loc);
+        }
 
         this.ghostscrap = util.createItemStack(
                 util.getString("GHOST_SCRAP_NAME"),
@@ -79,33 +88,61 @@ public class GhostHandler {
         }.runTaskTimer(this.iToT.getPlugin(), 0L, this.cleanInterval);
     }
 
-    public void setSpawnLocation(Location newSpawnLocation) {
-        this.spawnLocation = newSpawnLocation;
-        String locString = this.spawnLocation.getX() + ":"
-                + this.spawnLocation.getY() + ":"
-                + this.spawnLocation.getZ() + ":0:0";
-        Config.getCfg().set("ghost.spawn", locString);
+    public List<Location> listSpawnLocations() {
+        return spawnLocations;
+    }
+
+    public void addSpawnLocation(Location newLocation){
+        this.spawnLocations.add(newLocation);
+        List<String> locStrings = Config.getCfg().getStringList("ghost.spawn");
+        locStrings.add(String.format("%.2f:%.2f:%.2f:%.2f:%.2f",
+                newLocation.getX(),
+                newLocation.getY(),
+                newLocation.getZ(),
+                newLocation.getYaw(),
+                newLocation.getPitch()));
+        Config.getCfg().set("ghost.spawn", locStrings);
         Config.saveCfg();
     }
 
-    public void setDrops(int count, int delay) {
+    public boolean removeSpawnLocation(int index) {
+        if(index >= 0 && index < spawnLocations.size()) {
+            spawnLocations.remove(index);
+            List<String> locStrings = Config.getCfg().getStringList("ghost.spawn");
+            locStrings.remove(index);
+            Config.getCfg().set("ghost.spawn", locStrings);
+            Config.saveCfg();
+            return true;
+        }
+        return false;
+    }
+
+    public boolean setDrops(int count, int delay) {
         if(count >= 0 && delay >= 0) {
             this.dropCount = count;
             this.dropDelay = delay;
             Config.getCfg().set("ghost.dropCount", count);
             Config.getCfg().set("ghost.dropDelay", delay);
             Config.saveCfg();
+            return true;
         }
+        return false;
     }
 
-    public void spawnGhost() {
+    public void prepareGhostSpawn() {
+        // cooldown for ghostspawn
         if ((System.currentTimeMillis() - lastSpawn) < spawnCooldown)
             return;
-
         lastSpawn = System.currentTimeMillis();
 
+        // randomly choose locations for ghostspawn
+        for(int i = 0; i < this.spawnCount; i++)
+            spawnGhost(spawnLocations.get((int)((Math.random()*11) % spawnLocations.size())));
+    }
+
+    public void spawnGhost(Location location) {
         LivingEntity carrier = (LivingEntity) util.getWorld()
-                .spawnEntity(spawnLocation, EntityType.BAT);
+                .spawnEntity(location, EntityType.BAT);
 
         carrier.addPotionEffect(new PotionEffect(
                 PotionEffectType.INVISIBILITY, 99999, 1));
@@ -113,7 +150,7 @@ public class GhostHandler {
         switch (ghostSwitch) {
             case 0: {
                 LivingEntity passenger = (LivingEntity) util.getWorld()
-                        .spawnEntity(spawnLocation, EntityType.SKELETON);
+                        .spawnEntity(location, EntityType.SKELETON);
 
                 passenger.addPotionEffect(new PotionEffect(
                         PotionEffectType.INVISIBILITY, 99999, 1));
@@ -130,7 +167,7 @@ public class GhostHandler {
 
             case 1: {
                 Creeper creeper = (Creeper) util.getWorld()
-                        .spawnEntity(spawnLocation, EntityType.CREEPER);
+                        .spawnEntity(location, EntityType.CREEPER);
                 creeper.addPotionEffect(new PotionEffect(
                         PotionEffectType.INVISIBILITY, 99999, 1));
                 creeper.setPowered(true);
@@ -162,16 +199,16 @@ public class GhostHandler {
                         if (cnt % 3 == 0)
                             util.dropItem(loc, iToT.getTreatHandler().getRandomTreat(), 1);
 
-                        util.dropItem(loc, ghostscrap, 2);
-                        util.dropItem(loc, coinshard, 2);
+                        util.dropItem(loc, ghostscrap, 1);
+                        util.dropItem(loc, coinshard, 1);
                         cnt--;
                     }
                 }
             }.runTaskTimer(this.iToT.getPlugin(), 0, this.dropDelay);
         } else {
             util.dropItem(loc, iToT.getTreatHandler().getRandomTreat(), 1);
-            util.dropItem(loc, ghostscrap, 1);
-            util.dropItem(loc, coinshard, 3);
+            util.dropItem(loc, ghostscrap, 2);
+            util.dropItem(loc, coinshard, 2);
         }
     }
 

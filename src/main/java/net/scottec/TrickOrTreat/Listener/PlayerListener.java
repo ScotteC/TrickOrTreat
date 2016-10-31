@@ -144,7 +144,7 @@ public class PlayerListener implements Listener {
      */
     @EventHandler
     public void onPlayerJoin(PlayerJoinEvent evt) {
-        this.iToT.getGhostHandler().spawnGhost();
+        this.iToT.getGhostHandler().prepareGhostSpawn();
         evt.getPlayer().setSaturation(1);
         evt.getPlayer().setFoodLevel(19);
 
