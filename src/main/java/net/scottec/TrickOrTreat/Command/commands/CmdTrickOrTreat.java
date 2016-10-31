@@ -1,6 +1,9 @@
 package net.scottec.TrickOrTreat.Command.commands;
 
 import net.scottec.TrickOrTreat.Command.CommandTop;
+import net.scottec.TrickOrTreat.Command.commands.CmdGhost.CmdGhost;
+import net.scottec.TrickOrTreat.Command.commands.CmdRequest.CmdRequest;
+import net.scottec.TrickOrTreat.Command.commands.CmdTrick.CmdTrick;
 import net.scottec.TrickOrTreat.TrickOrTreat;
 
 public class CmdTrickOrTreat extends CommandTop {

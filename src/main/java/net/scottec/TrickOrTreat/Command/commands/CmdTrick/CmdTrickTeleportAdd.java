@@ -1,4 +1,4 @@
-package net.scottec.TrickOrTreat.Command.commands;
+package net.scottec.TrickOrTreat.Command.commands.CmdTrick;
 
 import net.scottec.TrickOrTreat.Command.CommandBase;
 import net.scottec.TrickOrTreat.TrickOrTreat;

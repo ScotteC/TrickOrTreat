@@ -1,4 +1,4 @@
-package net.scottec.TrickOrTreat.Command.commands;
+package net.scottec.TrickOrTreat.Command.commands.CmdTrick;
 
 import net.scottec.TrickOrTreat.Command.CommandBase;
 import net.scottec.TrickOrTreat.TrickOrTreat;
@@ -12,7 +12,7 @@ public class CmdTrickTeleportList extends CommandBase {
 
     public CmdTrickTeleportList(TrickOrTreat.ITrickOrTreat iToT) {
         super(iToT, "list");
-        this.setCommandUsage("/tot trick teleport list : List all TeleportLocations actual set");
+        this.setCommandUsage("/tot trick teleport list : List all TeleportLocations");
     }
 
     @Override
@@ -23,12 +23,13 @@ public class CmdTrickTeleportList extends CommandBase {
             // output
             sender.sendMessage("[ToT] Actual Teleports:");
             for (int i = 0; i < locations.size(); i++)
-                sender.sendMessage("- " + i + " - "
-                        + locations.get(i).getX() + ":"
-                        + locations.get(i).getY() + ":"
-                        + locations.get(i).getZ() + ":"
-                        + locations.get(i).getPitch() + ":"
-                        + locations.get(i).getYaw());
+                sender.sendMessage(String.format("- %d : [%.2f / %.2f / %.2f / %.2f / %.2f]",
+                        i,
+                        locations.get(i).getX(),
+                        locations.get(i).getY(),
+                        locations.get(i).getZ(),
+                        locations.get(i).getPitch(),
+                        locations.get(i).getYaw()));
         }
         else
             sender.sendMessage("No permission");
