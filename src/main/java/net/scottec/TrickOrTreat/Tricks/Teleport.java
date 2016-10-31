@@ -33,15 +33,16 @@ public class Teleport implements Trick {
         return locations;
     }
 
-    public void addPortLocation(Location newPortLocation){
-        this.locations.add(newPortLocation);
-        List<String> ports = Config.getCfg().getStringList("trick.port");
-        ports.add(newPortLocation.getX() + ":"
-                + newPortLocation.getY() + ":"
-                + newPortLocation.getZ() + ":"
-                + newPortLocation.getYaw() + ":"
-                + newPortLocation.getPitch());
-        Config.getCfg().set("trick.port", ports);
+    public void addPortLocation(Location newLocation){
+        this.locations.add(newLocation);
+        List<String> locStrings = Config.getCfg().getStringList("trick.port");
+        locStrings.add(String.format("%.2f:%.2f:%.2f:%.2f:%.2f",
+                newLocation.getX(),
+                newLocation.getY(),
+                newLocation.getZ(),
+                newLocation.getYaw(),
+                newLocation.getPitch()));
+        Config.getCfg().set("trick.port", locStrings);
         Config.saveCfg();
     }
 
