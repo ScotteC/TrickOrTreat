@@ -21,7 +21,7 @@ public class CmdTrickTeleportList extends CommandBase {
             List<Location> locations = ((Teleport) this.plugin.getTrickHandler().getTrickByName("teleport"))
                     .listPortLocations();
             // output
-            sender.sendMessage("[ToT] Actual Teleports:");
+            sender.sendMessage("[ToT] Actual Teleports: [x/y/z/yaw/pitch]");
             for (int i = 0; i < locations.size(); i++)
                 sender.sendMessage(String.format("- %d : [%.2f / %.2f / %.2f / %.2f / %.2f]",
                         i,

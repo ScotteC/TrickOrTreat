@@ -20,7 +20,7 @@ public class CmdGhostSpawnList extends CommandBase {
         if (sender.hasPermission("trickortreat.config")) {
             List<Location> locations = this.plugin.getGhostHandler().listSpawnLocations();
             // output
-            sender.sendMessage("[ToT] Actual GhostSpawns:");
+            sender.sendMessage("[ToT] Actual GhostSpawns: [x/y/z/yaw/pitch]");
             for (int i = 0; i < locations.size(); i++)
                 sender.sendMessage(String.format("- %d : [%.2f / %.2f / %.2f / %.2f / %.2f]",
                         i,

@@ -13,6 +13,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Initial idea and code written by Titian, Oct 2014
@@ -95,7 +96,7 @@ public class GhostHandler {
     public void addSpawnLocation(Location newLocation){
         this.spawnLocations.add(newLocation);
         List<String> locStrings = Config.getCfg().getStringList("ghost.spawn");
-        locStrings.add(String.format("%.2f:%.2f:%.2f:%.2f:%.2f",
+        locStrings.add(String.format(Locale.US, "%.2f:%.2f:%.2f:%.2f:%.2f",
                 newLocation.getX(),
                 newLocation.getY(),
                 newLocation.getZ(),

@@ -9,6 +9,7 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Teleport - Trickeffect
@@ -36,7 +37,7 @@ public class Teleport implements Trick {
     public void addPortLocation(Location newLocation){
         this.locations.add(newLocation);
         List<String> locStrings = Config.getCfg().getStringList("trick.port");
-        locStrings.add(String.format("%.2f:%.2f:%.2f:%.2f:%.2f",
+        locStrings.add(String.format(Locale.US, "%.2f:%.2f:%.2f:%.2f:%.2f",
                 newLocation.getX(),
                 newLocation.getY(),
                 newLocation.getZ(),
