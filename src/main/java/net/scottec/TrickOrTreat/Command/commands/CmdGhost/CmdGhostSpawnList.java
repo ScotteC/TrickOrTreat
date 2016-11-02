@@ -27,8 +27,8 @@ public class CmdGhostSpawnList extends CommandBase {
                         locations.get(i).getX(),
                         locations.get(i).getY(),
                         locations.get(i).getZ(),
-                        locations.get(i).getPitch(),
-                        locations.get(i).getYaw()));
+                        locations.get(i).getYaw(),
+                        locations.get(i).getPitch()));
         }
         else
             sender.sendMessage("No permission");
