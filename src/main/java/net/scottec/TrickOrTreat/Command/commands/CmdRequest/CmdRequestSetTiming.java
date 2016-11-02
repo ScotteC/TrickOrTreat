@@ -21,12 +21,15 @@ public class CmdRequestSetTiming extends CommandBase{
                     this.plugin.getRequestHandler().setRequestTimings(
                             Integer.parseInt(args.get(0)),
                             Integer.parseInt(args.get(1)));
+                    sender.sendMessage("[ToT] Timings setted");
                 } catch (NumberFormatException e) {
-                    sender.sendMessage("Invalid input");
+                    sender.sendMessage("[ToT] Invalid input");
                 }
             }
-            else
-                sender.sendMessage("Not enough arguments (2 needed)");
+            else {
+                int[] timings = this.plugin.getRequestHandler().getRequestTimings();
+                sender.sendMessage("[ToT] RequestTimeout: " + timings[0] + " - RequestCooldown: " + timings[1]);
+            }
         }
         else
             sender.sendMessage("No Permission");

@@ -27,8 +27,10 @@ public class CmdGhostDrops extends CommandBase {
                     sender.sendMessage("[ToT] Invalid input");
                 }
             }
-            else
-                sender.sendMessage("[ToT] Not enough arguments");
+            else {
+                int[] drops = this.plugin.getGhostHandler().getDrops();
+                sender.sendMessage("[ToT] DropCount: " + drops[0] + " - DropDelay: " + drops[1]);
+            }
         }
         else
             sender.sendMessage("No permission");

@@ -25,7 +25,7 @@ public class GhostHandler {
     private int spawnCooldown;
     private int spawnCount;
     private int maxLived;
-    private long dropDelay;
+    private int dropDelay;
     private int dropCount;
     private long cleanInterval;
 
@@ -115,6 +115,11 @@ public class GhostHandler {
             return true;
         }
         return false;
+    }
+
+    public int[] getDrops() {
+        int[] drops = {this.dropCount, this.dropDelay};
+        return drops;
     }
 
     public boolean setDrops(int count, int delay) {

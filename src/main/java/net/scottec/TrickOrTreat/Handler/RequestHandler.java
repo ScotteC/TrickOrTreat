@@ -25,6 +25,11 @@ public class RequestHandler {
                 .getInt("request.cooldown");
     }
 
+    public int[] getRequestTimings() {
+        int[] timings = {this.requestTimeout, this.requestCooldown};
+        return timings;
+    }
+
     public void setRequestTimings(int requestTimeout, int requestCooldown) {
         if(requestTimeout > 0 && requestCooldown >= 0) {
             this.requestTimeout = requestTimeout;
