@@ -12,5 +12,6 @@ public class CmdGhostSpawn extends CommandTop {
         this.addSubCommand(new CmdGhostSpawnList(iToT));
         this.addSubCommand(new CmdGhostSpawnAdd(iToT));
         this.addSubCommand(new CmdGhostSpawnRemove(iToT));
+        this.addSubCommand(new CmdGhostSpawnSetCount(iToT));
     }
 }

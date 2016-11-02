@@ -117,6 +117,20 @@ public class GhostHandler {
         return false;
     }
 
+    public int getSpawnCount() {
+        return this.spawnCount;
+    }
+
+    public boolean setSpawnCount(int count) {
+        if(count >= 0) {
+            this.spawnCount = count;
+            Config.getCfg().set("ghost.spawnCount", count);
+            Config.saveCfg();
+            return true;
+        }
+        return false;
+    }
+
     public int[] getDrops() {
         int[] drops = {this.dropCount, this.dropDelay};
         return drops;
