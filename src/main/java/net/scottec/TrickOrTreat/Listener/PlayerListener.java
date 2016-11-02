@@ -151,8 +151,5 @@ public class PlayerListener implements Listener {
         ItemStack stick = new Halloweenstick();
         if (!evt.getPlayer().getInventory().containsAtLeast(stick, 1))
             evt.getPlayer().getInventory().addItem(stick);
-
-//        // dev
-//        this.iToT.getTreatHandler().addAllTreats(evt.getPlayer());
     }
 }

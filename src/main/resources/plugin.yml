@@ -1,5 +1,5 @@
 name: TrickOrTreat
-version: 2.1.2
+version: 2.2
 author: scottec
 description:
 depend: [WorldGuard, CsApi]

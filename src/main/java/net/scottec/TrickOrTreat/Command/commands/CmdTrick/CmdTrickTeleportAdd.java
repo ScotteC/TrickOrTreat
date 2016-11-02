@@ -19,6 +19,7 @@ public class CmdTrickTeleportAdd extends CommandBase{
         if (sender.hasPermission("trickortreat.config")) {
             ((Teleport) this.plugin.getTrickHandler().getTrickByName("teleport"))
                     .addPortLocation(sender.getLocation());
+            sender.sendMessage("[ToT] Teleport added");
         }
         else
             sender.sendMessage("No permission");
