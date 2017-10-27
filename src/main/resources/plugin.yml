@@ -1,9 +1,9 @@
 name: TrickOrTreat
-version: 2.2
+version: 3.0
 author: scottec
 description:
 depend: [WorldGuard, CsApi]
-main: net.scottec.TrickOrTreat.TrickOrTreat
+main: net.scottec.trickortreat.TrickOrTreat
 
 commands:
   tot:
@@ -17,3 +17,5 @@ commands:
     description:
     usage: /tottoggle
     aliases:
+    permission: trickortreat.toggle
+    permission-message: No permission

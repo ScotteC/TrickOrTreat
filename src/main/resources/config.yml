@@ -4,7 +4,6 @@
 
 common:
   locale: "de-DE"
-  worldname: "world"
 
 request:
   timeout: 5
@@ -16,9 +15,9 @@ treat:
 
 trick:
   port:
-  - "170:67:269:0:0"
-  - "158:67:269:0:0"
-  - "164:78:252:0:0"
+  - "world:170:67:269:0:0"
+  - "world:158:67:269:0:0"
+  - "world:164:78:252:0:0"
 
 ghost:
   cleanInterval: 400
@@ -28,4 +27,4 @@ ghost:
   spawncooldown: 5000
   spawnCount: 3
   spawn:
-  - "164:73:260:0:0"
+  - "world:164:73:260:0:0"
