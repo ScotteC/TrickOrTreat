@@ -27,6 +27,7 @@ public class TrickOrTreat extends JavaPlugin {
         this.plugin = this;
         // load config files
         Config.reloadConfig(this);
+        this.oCSMessageHandler = new CSMessageHandler();
 
         // create objects
         this.oCSVoteHandler = new CSVoteHandler();
@@ -41,8 +42,6 @@ public class TrickOrTreat extends JavaPlugin {
         CommandHandler.init(this.iTrickOrTreat);
         CommandHandler.instance.addCommand(new CmdTrickOrTreat(this.iTrickOrTreat));
         CommandHandler.instance.addCommand(new CmdTrickOrTreatToggle(this.iTrickOrTreat));
-
-        this.oCSMessageHandler = new CSMessageHandler();
     }
 
     @Override
