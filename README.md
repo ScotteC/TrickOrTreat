@@ -1,4 +1,6 @@
-## TrickOrTreat 3.0 ##
+## TrickOrTreat 3 ##
+
+v3.1
 
 Eine Portierung der "Süßes oder Saures"-Tradition für Minecraft.
 
@@ -18,6 +20,7 @@ Eine Portierung der "Süßes oder Saures"-Tradition für Minecraft.
 - /tot trick teleport add : Fügt die aktuelle Position als Teleport hinzu.
 - /tot trick teleport remove <index> : Löscht den Teleportpunkt an Position <index> aus der Liste.
 
+##### Achtung : Unterstützt nicht Server /reload !!!
 
 Requirements:
 - Spigot:1.10 R0.1 SNAPSHOT
